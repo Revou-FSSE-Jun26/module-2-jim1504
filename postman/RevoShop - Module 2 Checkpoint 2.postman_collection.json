@@ -1,0 +1,226 @@
+{
+  "info": {
+    "_postman_id": "70e1e174-5ced-4d03-a6c3-59c963bab42f",
+    "name": "RevoShop - Module 2 Checkpoint 2",
+    "description": "Routes for the RevoShop Flask + SQLAlchemy layer. Set the base_url variable if the app is not on [http://127.0.0.1:5000](http://127.0.0.1:5000).",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_exporter_id": "57339300",
+    "_collection_link": "https://go.postman.co/collection/57339300-70e1e174-5ced-4d03-a6c3-59c963bab42f?source=collection_link"
+  },
+  "item": [
+    {
+      "name": "GET Connection Health",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{base_url}}/health",
+          "host": [
+            "{{base_url}}"
+          ],
+          "path": [
+            "health"
+          ]
+        },
+        "description": "Runs `select 1` through SQLAlchemy. Proves SQLALCHEMY_DATABASE_URI reaches revoshop_db."
+      },
+      "response": []
+    },
+    {
+      "name": "GET All Products",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{base_url}}/products",
+          "host": [
+            "{{base_url}}"
+          ],
+          "path": [
+            "products"
+          ]
+        },
+        "description": "Returns the full hardcoded product list as JSON via jsonify()."
+      },
+      "response": []
+    },
+    {
+      "name": "GET Single Product",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{base_url}}/products/2",
+          "host": [
+            "{{base_url}}"
+          ],
+          "path": [
+            "products",
+            "2"
+          ]
+        },
+        "description": "Filters the hardcoded list by id and returns the matching product."
+      },
+      "response": []
+    },
+    {
+      "name": "GET Unknown Product",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{base_url}}/products/999",
+          "host": [
+            "{{base_url}}"
+          ],
+          "path": [
+            "products",
+            "999"
+          ]
+        },
+        "description": "Expected: HTTP 404 with a JSON error body."
+      },
+      "response": []
+    },
+    {
+      "name": "Register User",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n    \"username\": \"jim wicaksono\",\n    \"email\": \"jim.demo@example.com\",\n    \"password\": \"secret123\",\n    \"phone_number\": \"+62-811-0000-0001\",\n    \"address\": \"jl. asia afrika no. 1, bandung 40111\"\n}",
+          "options": {
+            "raw": {
+              "language": "text"
+            }
+          }
+        },
+        "url": {
+          "raw": "{{base_url}}/register",
+          "host": [
+            "{{base_url}}"
+          ],
+          "path": [
+            "register"
+          ]
+        },
+        "description": "Expected: HTTP 201. Creates a User with db.session.add() and db.session.commit(). Change the email to re-run."
+      },
+      "response": []
+    },
+    {
+      "name": "Register Duplicate User Email",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n    \"username\": \"someone else\",\n    \"email\": \"jim.demo@example.com\",\n    \"password\": \"secret123\"\n}",
+          "options": {
+            "raw": {
+              "language": "text"
+            }
+          }
+        },
+        "url": {
+          "raw": "{{base_url}}/register",
+          "host": [
+            "{{base_url}}"
+          ],
+          "path": [
+            "register"
+          ]
+        },
+        "description": "Expected: HTTP 409. Run the previous request first so the email already exists."
+      },
+      "response": []
+    },
+    {
+      "name": "Register Missing Fields",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n    \"username\": \"incomplete\"\n}",
+          "options": {
+            "raw": {
+              "language": "text"
+            }
+          }
+        },
+        "url": {
+          "raw": "{{base_url}}/register",
+          "host": [
+            "{{base_url}}"
+          ],
+          "path": [
+            "register"
+          ]
+        },
+        "description": "Expected: HTTP 400 listing the missing fields."
+      },
+      "response": []
+    },
+    {
+      "name": "GET Single User",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{base_url}}/users/1",
+          "host": [
+            "{{base_url}}"
+          ],
+          "path": [
+            "users",
+            "1"
+          ]
+        },
+        "description": "Fetches a user by id from the database. The response includes the role column added by migration."
+      },
+      "response": []
+    },
+    {
+      "name": "GET Unknown User",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{base_url}}/users/9999",
+          "host": [
+            "{{base_url}}"
+          ],
+          "path": [
+            "users",
+            "9999"
+          ]
+        },
+        "description": "Expected: HTTP 404 with a JSON error body."
+      },
+      "response": []
+    }
+  ],
+  "variable": [
+    {
+      "key": "base_url",
+      "value": "http://127.0.0.1:5000"
+    }
+  ]
+}
