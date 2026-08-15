@@ -1,6 +1,7 @@
-# ---- konfigurasi (kredensial & pengaturan lokal) ----
+# ---- konfigurasi (pengaturan lokal) ----
 .env
 .env.*
+!.env.example
 *.local
 pgpass.conf
 .pgpass
@@ -11,20 +12,22 @@ pgpass.conf
 *.sql.gz
 /backups/
 
-# ---- python (dipakai mulai checkpoint 2) ----
+# ---- python ----
 __pycache__/
 *.py[cod]
 venv/
 .venv/
 env/
 *.egg-info/
+instance/
+.pytest_cache/
 
 # ---- editor dan tools ----
 .vscode/
 .idea/
 *.swp
 
-# ---- file workspace dbeaver / pgadmin (berisi kredensial koneksi & cache lokal) ----
+# ---- file workspace dbeaver / pgadmin ----
 .dbeaver/
 .metadata/
 .project
