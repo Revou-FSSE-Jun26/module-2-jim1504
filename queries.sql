@@ -29,14 +29,14 @@ order by categories.category_name asc, products.product_name desc;
 -- Query 3: Menampilkan order dengan order_id = 1 beserta nama user, nama produk, quantity, unit_price, dan line_total (quantity * unit_price)
 select
     orders.order_id,
-    users.full_name,
+    users.username,
     products.product_name,
     order_items.quantity,
     order_items.unit_price,
     (order_items.quantity * order_items.unit_price) as line_total
 from orders
 join users
-    on orders.user_id = users.user_id
+    on orders.user_id = users.id
 join order_items
     on order_items.order_id = orders.order_id
 join products
@@ -46,15 +46,15 @@ order by products.product_name asc;
 
 -- Query 4: Menampilkan user beserta jumlah order yang pernah dilakukan
 select
-    users.user_id,
-    users.full_name,
+    users.id,
+    users.username,
     count(orders.order_id) as order_count,
     sum(orders.total_amount) as lifetime_value
 from users
 join orders
-    on orders.user_id = users.user_id
+    on orders.user_id = users.id
 where orders.order_status <> 'cancelled'
-group by users.user_id, users.full_name
+group by users.id, users.username
 order by lifetime_value desc;
 
 
@@ -72,11 +72,11 @@ limit 5;
 
 -- Query 6: Menampilkan semua user yang belum pernah melakukan order
 select
-    users.user_id,
-    users.full_name,
+    users.id,
+    users.username,
     users.email
 from users
 left join orders
-    on orders.user_id = users.user_id
+    on orders.user_id = users.id
 where orders.order_id is null
-order by users.user_id asc;
+order by users.id asc;

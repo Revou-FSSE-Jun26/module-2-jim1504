@@ -1,7 +1,7 @@
 
 -- users
 --password tidak disimpan dalam bentuk teks biasa, tapi dalam bentuk hash
-insert into users (full_name, email, password_hash, phone_number, address) values
+insert into users (username, email, password_hash, phone_number, address) values
     ('andi pratama',    'andi.pratama@example.com',   '$2b$12$fakehashvalue000000001', '+62-812-1111-0001', 'jl. merdeka no. 12, bandung, west java 40115'),
     ('siti rahayu',     'siti.rahayu@example.com',    '$2b$12$fakehashvalue000000002', '+62-813-2222-0002', 'jl. sudirman no. 45, jakarta 10210'),
     ('budi santoso',    'budi.santoso@example.com',   '$2b$12$fakehashvalue000000003', '+62-856-3333-0003', 'jl. diponegoro no. 8, surabaya 60241'),
