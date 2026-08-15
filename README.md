@@ -279,19 +279,9 @@ erDiagram
 | `models.py` | model SQLAlchemy dan tabel asosiasi `order_items` |
 | `routes.py` | seluruh route aplikasi |
 | `migrations/` | riwayat migration Flask-Migrate |
-| `seed_db.py` | memuat data contoh lewat SQLAlchemy |
-| `demo_m2m.py` | demonstrasi relasi many-to-many |
 | `postman/` | koleksi Postman untuk semua route |
-| `docs/checkpoint2-evidence.md` | daftar bukti yang perlu di-screenshot |
 
 ## Catatan
 
-- Kata kunci SQL ditulis dengan huruf kecil dan identifier menggunakan `snake_case` secara konsisten.
-- Setiap tabel menggunakan primary key surrogate `serial` bernama `<table_singular>_id`.
-  **Pengecualian:** tabel `users` memakai `id` (bukan `user_id`) dan `username`
-  (bukan `full_name`) sejak checkpoint 2, mengikuti nama field yang diminta pada
-  model `User`. Kolom foreign key di `orders` tetap bernama `user_id`.
 - Menghapus sebuah order juga menghapus order item-nya (`on delete cascade`). Produk dan user tidak ikut terhapus (cascade).
-- Password tidak pernah disimpan sebagai teks biasa. Route `/register` melakukan
-  hashing dengan `werkzeug.security.generate_password_hash`, dan `password_hash`
-  tidak pernah ikut dikirim dalam response JSON.
+- Password tidak pernah disimpan sebagai teks biasa.
