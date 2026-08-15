@@ -5,7 +5,7 @@ Repositori ini berisi database RevoShop beserta lapisan aplikasinya.
 | Checkpoint | Isi |
 | --- | --- |
 | Checkpoint 1 | skema database, contoh data, dan query (`schema.sql`, `seed.sql`, `queries.sql`) |
-| Checkpoint 2 | aplikasi Flask + SQLAlchemy, model, dan migration (`app/`, `migrations/`) |
+| Checkpoint 2 | aplikasi Flask + SQLAlchemy, model, dan migration (`app.py`, `models.py`, `routes.py`, `migrations/`) |
 
 Mulai checkpoint 2, **sumber kebenaran skema adalah migration** di folder
 `migrations/`. `schema.sql` tetap dijaga sinkron sebagai dokumentasi.
@@ -162,7 +162,23 @@ Route produk sengaja masih memakai data hardcoded — sesuai lingkup checkpoint 
 route tersebut adalah latihan pemanasan. Versi yang membaca database dikerjakan
 di checkpoint 3.
 
-Koleksi Postman siap pakai tersedia di `postman/RevoShop.postman_collection.json`.
+## Bukti
+
+| Bukti | File | Isi |
+| --- | --- | --- |
+| Rekaman Postman | [`postman/Postman_trial.mp4`](postman/Postman_trial.mp4) | demo seluruh route berjalan lokal |
+| Koleksi Postman | [`postman/RevoShop - Module 2 Checkpoint 2.postman_collection.json`](postman/RevoShop%20-%20Module%202%20Checkpoint%202.postman_collection.json) | tinggal di-import ke Postman, semua request sudah siap |
+| Screenshot database | [`docs/C2_userdbScreenshoot.png`](docs/C2_userdbScreenshoot.png) | tabel `users` di DBeaver |
+
+![Tabel users dengan kolom role](docs/C2_userdbScreenshoot.png)
+
+Screenshot di atas menunjukkan dua hal sekaligus:
+
+1. Kolom `role` sudah ada setelah migration, dan keenam user hasil seed tetap
+   utuh dengan nilai `customer` — migration tidak mengganggu baris lama.
+2. Baris ke-7 (`jim wicaksono`) adalah user yang dibuat lewat route
+   `POST /register`, dengan `password_hash` berformat `scrypt:...` hasil
+   `generate_password_hash`, bukan teks biasa.
 
 ## Struktur file
 
@@ -211,8 +227,29 @@ harga saat pembelian tetap tercatat.
 python demo_m2m.py
 ```
 
-Script tersebut membaca relasi dari kedua arah (`order.products` dan
-`product.orders`) lalu membuat order baru dengan cara `order.products.append(...)`.
+Script tersebut menampilkan isi tabel `order_items`, lalu membuktikan relasi
+dari kedua arah: `order.products` (satu order berisi banyak produk) dan
+`product.orders` (satu produk muncul di banyak order). Script hanya membaca,
+tidak mengubah data.
+
+Contoh keluarannya:
+
+```
+SELECT * FROM order_items;
+
+order_id | product_id | quantity | unit_price
+---------+------------+----------+-----------
+       1 |          1 |        2 |      18.50
+       1 |          2 |        1 |      79.99
+       2 |          8 |        1 |      38.25
+       2 |          9 |        1 |      45.00
+       2 |         10 |        1 |      27.60
+
+Order 2 berisi 3 produk:
+  - clean code
+  - the pragmatic programmer
+  - sql for beginners
+```
 
 ## Diagram relasi
 
@@ -279,7 +316,12 @@ erDiagram
 | `models.py` | model SQLAlchemy dan tabel asosiasi `order_items` |
 | `routes.py` | seluruh route aplikasi |
 | `migrations/` | riwayat migration Flask-Migrate |
-| `postman/` | koleksi Postman untuk semua route |
+| `seed_db.py` | memuat data contoh lewat SQLAlchemy |
+| `demo_m2m.py` | verifikasi relasi many-to-many |
+| `postman/RevoShop - Module 2 Checkpoint 2.postman_collection.json` | koleksi Postman untuk semua route |
+| `postman/Postman_trial.mp4` | rekaman demo route berjalan lokal |
+| `docs/C2_userdbScreenshoot.png` | screenshot tabel `users` dengan kolom `role` |
+| `docs/checkpoint2-evidence.md` | daftar bukti yang perlu diambil |
 
 ## Catatan
 
