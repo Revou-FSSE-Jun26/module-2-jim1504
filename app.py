@@ -1,27 +1,51 @@
+"""RevoShop API -- application entry point.
+
+Run with:
+    flask run                             
+    waitress-serve --port=5000 app:app    works on Windows
+    gunicorn app:app                      Linux deploy target
+"""
+
+import os
+from datetime import timedelta
+
+from dotenv import load_dotenv
 from flask import Flask, jsonify
+from flask_jwt_extended import JWTManager
 from flask_migrate import Migrate
 from sqlalchemy import text
 
 from models import Category, Order, Product, User, db, order_items
-from routes import product_routes, user_routes
+from routes import register_blueprints
+
+load_dotenv()
 
 app = Flask(__name__)
 
-# Format: postgresql://user:password@host:port/dbname -- suka lupa
-app.config["SQLALCHEMY_DATABASE_URI"] = "postgresql://postgres:root@localhost:5432/revoshop_db"
+DATABASE_URL = os.getenv("DATABASE_URL")
+if not DATABASE_URL:
+    raise RuntimeError(
+        "DATABASE_URL is not set. Copy .env.example to .env and fill in your credentials."
+    )
+
+app.config["SQLALCHEMY_DATABASE_URI"] = DATABASE_URL
 app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
+app.config["SECRET_KEY"] = os.getenv("SECRET_KEY", "dev-secret-change-me")
+app.config["JWT_SECRET_KEY"] = app.config["SECRET_KEY"]
+app.config["JWT_ACCESS_TOKEN_EXPIRES"] = timedelta(days=1)
+app.config["DEBUG"] = os.getenv("FLASK_DEBUG", "0") == "1"
 app.json.sort_keys = False
 
 db.init_app(app)
 migrate = Migrate(app, db)
+jwt = JWTManager(app)
 
-app.register_blueprint(product_routes)
-app.register_blueprint(user_routes)
+register_blueprints(app)
 
 
 @app.get("/health")
 def health():
-    """Prove the SQLAlchemy connection to revoshop_db is live."""
+    """Prove the SQLAlchemy connection to the database is live."""
     try:
         db.session.execute(text("select 1"))
     except Exception as exc:
