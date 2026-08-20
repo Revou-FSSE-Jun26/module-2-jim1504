@@ -1,0 +1,783 @@
+{
+  "info": {
+    "name": "RevoShop API - Checkpoint 3",
+    "description": "Full CRUD for products, categories, orders and users.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    {
+      "key": "base_url",
+      "value": "http://127.0.0.1:5000"
+    },
+    {
+      "key": "access_token",
+      "value": ""
+    }
+  ],
+  "item": [
+    {
+      "name": "Utility",
+      "item": [
+        {
+          "name": "GET /health",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/health",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "health"
+              ]
+            },
+            "description": "Confirms the database connection is live."
+          }
+        }
+      ]
+    },
+    {
+      "name": "User",
+      "item": [
+        {
+          "name": "POST /users (register)",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/users",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "users"
+              ]
+            },
+            "description": "201 Created. Change the email to re-run.",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"username\": \"postman user\",\n    \"email\": \"postman.user@example.com\",\n    \"password\": \"secret123\",\n    \"phone_number\": \"+62-811-0000-0002\"\n}"
+            }
+          }
+        },
+        {
+          "name": "POST /users (duplicate email)",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/users",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "users"
+              ]
+            },
+            "description": "409 Conflict.",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"username\": \"again\",\n    \"email\": \"postman.user@example.com\",\n    \"password\": \"secret123\"\n}"
+            }
+          }
+        },
+        {
+          "name": "POST /users (missing fields)",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/users",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "users"
+              ]
+            },
+            "description": "400 Bad Request.",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"username\": \"incomplete\"\n}"
+            }
+          }
+        },
+        {
+          "name": "POST /auth/login",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/auth/login",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "auth",
+                "login"
+              ]
+            },
+            "description": "Returns an access token. The test script saves it to {{access_token}}.",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"email\": \"andi.pratama@example.com\",\n    \"password\": \"password123\"\n}"
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "if (pm.response.code === 200) {",
+                  "    pm.collectionVariables.set('access_token', pm.response.json().access_token);",
+                  "}"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "POST /auth/login (wrong password)",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/auth/login",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "auth",
+                "login"
+              ]
+            },
+            "description": "401 Unauthorized.",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"email\": \"andi.pratama@example.com\",\n    \"password\": \"wrong\"\n}"
+            }
+          }
+        },
+        {
+          "name": "GET /users/1",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/users/1",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "users",
+                "1"
+              ]
+            },
+            "description": "200 OK."
+          }
+        },
+        {
+          "name": "GET /users/9999 (not found)",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/users/9999",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "users",
+                "9999"
+              ]
+            },
+            "description": "404 Not Found."
+          }
+        }
+      ]
+    },
+    {
+      "name": "Product",
+      "item": [
+        {
+          "name": "GET /products",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/products",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "products"
+              ]
+            },
+            "description": "200 OK, all products from the database."
+          }
+        },
+        {
+          "name": "GET /products/1",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/products/1",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "products",
+                "1"
+              ]
+            },
+            "description": "200 OK, one product."
+          }
+        },
+        {
+          "name": "GET /products/9999 (not found)",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/products/9999",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "products",
+                "9999"
+              ]
+            },
+            "description": "404 Not Found."
+          }
+        },
+        {
+          "name": "POST /products",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/products",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "products"
+              ]
+            },
+            "description": "201 Created.",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"product_name\": \"postman widget\",\n    \"description\": \"created from postman\",\n    \"price\": 24.99,\n    \"stock_quantity\": 10,\n    \"category_id\": 1\n}"
+            }
+          }
+        },
+        {
+          "name": "POST /products (validation error)",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/products",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "products"
+              ]
+            },
+            "description": "400 Bad Request - negative price.",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"product_name\": \"bad\",\n    \"price\": -5,\n    \"category_id\": 1\n}"
+            }
+          }
+        },
+        {
+          "name": "PUT /products/15",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/products/21",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "products",
+                "21"
+              ]
+            },
+            "description": "200 OK. Use the id returned by POST.",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"price\": 19.99,\n    \"stock_quantity\": 25\n}"
+            }
+          }
+        },
+        {
+          "name": "PUT /products/9999 (not found)",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/products/9999",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "products",
+                "9999"
+              ]
+            },
+            "description": "404 Not Found.",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"price\": 1\n}"
+            }
+          }
+        },
+        {
+          "name": "DELETE /products/15",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/products/21",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "products",
+                "21"
+              ]
+            },
+            "description": "200 OK when no active order references it."
+          }
+        },
+        {
+          "name": "DELETE /products/8 (blocked)",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/products/1",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "products",
+                "1"
+              ]
+            },
+            "description": "409 Conflict - product 1 sits in an active order."
+          }
+        }
+      ]
+    },
+    {
+      "name": "Category",
+      "item": [
+        {
+          "name": "GET /categories",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/categories",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "categories"
+              ]
+            },
+            "description": "200 OK."
+          }
+        },
+        {
+          "name": "GET /categories/1",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/categories/1",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "categories",
+                "1"
+              ]
+            },
+            "description": "200 OK, includes the products in this category."
+          }
+        },
+        {
+          "name": "GET /categories/999 (not found)",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/categories/999",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "categories",
+                "999"
+              ]
+            },
+            "description": "404 Not Found."
+          }
+        },
+        {
+          "name": "POST /categories",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/categories",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "categories"
+              ]
+            },
+            "description": "201 Created.",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"category_name\": \"postman category\",\n    \"description\": \"created from postman\"\n}"
+            }
+          }
+        },
+        {
+          "name": "POST /categories (duplicate)",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/categories",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "categories"
+              ]
+            },
+            "description": "409 Conflict.",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"category_name\": \"processors\"\n}"
+            }
+          }
+        },
+        {
+          "name": "PUT /categories/6",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/categories/7",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "categories",
+                "7"
+              ]
+            },
+            "description": "200 OK.",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"description\": \"updated from postman\"\n}"
+            }
+          }
+        },
+        {
+          "name": "DELETE /categories/6",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/categories/7",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "categories",
+                "7"
+              ]
+            },
+            "description": "200 OK when empty."
+          }
+        },
+        {
+          "name": "DELETE /categories/1 (blocked)",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/categories/1",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "categories",
+                "1"
+              ]
+            },
+            "description": "409 Conflict - products still belong to it."
+          }
+        }
+      ]
+    },
+    {
+      "name": "Order",
+      "item": [
+        {
+          "name": "GET /orders (token)",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{access_token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/orders",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "orders"
+              ]
+            },
+            "description": "200 OK. Run login first so {{access_token}} is set."
+          }
+        },
+        {
+          "name": "GET /orders (user_id param)",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/orders?user_id=1",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "orders"
+              ],
+              "query": [
+                {
+                  "key": "user_id",
+                  "value": "1"
+                }
+              ]
+            },
+            "description": "200 OK. Same result without a token."
+          }
+        },
+        {
+          "name": "GET /orders/2",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/orders/2",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "orders",
+                "2"
+              ]
+            },
+            "description": "200 OK, includes order items and product details."
+          }
+        },
+        {
+          "name": "GET /orders/9999 (not found)",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/orders/9999",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "orders",
+                "9999"
+              ]
+            },
+            "description": "404 Not Found."
+          }
+        },
+        {
+          "name": "POST /orders",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/orders",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "orders"
+              ]
+            },
+            "description": "201 Created.",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"user_id\": 1,\n    \"shipping_address\": \"jl. merdeka no. 12, bandung\",\n    \"items\": [\n        {\n            \"product_id\": 1,\n            \"quantity\": 2\n        },\n        {\n            \"product_id\": 3,\n            \"quantity\": 1\n        }\n    ]\n}"
+            }
+          }
+        },
+        {
+          "name": "POST /orders (validation error)",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/orders",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "orders"
+              ]
+            },
+            "description": "400 Bad Request - items must not be empty.",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"user_id\": 1,\n    \"shipping_address\": \"jl. test\",\n    \"items\": []\n}"
+            }
+          }
+        },
+        {
+          "name": "PUT /orders/7",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/orders/7",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "orders",
+                "7"
+              ]
+            },
+            "description": "200 OK. Use the id returned by POST.",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"order_status\": \"paid\"\n}"
+            }
+          }
+        },
+        {
+          "name": "DELETE /orders/7",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/orders/7",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "orders",
+                "7"
+              ]
+            },
+            "description": "200 OK. order_items rows go with it via ON DELETE CASCADE."
+          }
+        }
+      ]
+    }
+  ]
+}
