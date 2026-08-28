@@ -1,0 +1,278 @@
+{
+	"info": {
+		"name": "RevoShop API - Production (Render)",
+		"description": "Full CRUD cycle against the live deployment at https://module-2-jim1504.onrender.com\n\nRun the requests in order. `POST /products` stores the new product_id in a collection variable, so the GET, PUT and DELETE that follow target it automatically - no manual id editing.\n\nRequest 6 proves the deletion guard: product 7 sits in two active orders (order 2 shipped, order 3 paid), so deleting it must be refused with 409.\n\nNote: the free Render instance sleeps after 15 minutes idle. The first request may take ~50 seconds while it wakes up.",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"variable": [
+		{
+			"key": "base_url",
+			"value": "https://module-2-jim1504.onrender.com"
+		},
+		{
+			"key": "product_id",
+			"value": ""
+		}
+	],
+	"item": [
+		{
+			"name": "0. GET /health",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{base_url}}/health",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"health"
+					]
+				},
+				"description": "200 OK. Proves the API is awake and connected to the Supabase database."
+			},
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							"pm.test(\"Status is 200 OK\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"pm.test(\"Database is connected\", function () {",
+							"    pm.expect(pm.response.json().database).to.eql(\"connected\");",
+							"});"
+						]
+					}
+				}
+			]
+		},
+		{
+			"name": "1. POST /products (201 Created)",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"url": {
+					"raw": "{{base_url}}/products",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"products"
+					]
+				},
+				"description": "201 Created. Creates the product used by requests 3, 4 and 5.",
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"product_name\": \"produk uji produksi\",\n    \"description\": \"dibuat lewat postman terhadap url publik\",\n    \"price\": 1999000.00,\n    \"stock_quantity\": 12,\n    \"category_id\": 1\n}"
+				}
+			},
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							"pm.test(\"Status is 201 Created\", function () {",
+							"    pm.response.to.have.status(201);",
+							"});",
+							"",
+							"var body = pm.response.json();",
+							"",
+							"pm.test(\"Response carries the new product\", function () {",
+							"    pm.expect(body.product).to.have.property(\"product_id\");",
+							"});",
+							"",
+							"// Hand the new id to the requests that follow.",
+							"pm.collectionVariables.set(\"product_id\", body.product.product_id);",
+							"console.log(\"created product_id =\", body.product.product_id);"
+						]
+					}
+				}
+			]
+		},
+		{
+			"name": "2. GET /products (200 OK)",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{base_url}}/products",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"products"
+					]
+				},
+				"description": "200 OK. Full catalogue as JSON, including the product just created."
+			},
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							"pm.test(\"Status is 200 OK\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"pm.test(\"Returns a non-empty list\", function () {",
+							"    pm.expect(pm.response.json()).to.be.an(\"array\").that.is.not.empty;",
+							"});"
+						]
+					}
+				}
+			]
+		},
+		{
+			"name": "3. GET /products/:id (200 OK)",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{base_url}}/products/{{product_id}}",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"products",
+						"{{product_id}}"
+					]
+				},
+				"description": "200 OK. Fetches the product created by request 1."
+			},
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							"pm.test(\"Status is 200 OK\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"pm.test(\"Returns the product created in step 1\", function () {",
+							"    pm.expect(pm.response.json().product_id).to.eql(",
+							"        Number(pm.collectionVariables.get(\"product_id\"))",
+							"    );",
+							"});"
+						]
+					}
+				}
+			]
+		},
+		{
+			"name": "4. PUT /products/:id (200 OK)",
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"url": {
+					"raw": "{{base_url}}/products/{{product_id}}",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"products",
+						"{{product_id}}"
+					]
+				},
+				"description": "200 OK. Updates the price and stock of the same product.",
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"price\": 1750000.00,\n    \"stock_quantity\": 30,\n    \"description\": \"harga dan stok diperbarui lewat postman\"\n}"
+				}
+			},
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							"pm.test(\"Status is 200 OK\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"pm.test(\"Price was actually updated\", function () {",
+							"    pm.expect(pm.response.json().product.price).to.eql(1750000.0);",
+							"});"
+						]
+					}
+				}
+			]
+		},
+		{
+			"name": "5. DELETE /products/:id (200 OK)",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "{{base_url}}/products/{{product_id}}",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"products",
+						"{{product_id}}"
+					]
+				},
+				"description": "200 OK. Removes the product created in step 1, completing the CRUD cycle."
+			},
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							"pm.test(\"Status is 200 OK\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});"
+						]
+					}
+				}
+			]
+		},
+		{
+			"name": "6. DELETE /products/7 (409 blocked)",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "{{base_url}}/products/7",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"products",
+						"7"
+					]
+				},
+				"description": "409 Conflict. Product 7 is still referenced by order 2 (shipped) and order 3 (paid), so the deletion guard refuses it and reports active_orders = 2."
+			},
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							"pm.test(\"Status is 409 Conflict\", function () {",
+							"    pm.response.to.have.status(409);",
+							"});",
+							"pm.test(\"Reports how many active orders block it\", function () {",
+							"    pm.expect(pm.response.json()).to.have.property(\"active_orders\");",
+							"});"
+						]
+					}
+				}
+			]
+		}
+	]
+}

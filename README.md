@@ -3,6 +3,22 @@
 REST API untuk toko online sederhana: mengelola produk, kategori, pesanan, dan
 akun pengguna, di atas PostgreSQL dengan SQLAlchemy sebagai ORM.
 
+## Live demo
+
+| | |
+| --- | --- |
+| **API** | <https://module-2-jim1504.onrender.com> |
+| Cek cepat | <https://module-2-jim1504.onrender.com/health> |
+| Contoh data | <https://module-2-jim1504.onrender.com/products> |
+| Hosting API | Render (Web Service, gunicorn) |
+| Hosting database | Supabase PostgreSQL, region Southeast Asia (Singapore) |
+
+> **Catatan:** API di-host pada paket gratis Render yang tidur setelah 15 menit
+> menganggur. **Request pertama bisa memakan waktu sekitar 50 detik** sementara
+> instance-nya bangun; request berikutnya kembali normal. Kalau
+> `/health` membalas `{"status":"ok","database":"connected"}`, berarti API dan
+> database produksi sama-sama sehat.
+
 Proyek ini dikerjakan bertahap dalam tiga checkpoint:
 
 | Checkpoint | Isi |
@@ -414,19 +430,122 @@ memenuhi kebutuhan seluruh endpoint.
 
 ## Deployment
 
-Aplikasi siap dideploy ke platform mana pun yang menjalankan aplikasi WSGI:
+Aplikasi berjalan di <https://module-2-jim1504.onrender.com>, dengan database
+PostgreSQL terkelola di Supabase. Berikut konfigurasi yang benar-benar dipakai.
 
-1. Buat instance PostgreSQL terkelola di platform pilihan.
-2. Set environment variable: `DATABASE_URL`, `SECRET_KEY`, `FLASK_DEBUG=0`.
-   Jangan pernah meng-commit nilainya.
-3. Build command: `pip install -r requirements.txt`
-4. Start command: `gunicorn app:app` (sudah tersedia di `Procfile`).
-5. Jalankan `flask db upgrade` **terhadap database hosting**, bukan hanya lokal.
-6. Uji ulang seluruh CRUD di Postman memakai URL publik.
+### Database -- Supabase
+
+Project berada di region Southeast Asia (Singapore). Yang dipakai adalah
+connection string **session pooler**, bukan direct connection:
+
+```
+postgresql://postgres.<project-ref>:<password>@aws-0-ap-southeast-1.pooler.supabase.com:5432/postgres
+```
+
+Dua hal yang menentukan di sini. Pertama, direct connection project baru hanya
+melayani IPv6 sedangkan koneksi keluar Render memakai IPv4, sehingga bentuk itu
+gagal dengan `Network is unreachable`. Kedua, pada endpoint pooler username-nya
+wajib `postgres.<project-ref>` lengkap dengan akhirannya; memakai `postgres`
+saja menghasilkan `password authentication failed`.
+
+### API -- Render
+
+| Field | Nilai |
+| --- | --- |
+| Branch | `main` |
+| Root Directory | dikosongkan (`app.py` ada di root repo) |
+| Build Command | `pip install -r requirements.txt` |
+| Start Command | `gunicorn app:app --worker-class gthread --workers 2 --threads 4 --timeout 60 --access-logfile -` |
+
+Environment variable yang diset di Render: `DATABASE_URL`, `SECRET_KEY`,
+`FLASK_DEBUG=0`, `DB_POOL_SIZE=3`, `DB_MAX_OVERFLOW=2`. Tidak ada satu pun nilai
+sensitif yang tersimpan di dalam repo.
+
+`DB_POOL_SIZE` dan `DB_MAX_OVERFLOW` diturunkan dari bawaan 5/5 supaya totalnya
+2 worker x (3 + 2) = 10 koneksi, aman di bawah batas paket gratis. Jumlah worker
+juga diturunkan dari 3 (nilai di `Procfile`) menjadi 2 agar muat di RAM 512 MB.
+
+### Migration dan seed
+
+Paket gratis Render tidak menyediakan akses shell, jadi keduanya dijalankan dari
+lokal dengan `DATABASE_URL` diarahkan ke Supabase:
+
+```powershell
+$env:DATABASE_URL="<connection string session pooler>"
+flask db upgrade
+python seed_db.py
+```
 
 ---
 
 ## Screenshots
+
+### Bukti produksi -- CRUD penuh terhadap URL publik
+
+Seluruh request berikut dijalankan terhadap
+<https://module-2-jim1504.onrender.com> memakai koleksi
+[`postman/RevoShop API - Production.postman_collection.json`](postman/RevoShop%20API%20-%20Production.postman_collection.json).
+Satu product yang sama dibuat, dibaca, diubah, lalu dihapus, sehingga rangkaian
+ini membuktikan CRUD penuh berjalan di produksi, bukan hanya di lokal.
+
+Koleksinya menyimpan `product_id` hasil `POST` ke dalam collection variable, jadi
+request `GET`, `PUT`, dan `DELETE` sesudahnya otomatis menunjuk product yang
+sama. Panel Test Results di tiap screenshot memperlihatkan assertion status code
+yang lolos.
+
+**1. `POST /products` -- 201 Created**
+
+![POST products ke URL publik mengembalikan 201 Created](docs/prod_post_products.png)
+
+**2. `GET /products` -- 200 OK**
+
+![GET products ke URL publik mengembalikan daftar product](docs/prod_get_products.png)
+
+**3. `PUT /products/<id>` -- 200 OK**
+
+![PUT product ke URL publik mengembalikan 200 OK](docs/prod_put_products.png)
+
+**4. `DELETE /products/<id>` -- 200 OK**
+
+![DELETE product ke URL publik mengembalikan 200 OK](docs/prod_delete_products.png)
+
+### Bukti database produksi
+
+**Kelima tabel hidup di database hosting**
+
+![Daftar tabel RevoShop di database Supabase produksi](docs/supabase_tables.png)
+
+Schema `public` di Supabase berisi `categories`, `order_items`, `orders`,
+`products`, dan `users`, ditambah `alembic_version` milik Flask-Migrate --
+bukti bahwa skema produksi dibangun lewat `flask db upgrade`, bukan lewat SQL
+manual.
+
+Kolom **ROWS (ESTIMATED)** memang menampilkan angka dua kali lipat dari isi
+sebenarnya (misalnya 40 untuk `products` yang berisi 20 baris). Itu angka
+perkiraan dari statistik `reltuples` PostgreSQL, yang masih menghitung dead tuple
+sisa `truncate` di `seed_db.py` sampai autovacuum berjalan. Jumlah sebenarnya
+bisa dilihat langsung di
+<https://module-2-jim1504.onrender.com/products> -- 20 produk, sesuai seed.
+
+**Struktur dan relasi antar tabel**
+
+![Schema visualizer Supabase memperlihatkan kolom dan relasi antar tabel](docs/supabase_schema.png)
+
+Schema Visualizer memperlihatkan seluruh kolom beserta tipe datanya, penanda
+primary key dan unique, serta garis foreign key: `orders` ke `users`,
+`products` ke `categories`, dan `order_items` ke `orders` maupun `products`.
+Dua garis terakhir itulah bentuk many-to-many-nya, dan `order_items` terlihat
+membawa kolom tambahan `quantity` dan `unit_price`. Kolom `role` pada `users`
+juga terlihat -- hasil migration `e6435f039eab`.
+
+**Instance hosting**
+
+![Instance Supabase produksi dengan status healthy](docs/supabase_production.png)
+
+Status `Healthy`, region Southeast Asia (Singapore), terhubung ke repo
+`Revou-FSSE-Jun26/module-2-jim1504`.
+
+---
 
 ### Bukti Postman -- satu per HTTP method
 
