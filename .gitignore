@@ -26,6 +26,7 @@ instance/
 .vscode/
 .idea/
 *.swp
+review.md
 
 # ---- file workspace dbeaver / pgadmin ----
 .dbeaver/

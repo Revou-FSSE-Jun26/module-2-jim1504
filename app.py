@@ -1,9 +1,13 @@
 """RevoShop API -- application entry point.
 
 Run with:
-    flask run                             
-    waitress-serve --port=5000 app:app    works on Windows
-    gunicorn app:app                      Linux deploy target
+    flask run                             development only
+    waitress-serve --port=5000 app:app    local production server, works on Windows
+    gunicorn app:app                      Linux deploy target -- see Procfile
+
+Load testing needs the tuned waitress command in README section 7, not the bare
+one above; the defaults (4 threads, 100 connections) cap the numbers well below
+what the API can actually do.
 """
 
 import os
@@ -30,7 +34,24 @@ if not DATABASE_URL:
 
 app.config["SQLALCHEMY_DATABASE_URI"] = DATABASE_URL
 app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
-app.config["SECRET_KEY"] = os.getenv("SECRET_KEY", "dev-secret-change-me")
+
+# The pool is per process. Waitress runs one process with many threads; gunicorn runs
+# several processes with a few threads each. Total connections to Postgres is
+# processes x (pool_size + max_overflow) and must stay under its max_connections (100).
+app.config["SQLALCHEMY_ENGINE_OPTIONS"] = {
+    "pool_size": int(os.getenv("DB_POOL_SIZE", "5")),
+    "max_overflow": int(os.getenv("DB_MAX_OVERFLOW", "5")),
+    "pool_pre_ping": True,
+    "pool_recycle": 1800,
+}
+
+SECRET_KEY = os.getenv("SECRET_KEY")
+if not SECRET_KEY:
+    raise RuntimeError(
+        "SECRET_KEY is not set. Copy .env.example to .env and fill in your credentials."
+    )
+
+app.config["SECRET_KEY"] = SECRET_KEY
 app.config["JWT_SECRET_KEY"] = app.config["SECRET_KEY"]
 app.config["JWT_ACCESS_TOKEN_EXPIRES"] = timedelta(days=1)
 app.config["DEBUG"] = os.getenv("FLASK_DEBUG", "0") == "1"
@@ -68,4 +89,4 @@ def make_shell_context():
 
 
 if __name__ == "__main__":
-    app.run(debug=True)
+    app.run()
