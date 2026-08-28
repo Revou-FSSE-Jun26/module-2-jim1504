@@ -223,7 +223,8 @@ pernah tersentuh.
 ### 7. Menjalankan load test
 
 ```powershell
-waitress-serve --port=5000 app:app
+$env:FLASK_DEBUG="0"; $env:DB_POOL_SIZE="30"; $env:DB_MAX_OVERFLOW="10"
+waitress-serve --port=5000 --threads=32 --connection-limit=400 --channel-timeout=60 app:app
 locust -f locustfile.py --host http://127.0.0.1:5000
 ```
 
@@ -233,6 +234,59 @@ naikkan sampai 200.
 Gunakan `waitress`, bukan `flask run`, saat load test. Development server Flask
 tidak dirancang untuk ratusan koneksi bersamaan, sehingga angkanya akan mengukur
 keterbatasan server, bukan performa API.
+
+**Jangan pakai `gunicorn` di Windows.** Gunicorn meng-import `fcntl` yang hanya
+ada di Linux, jadi perintahnya langsung gagal dengan
+`ModuleNotFoundError: No module named 'fcntl'`. `Procfile` hanya dipakai di host
+deployment Linux. Di Windows, satu-satunya server produksi di proyek ini adalah
+waitress.
+
+Semua flag di atas wajib, bukan hiasan — dengan nilai bawaan, angka Locust
+mengukur batas waitress, bukan performa API:
+
+| Flag | Nilai | Alasan |
+| --- | --- | --- |
+| `--threads` | 32 | Bawaan hanya **4**, jadi maksimal 4 request diproses bersamaan. Pada 200 user (~100 req/detik) sisanya mengantre, dan p95 melonjak ke sekitar 2000 ms |
+| `--connection-limit` | 400 | Bawaan hanya **100**. Lewat dari itu waitress berhenti menerima koneksi, dan Locust mencatatnya sebagai *failures* |
+| `--channel-timeout` | 60 | Bawaan 120 detik membuat koneksi mati menahan slot terlalu lama |
+| `FLASK_DEBUG` | 0 | Debug mode mengubah penanganan error dan menambah overhead |
+| `DB_POOL_SIZE` / `DB_MAX_OVERFLOW` | 30 / 10 | Pool bawaan hanya 5 + 10 = 15 koneksi. Dengan 32 thread, sisanya kena `QueuePool limit of size 5 overflow 10 reached` |
+
+Batas `--connection-limit` sengaja 400, tidak lebih. Di Windows waitress memakai
+`select()` (flag `--asyncore-use-poll` hanya ada di POSIX), dan `select` milik
+CPython di Windows mentok di 512 socket. Angka 400 cukup untuk 200 user beserta
+koneksi yang masih `TIME_WAIT`, tapi tetap aman di bawah batas itu.
+
+Pool koneksi berlaku **per proses**. Waitress satu proses dengan banyak thread,
+sedangkan gunicorn beberapa proses dengan sedikit thread. Total koneksi ke
+Postgres adalah `jumlah proses x (DB_POOL_SIZE + DB_MAX_OVERFLOW)` dan harus tetap
+di bawah `max_connections` (bawaan 100). Karena itu nilainya dibaca dari
+environment: bawaan 5 / 5 untuk deployment (3 worker x 10 = 30 koneksi), dan
+di-override menjadi 30 / 10 untuk load test lokal.
+
+Alur inilah yang dipakai untuk bukti di bagian Screenshots: jalankan Locust
+dengan UI, mulai dari 50 user (spawn rate 5), tunggu stabil, lalu klik **Edit**
+dan naikkan targetnya ke 200 user. Grafik *Number of Users* akan memperlihatkan
+bentuk ramp-nya, dan itu yang diminta rubrik.
+
+```powershell
+locust -f locustfile.py --host http://127.0.0.1:5000
+```
+
+Kalau sewaktu-waktu butuh angka mentah di luar screenshot, ada versi tanpa UI:
+
+```powershell
+locust -f locustfile.py --host http://127.0.0.1:5000 --headless `
+  -u 200 -r 10 -t 3m --csv=docs/loadtest_after
+```
+
+Perintah itu menulis `docs/loadtest_after_stats.csv` beserta beberapa file
+pendampingnya. File CSV-nya sengaja tidak ikut di-commit karena bukti utamanya
+sudah berupa screenshot dashboard. Kalau masih ada failure setelah semua flag di
+atas dipakai, tersangka berikutnya adalah habisnya ephemeral port Windows —
+rentangnya 49152-65535 dan `TIME_WAIT` ditahan 120 detik. Isi file failures akan
+menunjukkannya sebagai error koneksi, bukan status HTTP; solusinya menurunkan
+jumlah user atau memperpanjang `wait_time`, bukan mengubah aplikasi.
 
 ---
 
@@ -374,17 +428,89 @@ Aplikasi siap dideploy ke platform mana pun yang menjalankan aplikasi WSGI:
 
 ## Screenshots
 
-| Bukti | File |
-| --- | --- |
-| Rekaman Postman | [`postman/Postman_trial.mp4`](postman/Postman_trial.mp4) |
-| Koleksi Postman | [`postman/RevoShop - Module 2 Checkpoint 2.postman_collection.json`](postman/RevoShop%20-%20Module%202%20Checkpoint%202.postman_collection.json) |
-| Tabel `users` di DBeaver | [`docs/C2_userdbScreenshoot.png`](docs/C2_userdbScreenshoot.png) |
+### Bukti Postman -- satu per HTTP method
+
+Seluruh request di bawah berasal dari koleksi
+[`postman/RevoShop API - Checkpoint 3.postman_collection.json`](postman/RevoShop%20API%20-%20Checkpoint%203.postman_collection.json).
+Keempat method dijalankan berurutan terhadap satu product yang sama, jadi
+rangkaian ini sekaligus membuktikan CRUD penuh berjalan dari ujung ke ujung.
+
+**1. `POST /products` -- 201 Created**
+
+![POST products mengembalikan 201 Created](docs/POST_products%5B201%5D.png)
+
+**2. `GET /products` -- 200 OK**
+
+![GET products mengembalikan daftar product sebagai JSON](docs/GET_products%5B200%5D.png)
+
+**3. `PUT /products/<id>` -- 200 OK**
+
+![PUT product mengembalikan 200 OK dengan data yang sudah diperbarui](docs/PUT_products%5B200%5D.png)
+
+**4. `DELETE /products/<id>` -- 200 OK**
+
+![DELETE product mengembalikan 200 OK](docs/DELETE_products%5B200%5D.png)
+
+**5. `DELETE /products/<id>` diblokir -- 409 Conflict**
+
+Bukti deletion guard: product yang masih terpakai di order berstatus
+`pending` / `paid` / `shipped` tidak bisa dihapus, dan response-nya menyebutkan
+berapa order aktif yang menahannya.
+
+![DELETE product ditolak dengan 409 Conflict karena masih ada order aktif](docs/Delete_products__blocked%5B409%5D.png)
+
+### Bukti database
+
+Kelima tabel RevoShop terlihat di pgAdmin, di bawah
+`revoshop_db` -> Schemas -> public -> Tables:
+
+![Kelima tabel RevoShop di pgAdmin beserta statistik barisnya](docs/pgAdmin.png)
+
+Tab Statistics di sebelah kanan memperlihatkan jumlah baris hidup tiap tabel:
+6 user, 6 kategori, 20 produk, 6 order, dan 15 order item -- persis isi
+`seed_db.py`. Tabel keenam, `alembic_version`, adalah milik Flask-Migrate dan
+membuktikan seluruh migration sudah diterapkan lewat `flask db upgrade`, bukan
+lewat SQL manual.
 
 ![Tabel users dengan kolom role](docs/C2_userdbScreenshoot.png)
 
-Screenshot di atas menunjukkan kolom `role` hasil migration, keenam user hasil
+Screenshot kedua menunjukkan kolom `role` hasil migration, keenam user hasil
 seed yang tetap utuh, dan satu user tambahan hasil `POST` yang password-nya
 tersimpan sebagai hash `scrypt:...`.
+
+### Bukti load test
+
+Dijalankan lewat UI Locust terhadap `waitress-serve`, dimulai dari 50 user lalu
+dinaikkan bertahap ke 200 user dengan spawn rate 5 user per detik.
+
+**Tahap 1 -- 50 user**
+
+![Dashboard Locust pada 50 user dengan 0 persen failure](docs/50%20users.png)
+
+50 user, 25,7 request per detik, **0% failure**. Log di terminal bawah
+mencatat `Ramping to 50 users at a rate of 5.00 per second`.
+
+**Tahap 2 -- dinaikkan ke 200 user**
+
+![Dashboard Locust pada 200 user dengan 0 persen failure](docs/200%20users.png)
+
+200 user, 99,2 request per detik, **0% failure**, dengan median 3 ms dan
+p95 7 ms. Grafik *Number of Users* memperlihatkan bentuk ramp-nya: naik ke 50,
+mendatar, lalu naik lagi ke 200 -- persis alur yang diminta. Grafik
+*Total Requests per Second* menunjukkan garis Failures/s tetap rata di nol
+sepanjang pengujian.
+
+Kedua terminal di bagian bawah screenshot memperlihatkan perintah yang dipakai:
+`waitress-serve` dengan 32 thread di sebelah kiri, dan `locust -f locustfile.py`
+di sebelah kanan.
+
+### Rekaman
+
+| Bukti | File |
+| --- | --- |
+| Rekaman Postman | [`postman/Postman_trial.mp4`](postman/Postman_trial.mp4) |
+| Koleksi Postman Checkpoint 2 | [`postman/RevoShop - Module 2 Checkpoint 2.postman_collection.json`](postman/RevoShop%20-%20Module%202%20Checkpoint%202.postman_collection.json) |
+| Koleksi Postman Checkpoint 3 | [`postman/RevoShop API - Checkpoint 3.postman_collection.json`](postman/RevoShop%20API%20-%20Checkpoint%203.postman_collection.json) |
 
 ---
 
