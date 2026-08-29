@@ -5,6 +5,8 @@ functions, so that adding documentation never touches working endpoint code.
 When a route changes, update the matching entry in PATHS below.
 """
 
+OPENAPI_VERSION = "3.0.3"
+
 TITLE = "RevoShop API"
 VERSION = "1.0.0"
 
@@ -594,7 +596,7 @@ PATHS = {
 }
 
 SWAGGER_TEMPLATE = {
-    "openapi": "3.0.3",
+    "openapi": OPENAPI_VERSION,
     "info": {
         "title": TITLE,
         "version": VERSION,
@@ -626,6 +628,12 @@ SWAGGER_TEMPLATE = {
 }
 
 SWAGGER_CONFIG = {
+    # This key must live in the config, not in the template. Flasgger reads
+    # `config['openapi']` to decide which version field to emit: with it set it
+    # writes `openapi`, and without it it falls back to `swagger: "2.0"`. Setting
+    # the version only in the template left both fields in the served document,
+    # and Swagger UI refuses to render a spec that carries the two at once.
+    "openapi": OPENAPI_VERSION,
     "headers": [],
     "specs": [
         {
