@@ -11,6 +11,7 @@ Flask-Migrate==4.1.0
 Flask-JWT-Extended==4.7.4
 psycopg2-binary==2.9.12
 python-dotenv==1.2.2
+flasgger==0.9.7.1       # Swagger UI at /apidocs -- pulls in PyYAML, jsonschema, mistune
 
 # --- production servers ---
 gunicorn==26.1.0        # deploy target (Linux only -- cannot run on Windows)

@@ -14,6 +14,7 @@ import os
 from datetime import timedelta
 
 from dotenv import load_dotenv
+from flasgger import Swagger
 from flask import Flask, jsonify
 from flask_jwt_extended import JWTManager
 from flask_migrate import Migrate
@@ -21,6 +22,7 @@ from sqlalchemy import text
 
 from models import Category, Order, Product, User, db, order_items
 from routes import register_blueprints
+from swagger_spec import SWAGGER_CONFIG, SWAGGER_TEMPLATE
 
 load_dotenv()
 
@@ -60,6 +62,10 @@ app.json.sort_keys = False
 db.init_app(app)
 migrate = Migrate(app, db)
 jwt = JWTManager(app)
+
+# Interactive API documentation at /apidocs. The spec lives in swagger_spec.py
+# rather than in the route docstrings, so documenting the API never edits it.
+swagger = Swagger(app, config=SWAGGER_CONFIG, template=SWAGGER_TEMPLATE)
 
 register_blueprints(app)
 
