@@ -7,17 +7,17 @@ akun pengguna, di atas PostgreSQL dengan SQLAlchemy sebagai ORM.
 
 | | |
 | --- | --- |
-| **API** | <https://module-2-jim1504.onrender.com> |
-| Cek cepat | <https://module-2-jim1504.onrender.com/health> |
-| Contoh data | <https://module-2-jim1504.onrender.com/products> |
-| Hosting API | Render (Web Service, gunicorn) |
+| **API** | <https://revotech-m2.vercel.app> |
+| **Frontend (Module 3)** | <https://revotech-m3.vercel.app> |
+| Cek cepat | <https://revotech-m2.vercel.app/health> |
+| Contoh data | <https://revotech-m2.vercel.app/products> |
+| Dokumentasi interaktif | <https://revotech-m2.vercel.app/apidocs> |
+| Hosting API | Vercel (serverless Python) |
 | Hosting database | Supabase PostgreSQL, region Southeast Asia (Singapore) |
 
-> **Catatan:** API di-host pada paket gratis Render yang tidur setelah 15 menit
-> menganggur. **Request pertama bisa memakan waktu sekitar 50 detik** sementara
-> instance-nya bangun; request berikutnya kembali normal. Kalau
-> `/health` membalas `{"status":"ok","database":"connected"}`, berarti API dan
-> database produksi sama-sama sehat.
+Kalau `/health` membalas `{"status":"ok","database":"connected"}`, berarti API dan
+database produksi sama-sama sehat -- endpoint itu memang menjalankan query ke
+database, bukan sekadar mengecek apakah prosesnya hidup.
 
 Proyek ini dikerjakan bertahap dalam tiga checkpoint:
 
@@ -115,27 +115,133 @@ gagal, sehingga transaksi tidak pernah tertinggal setengah jalan. Pelanggaran
 ### Deletion guard
 
 `DELETE /products/<id>` **ditolak dengan `409`** bila produk masih terikat pada
-order yang aktif, yaitu order berstatus `pending`, `paid`, atau `shipped`. Order
-yang sudah `delivered` atau `cancelled` dianggap selesai dan tidak lagi
-menghalangi penghapusan; baris `order_items` miliknya ikut dihapus dan
-`total_amount` order tersebut dihitung ulang agar tetap konsisten.
+order yang aktif, yaitu order berstatus `pending`, `paid`, atau `shipped`. Bila
+produk hanya muncul di order yang sudah selesai (`delivered` atau `cancelled`),
+produk **ditarik dari penjualan** (`is_active: false`, response
+`"withdrawn": true`) alih-alih dihapus -- sehingga riwayat order tetap utuh:
+baris `order_items`, harga, dan `total_amount` tidak berubah. Produk yang belum
+pernah dipesan dihapus seperti biasa.
 
 `DELETE /categories/<id>` memakai penjagaan serupa: kategori yang masih memiliki
 produk tidak bisa dihapus.
 
+### Stok mengikuti order
+
+Membuat order **mengurangi stok** di transaksi yang sama, lewat `UPDATE ... WHERE
+stock_quantity >= quantity` -- jadi dua pembeli tidak mungkin sama-sama membeli
+unit terakhir (yang kalah mendapat `409`). Membatalkan order (`cancelled`)
+mengembalikan stok, membuka kembali order yang dibatalkan mengambilnya lagi (dan
+ditolak bila stok sudah tidak cukup), dan menghapus order yang belum dibatalkan
+juga mengembalikan stoknya. Produk yang sudah ditarik dari penjualan tidak bisa
+dipesan.
+
 ### Authentication
 
 `POST /auth/login` memverifikasi password dengan `check_password_hash` dan
-mengembalikan **JWT access token**. Password tidak pernah disimpan sebagai teks
-biasa dan tidak pernah ikut dikirim dalam response.
+mengembalikan **JWT access token** yang berlaku satu hari. Password tidak pernah
+disimpan sebagai teks biasa dan tidak pernah ikut dikirim dalam response.
 
-Sesuai ketentuan modul, token **tidak diwajibkan**. Endpoint order menerima
-identitas dari salah satu dari dua cara:
+Token itu **membawa role pemiliknya sebagai claim**, sehingga pemeriksaan izin
+tidak perlu query tambahan ke database. Konsekuensinya, perubahan role baru
+berlaku saat user login berikutnya. `GET /auth/me` mengembalikan user pemilik
+token -- dipakai storefront untuk memeriksa siapa yang memanggil route
+pembantunya.
 
-- header `Authorization: Bearer <token>`, atau
-- `user_id` di body JSON atau query string
+**Katalog, konten, dan pengaturan boleh dibaca tanpa token; selebihnya wajib
+token.** Order dan profil kini hanya bisa dibaca dengan `Authorization: Bearer
+<token>` -- bentuk lama `?user_id=` / `user_id` di body sudah dihapus, karena
+siapa pun bisa menebak `user_id` orang lain dan membaca ordernya. Token yang
+kedaluwarsa atau rusak dijawab `401` dengan bentuk error yang sama seperti error
+lain (`{"error": ...}`), bukan `{"msg": ...}` bawaan Flask-JWT-Extended.
 
-Keduanya menghasilkan response yang sama.
+### Role-based access control
+
+Role-nya mengikuti storefront RevoTech, dan setiap role adalah sekumpulan
+**permission** (`models.PERMISSIONS`, tabel yang sama dengan `lib/roles.ts` di
+storefront). Route memeriksa permission, bukan nama role.
+
+| Permission | `superadmin` | `admin` | `customer` |
+| --- | :---: | :---: | :---: |
+| order dan profil milik sendiri | ya | ya | ya |
+| `products:write`, `categories:write` | ya | ya | |
+| `orders:manage` -- semua order, ubah status | ya | ya | |
+| `content:write` -- konten homepage dan About | ya | ya | |
+| `settings:write` -- nama toko, logo, zona waktu | ya | | |
+| `users:manage` -- daftar user, role, reset password | ya | | |
+
+Matriks per endpoint:
+
+| Endpoint | anonim | customer | admin | superadmin |
+| --- | --- | --- | --- | --- |
+| `GET` products, categories, content, settings | ya | ya | ya | ya |
+| `POST` / `PUT` / `DELETE` products, categories | 401 | 403 | **ya** | **ya** |
+| `GET /orders`, `GET /orders/<id>` | 401 | miliknya | **semua** | **semua** |
+| `POST /orders` | 401 | miliknya | siapa pun | siapa pun |
+| `PUT /orders/<id>` (status, alamat) | 401 | 403 | **ya** | **ya** |
+| `DELETE /orders/<id>` | 401 | miliknya | **siapa pun** | **siapa pun** |
+| `PUT /content/<key>` | 401 | 403 | **ya** | **ya** |
+| `PUT /settings`, logo | 401 | 403 | 403 | **ya** |
+| `GET /users`, role, reset password | 401 | 403 | 403 | **ya** |
+| `GET` / `PUT /users/<id>` | 401 | dirinya | dirinya | **siapa pun** |
+
+Yang menopang ini:
+
+1. **Registrasi selalu menghasilkan `customer`.** `POST /users` mengabaikan field
+   `role`. Role hanya bisa diubah superadmin lewat `PUT /users/<id>`, dan dua
+   pengaman berlaku: tidak ada yang bisa mengubah role-nya sendiri, dan
+   superadmin terakhir tidak bisa diturunkan.
+2. **Order terikat pada pemilik token.** `POST /orders` mengambil `user_id` dari
+   token. Hanya pemegang `orders:manage` yang boleh memesan atas nama user lain
+   atau menentukan `order_status` awal; order customer selalu dimulai `pending`.
+3. **Role dikunci di level database.** Constraint `chk_users_role` hanya menerima
+   `customer`, `admin`, dan `superadmin` (migration `7d2e9b1c4a60` mengganti nama
+   role lama: `admin` -> `superadmin`, `content_manager` -> `admin`).
+
+Response saat ditolak membedakan dua sebab:
+
+```json
+401  {"error": "authentication required -- send a Bearer token"}
+403  {"error": "your role is not allowed to perform this action",
+      "role": "customer", "permission": "products:write"}
+```
+
+Akun contoh hasil `seed_db.py` (password semuanya `password123`):
+
+| Email | Role |
+| --- | --- |
+| `andi.pratama@example.com` | `superadmin` |
+| `budi.santoso@example.com` | `admin` |
+| `siti.rahayu@example.com` dan tiga lainnya | `customer` |
+
+### Konten dan pengaturan toko
+
+Data yang dipakai storefront juga tinggal di API ini:
+
+- **Detail produk**: `official_url`, `overview` (+ `overview_source`), galeri
+  `images` (URL gambar AVIF, yang pertama = utama), tabel `specs`
+  (`[{group?, label, value}]`) dan `specs_source`. Semua divalidasi: gambar hanya
+  boleh foto produk storefront atau hasil upload-nya, URL harus http(s).
+- **Konten halaman**: `GET` / `PUT /content/home` dan `/content/about`,
+  divalidasi dengan aturan yang sama dengan editor di storefront.
+- **Pengaturan toko**: `GET` / `PUT /settings` (nama toko, zona waktu, gaya
+  tanggal, kontak), dan logo sebagai path vektor di `/settings/logo`. Path logo
+  hanya boleh berisi perintah path SVG dan warna `#rrggbb`, karena storefront
+  menuliskannya langsung ke markup SVG.
+- **Pencarian**: `GET /products?search=rtx&category_id=4`.
+
+### Keamanan Supabase (Row Level Security)
+
+Supabase membuka setiap tabel di schema `public` lewat Data API (PostgREST)
+bawaannya, dan siapa pun yang memegang *publishable key* (memang bersifat publik)
+bisa membaca dan menulis tabel itu langsung -- melewati semua aturan API ini.
+Security Advisor menandainya sebagai *"Table public.orders is public, but RLS has
+not been enabled"*.
+
+Migration `9a4b1d3e6c82` menutupnya: **RLS diaktifkan di semua tabel tanpa
+policy**, dan grant role `anon` / `authenticated` dicabut (termasuk default
+privileges untuk tabel baru). Data API tidak lagi bisa melihat satu baris pun.
+API ini tetap berjalan normal karena Flask terhubung sebagai `postgres`, pemilik
+tabel, yang tidak terkena RLS selama `FORCE ROW LEVEL SECURITY` tidak dipakai.
 
 ---
 
@@ -144,12 +250,13 @@ Keduanya menghasilkan response yang sama.
 | Teknologi | Kegunaan |
 | --- | --- |
 | **Flask** | framework web dan routing |
-| **SQLAlchemy** | ORM dan query builder |
+| **SQLAlchemy 2.1** | ORM dan query builder |
+| **psycopg 3** | driver PostgreSQL (default SQLAlchemy 2.1 untuk URL `postgresql://`) |
 | **Flask-Migrate** | versioning skema database (Alembic) |
 | **PostgreSQL** | basis data |
 | **pgAdmin / DBeaver** | inspeksi database |
 | **Flask-JWT-Extended** | pembuatan dan verifikasi access token |
-| **pytest** | pengujian otomatis endpoint Category |
+| **pytest** | 81 test otomatis: CRUD, RBAC, stok order, user, konten dan pengaturan |
 | **Locust** | simulasi beban 50 sampai 200 pengguna |
 | **python-dotenv** | memuat konfigurasi dari `.env` |
 | **gunicorn** | WSGI server di lingkungan deployment (Linux) |
@@ -174,10 +281,17 @@ python -m venv venv
 pip install -r requirements.txt
 ```
 
-Catatan: `requirements.txt` sengaja hanya berisi dependensi langsung. Jangan
-membuatnya ulang dengan `pip freeze` di Windows — perintah itu ikut memasukkan
-`pywin32`, yang tidak punya versi Linux dan akan menggagalkan proses build saat
-deployment.
+Catatan: `requirements.txt` sengaja hanya berisi dependensi langsung, ditambah
+beberapa dependensi transitif yang perilakunya penting bagi aplikasi (SQLAlchemy,
+Alembic, Werkzeug, PyJWT). Tanpa pin, deployment memasang versi terbaru --
+SQLAlchemy 2.1 misalnya mengganti driver PostgreSQL default dari psycopg2 ke
+psycopg 3, yang akan merusak deployment tanpa satu pun perubahan di repo ini.
+Jangan membuatnya ulang dengan `pip freeze` di Windows — perintah itu ikut
+memasukkan `pywin32`, yang tidak punya versi Linux dan akan menggagalkan proses
+build saat deployment.
+
+Versi Python dikunci di `.python-version` (**3.14**), sama dengan versi yang
+dipakai menjalankan test; tanpa file itu Vercel memakai default-nya (3.12).
 
 ### 3. Konfigurasi
 
@@ -211,9 +325,16 @@ flask db upgrade
 python seed_db.py
 ```
 
-`flask db upgrade` menjalankan ketiga migration secara berurutan dan membuat
-kelima tabel. `seed_db.py` mengisi 6 user, 6 kategori, 20 produk (sparepart
-komputer, harga dalam rupiah), 6 order, dan 15 order item.
+`flask db upgrade` menjalankan ketujuh migration secara berurutan dan membuat
+ketujuh tabel. `seed_db.py` mengisi data dari `seed_data.json`: 6 user, 6
+kategori, 23 produk (sparepart komputer generasi terbaru, harga dalam rupiah,
+lengkap dengan galeri dan tabel spesifikasi), 6 order, 15 order item, konten
+homepage/About, dan pengaturan toko.
+
+`seed_data.json` **dibuat oleh storefront RevoTech** dari katalognya
+(`node scripts/export-seed.mjs` di repo frontend), sehingga nama produk, harga,
+spesifikasi, dan path gambar selalu cocok dengan foto produk di storefront. Ubah
+katalognya di sana, lalu generate ulang file ini -- jangan edit manual.
 
 Seluruh user hasil seed memakai password **`password123`**, sehingga
 `POST /auth/login` bisa langsung dicoba.
@@ -234,7 +355,9 @@ pytest -v
 ```
 
 Test memakai database terpisah (`TEST_DATABASE_URL`) sehingga data asli tidak
-pernah tersentuh.
+pernah tersentuh. 81 test mencakup CRUD category, RBAC per permission, detail
+dan pencarian produk, pergerakan stok order, aturan update user, serta konten,
+pengaturan, dan validasi logo.
 
 ### 7. Menjalankan load test
 
@@ -314,25 +437,28 @@ Base URL lokal: `http://127.0.0.1:5000`
 
 | Method | Endpoint | Keterangan |
 | --- | --- | --- |
-| `POST` | `/users` | mendaftarkan user baru |
+| `POST` | `/users` | mendaftarkan customer baru |
 | `POST` | `/auth/login` | login, mengembalikan access token |
-| `GET` | `/users/<id>` | detail satu user |
+| `GET` | `/auth/me` | user pemilik token |
+| `GET` | `/users` | seluruh user (superadmin) |
+| `GET` | `/users/<id>` | detail satu user (dirinya sendiri, atau superadmin) |
+| `PUT` | `/users/<id>` | ubah profil/password; superadmin: juga role dan reset password |
 
 ### Product
 
 | Method | Endpoint | Keterangan |
 | --- | --- | --- |
-| `GET` | `/products` | seluruh produk |
+| `GET` | `/products` | seluruh produk; `?search=` dan `?category_id=` |
 | `GET` | `/products/<id>` | satu produk |
 | `POST` | `/products` | membuat produk, dengan validasi |
 | `PUT` | `/products/<id>` | memperbarui produk, dengan validasi |
-| `DELETE` | `/products/<id>` | menghapus produk, ditolak bila ada order aktif |
+| `DELETE` | `/products/<id>` | menghapus produk; ditolak bila ada order aktif, ditarik dari penjualan bila hanya ada order lama |
 
 ### Category
 
 | Method | Endpoint | Keterangan |
 | --- | --- | --- |
-| `GET` | `/categories` | seluruh kategori |
+| `GET` | `/categories` | seluruh kategori, masing-masing dengan `product_count` |
 | `GET` | `/categories/<id>` | satu kategori beserta produknya |
 | `POST` | `/categories` | membuat kategori |
 | `PUT` | `/categories/<id>` | memperbarui kategori |
@@ -342,11 +468,19 @@ Base URL lokal: `http://127.0.0.1:5000`
 
 | Method | Endpoint | Keterangan |
 | --- | --- | --- |
-| `GET` | `/orders` | order milik user (token atau `?user_id=`) |
+| `GET` | `/orders` | order milik pemilik token (staf: semua order), terbaru dulu |
 | `GET` | `/orders/<id>` | detail order beserta item dan produknya |
-| `POST` | `/orders` | membuat order baru |
-| `PUT` | `/orders/<id>` | memperbarui status atau alamat kirim |
+| `POST` | `/orders` | membuat order baru dan mengurangi stok |
+| `PUT` | `/orders/<id>` | memperbarui status atau alamat kirim (staf); batal/buka kembali menggerakkan stok |
 | `DELETE` | `/orders/<id>` | menghapus order beserta itemnya |
+
+### Konten dan pengaturan
+
+| Method | Endpoint | Keterangan |
+| --- | --- | --- |
+| `GET` / `PUT` | `/content/<home\|about>` | konten homepage dan halaman About |
+| `GET` / `PUT` | `/settings` | pengaturan toko |
+| `GET` / `PUT` / `DELETE` | `/settings/logo` | logo sebagai path vektor; `DELETE` kembali ke logo default |
 
 ### Utility
 
@@ -385,20 +519,27 @@ POST /auth/login
 ## Struktur proyek
 
 ```
-app.py              aplikasi Flask, konfigurasi dari .env, registrasi blueprint
-models.py           model SQLAlchemy dan tabel asosiasi order_items
+app.py              aplikasi Flask, konfigurasi dari .env, JWT, registrasi blueprint
+models.py           model SQLAlchemy, tabel asosiasi order_items, role dan PERMISSIONS
 routes/
   __init__.py       register_blueprints(app)
-  helpers.py        validasi, format error, resolusi identitas
-  products.py       CRUD produk
-  categories.py     CRUD kategori
-  orders.py         CRUD order
-  users.py          registrasi, login, detail user
+  helpers.py        validasi, format error, require_auth / require_permission
+  products.py       CRUD produk, pencarian, detail storefront, withdraw
+  categories.py     CRUD kategori (+ product_count)
+  orders.py         CRUD order, stok ikut bergerak
+  users.py          registrasi, login, /auth/me, daftar dan update user
+  site.py           konten halaman, pengaturan toko, logo
 tests/
-  conftest.py       fixture pytest, memakai database terpisah
-  test_categories.py  13 test: happy path dan error case
-migrations/         riwayat migration Flask-Migrate
-seed_db.py          memuat data contoh lewat SQLAlchemy
+  conftest.py       fixture pytest (database terpisah, token per role)
+  test_categories.py  CRUD kategori
+  test_rbac.py      izin per role dan per endpoint
+  test_products.py  pencarian, detail storefront, aturan hapus/withdraw
+  test_orders.py    stok saat pesan, batal, buka kembali, hapus
+  test_users.py     registrasi, daftar user, profil, password, role
+  test_site.py      konten, pengaturan, validasi logo
+migrations/         riwayat migration Flask-Migrate (7 versi)
+seed_db.py          memuat seed_data.json lewat SQLAlchemy (destruktif)
+seed_data.json      data contoh, di-generate oleh storefront RevoTech
 locustfile.py       skenario load test
 Procfile            perintah start untuk deployment
 ```
@@ -414,6 +555,10 @@ Konfigurasi, model, dan route berada di file terpisah.
 | 1 | `initial revoshop schema` | membuat `users`, `categories`, `products`, `orders` |
 | 2 | `add order_items association table` | membuat tabel asosiasi `order_items` |
 | 3 | `add role column to users` | menambah kolom `role` ke `users` |
+| 4 | `add role check constraint` (`c31f7a9e4b02`) | mengunci `role` ke nilai yang dikenal |
+| 5 | `rename roles to storefront names` (`7d2e9b1c4a60`) | `admin` -> `superadmin`, `content_manager` -> `admin` |
+| 6 | `add product details and site tables` (`8f3a0c2d5b71`) | kolom detail produk (`images`, `specs`, ...), tabel `site_content` dan `site_settings` |
+| 7 | `enable RLS on public tables` (`9a4b1d3e6c82`) | Row Level Security di semua tabel, grant Data API Supabase dicabut |
 
 Kolom `role` dibuat `not null` dengan `server default 'customer'`, sehingga bisa
 ditambahkan ke tabel yang **sudah berisi data** tanpa mengganggu baris lama.
@@ -423,15 +568,16 @@ flask db history
 flask db current
 ```
 
-Checkpoint 3 tidak menambah migration baru — skema dari checkpoint 2 sudah
-memenuhi kebutuhan seluruh endpoint.
+Setiap migration bisa di-*downgrade*. Migration 5 dan 7 sudah diuji naik-turun
+terhadap salinan database lokal yang masih berisi role lama.
 
 ---
 
 ## Deployment
 
-Aplikasi berjalan di <https://module-2-jim1504.onrender.com>, dengan database
-PostgreSQL terkelola di Supabase. Berikut konfigurasi yang benar-benar dipakai.
+Aplikasi berjalan di <https://revotech-m2.vercel.app>, dengan
+database PostgreSQL terkelola di Supabase. Berikut konfigurasi yang benar-benar
+dipakai.
 
 ### Database -- Supabase
 
@@ -443,38 +589,49 @@ postgresql://postgres.<project-ref>:<password>@aws-0-ap-southeast-1.pooler.supab
 ```
 
 Dua hal yang menentukan di sini. Pertama, direct connection project baru hanya
-melayani IPv6 sedangkan koneksi keluar Render memakai IPv4, sehingga bentuk itu
-gagal dengan `Network is unreachable`. Kedua, pada endpoint pooler username-nya
-wajib `postgres.<project-ref>` lengkap dengan akhirannya; memakai `postgres`
-saja menghasilkan `password authentication failed`.
+melayani IPv6, sedangkan koneksi keluar dari platform hosting umumnya IPv4 --
+memakai bentuk itu berujung `Network is unreachable`. Kedua, pada endpoint
+pooler username-nya wajib `postgres.<project-ref>` lengkap dengan akhirannya;
+memakai `postgres` saja menghasilkan `password authentication failed`.
 
-### API -- Render
+### API -- Vercel
 
-| Field | Nilai |
+Vercel menjalankan aplikasi ini sebagai fungsi serverless Python 3.14 (dari
+`.python-version`). Dependensinya dipasang dari `requirements.txt`, dan objek
+WSGI `app` di `app.py` yang dilayani
+-- **tidak ada start command dan tidak ada jumlah worker** untuk diatur, berbeda
+dengan hosting yang menjalankan proses secara terus-menerus.
+
+Environment variable yang diset di project Vercel:
+
+| Key | Nilai |
 | --- | --- |
-| Branch | `main` |
-| Root Directory | dikosongkan (`app.py` ada di root repo) |
-| Build Command | `pip install -r requirements.txt` |
-| Start Command | `gunicorn app:app --worker-class gthread --workers 2 --threads 4 --timeout 60 --access-logfile -` |
+| `DATABASE_URL` | connection string session pooler Supabase |
+| `SECRET_KEY` | string acak, dipakai juga sebagai kunci JWT |
+| `FLASK_DEBUG` | `0` |
 
-Environment variable yang diset di Render: `DATABASE_URL`, `SECRET_KEY`,
-`FLASK_DEBUG=0`, `DB_POOL_SIZE=3`, `DB_MAX_OVERFLOW=2`. Tidak ada satu pun nilai
-sensitif yang tersimpan di dalam repo.
+Tidak ada satu pun nilai sensitif yang tersimpan di dalam repo.
 
-`DB_POOL_SIZE` dan `DB_MAX_OVERFLOW` diturunkan dari bawaan 5/5 supaya totalnya
-2 worker x (3 + 2) = 10 koneksi, aman di bawah batas paket gratis. Jumlah worker
-juga diturunkan dari 3 (nilai di `Procfile`) menjadi 2 agar muat di RAM 512 MB.
+`Procfile` dan `gunicorn` tetap disimpan, tapi **bukan** konfigurasi yang dipakai
+di produksi sekarang -- Vercel mengabaikan keduanya. Keduanya ada supaya aplikasi
+ini tetap bisa dipindahkan ke hosting WSGI biasa tanpa setup ulang.
 
 ### Migration dan seed
 
-Paket gratis Render tidak menyediakan akses shell, jadi keduanya dijalankan dari
-lokal dengan `DATABASE_URL` diarahkan ke Supabase:
+Deployment serverless tidak menyediakan shell, jadi keduanya dijalankan dari
+lokal dengan `DATABASE_URL` diarahkan ke Supabase. **Backup dulu** --
+`seed_db.py` mengosongkan seluruh tabel:
 
 ```powershell
 $env:DATABASE_URL="<connection string session pooler>"
+pg_dump $env:DATABASE_URL -Fc -f "backup-$(Get-Date -Format yyyyMMdd-HHmm).dump"
 flask db upgrade
 python seed_db.py
+Remove-Item Env:DATABASE_URL   # supaya terminal ini tidak lagi menunjuk ke produksi
 ```
+
+Setelah `flask db upgrade`, buka Supabase -> **Advisors -> Security**: peringatan
+*"RLS has not been enabled"* untuk tabel-tabel ini seharusnya sudah hilang.
 
 ---
 
@@ -482,8 +639,7 @@ python seed_db.py
 
 ### Bukti produksi -- CRUD penuh terhadap URL publik
 
-Seluruh request berikut dijalankan terhadap
-<https://module-2-jim1504.onrender.com> memakai koleksi
+Seluruh request berikut dijalankan terhadap URL publik memakai koleksi
 [`postman/RevoShop API - Production.postman_collection.json`](postman/RevoShop%20API%20-%20Production.postman_collection.json).
 Satu product yang sama dibuat, dibaca, diubah, lalu dihapus, sehingga rangkaian
 ini membuktikan CRUD penuh berjalan di produksi, bukan hanya di lokal.
@@ -492,6 +648,12 @@ Koleksinya menyimpan `product_id` hasil `POST` ke dalam collection variable, jad
 request `GET`, `PUT`, dan `DELETE` sesudahnya otomatis menunjuk product yang
 sama. Panel Test Results di tiap screenshot memperlihatkan assertion status code
 yang lolos.
+
+> **Catatan:** kelima screenshot di bawah diambil saat API masih di-host di
+> Render, jadi URL yang terlihat di sana adalah `module-2-jim1504.onrender.com`.
+> Aplikasinya sejak itu dipindahkan ke Vercel; kodenya, endpoint-nya, dan
+> database-nya tidak berubah. Koleksi Postman-nya sendiri sudah menunjuk ke URL
+> Vercel yang baru.
 
 **1. `POST /products` -- 201 Created**
 
@@ -525,7 +687,8 @@ sebenarnya (misalnya 40 untuk `products` yang berisi 20 baris). Itu angka
 perkiraan dari statistik `reltuples` PostgreSQL, yang masih menghitung dead tuple
 sisa `truncate` di `seed_db.py` sampai autovacuum berjalan. Jumlah sebenarnya
 bisa dilihat langsung di
-<https://module-2-jim1504.onrender.com/products> -- 20 produk, sesuai seed.
+<https://revotech-m2.vercel.app/products> -- 20 produk, sesuai
+seed.
 
 **Struktur dan relasi antar tabel**
 

@@ -1,16 +1,20 @@
 {
 	"info": {
-		"name": "RevoShop API - Production (Render)",
-		"description": "Full CRUD cycle against the live deployment at https://module-2-jim1504.onrender.com\n\nRun the requests in order. `POST /products` stores the new product_id in a collection variable, so the GET, PUT and DELETE that follow target it automatically - no manual id editing.\n\nRequest 6 proves the deletion guard: product 7 sits in two active orders (order 2 shipped, order 3 paid), so deleting it must be refused with 409.\n\nNote: the free Render instance sleeps after 15 minutes idle. The first request may take ~50 seconds while it wakes up.",
+		"name": "RevoShop API - Production (Vercel)",
+		"description": "Full CRUD cycle against the live deployment at https://revotech-m2.vercel.app\n\nRun the requests in order. Request 0b logs in and stores the access token in a collection variable; every write below sends it automatically via collection-level Bearer auth.\n\n`POST /products` stores the new product_id in a collection variable, so the GET, PUT and DELETE that follow target it automatically - no manual id editing.\n\nRequest 6 proves the deletion guard: product 12 sits in an active order (order 5, pending), so deleting it must be refused with 409.\n\nRBAC: products and categories may only be written by an admin or superadmin (the products:write / categories:write permissions). Without a token a write answers 401; with a customer token it answers 403. Order reads need a token too.",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
 	"variable": [
 		{
 			"key": "base_url",
-			"value": "https://module-2-jim1504.onrender.com"
+			"value": "https://revotech-m2.vercel.app"
 		},
 		{
 			"key": "product_id",
+			"value": ""
+		},
+		{
+			"key": "access_token",
 			"value": ""
 		}
 	],
@@ -29,7 +33,10 @@
 						"health"
 					]
 				},
-				"description": "200 OK. Proves the API is awake and connected to the Supabase database."
+				"description": "200 OK. Proves the API is awake and connected to the Supabase database.",
+				"auth": {
+					"type": "noauth"
+				}
 			},
 			"event": [
 				{
@@ -43,6 +50,58 @@
 							"pm.test(\"Database is connected\", function () {",
 							"    pm.expect(pm.response.json().database).to.eql(\"connected\");",
 							"});"
+						]
+					}
+				}
+			]
+		},
+		{
+			"name": "0b. POST /auth/login (admin)",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"url": {
+					"raw": "{{base_url}}/auth/login",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"auth",
+						"login"
+					]
+				},
+				"description": "200 OK. Stores access_token for every write request below. Requires the seeded staff account (python seed_db.py).",
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"email\": \"budi.santoso@example.com\",\n    \"password\": \"password123\"\n}"
+				},
+				"auth": {
+					"type": "noauth"
+				}
+			},
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							"pm.test(\"Status is 200 OK\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"var body = pm.response.json();",
+							"",
+							"pm.test(\"Token carries an elevated role\", function () {",
+							"    pm.expect([\"admin\", \"superadmin\"]).to.include(body.user.role);",
+							"});",
+							"",
+							"pm.collectionVariables.set(\"access_token\", body.access_token);",
+							"console.log(\"logged in as\", body.user.email, \"role\", body.user.role);"
 						]
 					}
 				}
@@ -241,21 +300,21 @@
 			]
 		},
 		{
-			"name": "6. DELETE /products/7 (409 blocked)",
+			"name": "6. DELETE /products/12 (409 blocked)",
 			"request": {
 				"method": "DELETE",
 				"header": [],
 				"url": {
-					"raw": "{{base_url}}/products/7",
+					"raw": "{{base_url}}/products/12",
 					"host": [
 						"{{base_url}}"
 					],
 					"path": [
 						"products",
-						"7"
+						"12"
 					]
 				},
-				"description": "409 Conflict. Product 7 is still referenced by order 2 (shipped) and order 3 (paid), so the deletion guard refuses it and reports active_orders = 2."
+				"description": "409 Conflict. Product 12 is still referenced by order 5 (pending), so the deletion guard refuses it and reports active_orders = 1. (A product that only appears in finished orders would be withdrawn from sale instead, not refused.)"
 			},
 			"event": [
 				{
@@ -274,5 +333,15 @@
 				}
 			]
 		}
-	]
+	],
+	"auth": {
+		"type": "bearer",
+		"bearer": [
+			{
+				"key": "token",
+				"value": "{{access_token}}",
+				"type": "string"
+			}
+		]
+	}
 }
