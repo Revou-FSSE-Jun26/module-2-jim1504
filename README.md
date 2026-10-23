@@ -593,30 +593,13 @@ Supavisor, bukan direct connection -- dengan dua port untuk dua keperluan:
 postgresql://postgres.<project-ref>:<password>@aws-0-ap-southeast-1.pooler.supabase.com:6543/postgres?sslmode=require
 ```
 
-**Kenapa API wajib lewat transaction pooler.** Session pooler memberi tiap klien
-satu koneksi server selama klien itu tersambung, dan jumlah slotnya kecil. Di
-Vercel setiap instance yang sedang hangat adalah proses sendiri yang memegang
-pool koneksinya sendiri, dan banyak instance berjalan bersamaan. Saat build
-frontend me-render 40-an halaman sekaligus, slot session pooler habis dan
-request gagal dengan `(EMAXCONNSESSION) max clients reached in session mode`
-(terukur: 11 dari 30 request paralel gagal). Transaction pooler meminjamkan
-koneksi server hanya selama satu transaksi, jadi banyak instance bisa berbagi
-sedikit koneksi. Sesuai saran Supabase untuk serverless, `app.py` di Vercel
-memakai pool 1 koneksi per instance (`DB_POOL_SIZE`/`DB_MAX_OVERFLOW` tetap bisa
-menimpanya) dan mematikan prepared statement (`prepare_threshold=None`), yang
-tidak didukung transaction mode. Dengan ini 30 dari 30 request paralel berhasil.
+**Kenapa API wajib lewat transaction pooler.** Session pooler memberi tiap klien satu koneksi server selama klien itu tersambung, dan jumlah slotnya kecil. Di Vercel setiap instance yang sedang hangat adalah proses sendiri yang memegang pool koneksinya sendiri, dan banyak instance berjalan bersamaan. Saat build frontend me-render 40-an halaman sekaligus, slot session pooler habis dan request gagal dengan `(EMAXCONNSESSION) max clients reached in session mode` (terukur: 11 dari 30 request paralel gagal). Transaction pooler meminjamkan koneksi server hanya selama satu transaksi, jadi banyak instance bisa berbagi sedikit koneksi. Sesuai saran Supabase untuk serverless, `app.py` di Vercel memakai pool 1 koneksi per instance (`DB_POOL_SIZE`/`DB_MAX_OVERFLOW` tetap bisa menimpanya) dan mematikan prepared statement (`prepare_threshold=None`), yang tidak didukung transaction mode. Dengan ini 30 dari 30 request paralel berhasil.
 
-Password yang mengandung karakter khusus harus di-*encode* di dalam URL
-(misalnya `#` menjadi `%23`).
+Password yang mengandung karakter khusus harus di-*encode* di dalam URL (misalnya `#` menjadi `%23`).
 
-Dua hal lain yang menentukan di sini. Pertama, direct connection project baru hanya
-melayani IPv6, sedangkan koneksi keluar dari platform hosting umumnya IPv4 --
-memakai bentuk itu berujung `Network is unreachable`. Kedua, pada endpoint
-pooler username-nya wajib `postgres.<project-ref>` lengkap dengan akhirannya;
-memakai `postgres` saja menghasilkan `password authentication failed`.
+Dua hal lain yang menentukan di sini. Pertama, direct connection project baru hanya melayani IPv6, sedangkan koneksi keluar dari platform hosting umumnya IPv4 -- memakai bentuk itu berujung `Network is unreachable`. Kedua, pada endpoint pooler username-nya wajib `postgres.<project-ref>` lengkap dengan akhirannya; memakai `postgres` saja menghasilkan `password authentication failed`.
 
 ### API -- Vercel
-
 Vercel menjalankan aplikasi ini sebagai fungsi serverless Python 3.14 (dari
 `.python-version`). Dependensinya dipasang dari `requirements.txt`, dan objek
 WSGI `app` di `app.py` yang dilayani
