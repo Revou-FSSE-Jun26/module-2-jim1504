@@ -325,11 +325,7 @@ PATHS = {
                     "description": "The API is up but the database is unreachable.",
                     "content": {
                         "application/json": {
-                            "example": {
-                                "status": "error",
-                                "database": "unreachable",
-                                "detail": "connection refused",
-                            }
+                            "example": {"status": "error", "database": "unreachable"}
                         }
                     },
                 },

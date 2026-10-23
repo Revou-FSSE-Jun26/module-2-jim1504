@@ -3,7 +3,9 @@
 Run with:
     flask run                             development only
     waitress-serve --port=5000 app:app    local production server, works on Windows
-    gunicorn app:app                      Linux deploy target -- see Procfile
+    gunicorn app:app                      classic Linux WSGI host -- see Procfile
+
+Production runs on Vercel, which serves the WSGI `app` below directly (no start command).
 
 Load testing needs the tuned waitress command in README section 7, not the bare
 one above; the defaults (4 threads, 100 connections) cap the numbers well below
@@ -95,8 +97,11 @@ def health():
     """Prove the SQLAlchemy connection to the database is live."""
     try:
         db.session.execute(text("select 1"))
-    except Exception as exc:
-        return jsonify({"status": "error", "database": "unreachable", "detail": str(exc)}), 503
+    except Exception:
+        # The driver's message names the database host and user, so it goes to the server log
+        # (Vercel's runtime logs), not to whoever is calling this public endpoint.
+        app.logger.exception("health check: database unreachable")
+        return jsonify({"status": "error", "database": "unreachable"}), 503
 
     return jsonify({"status": "ok", "database": "connected"})
 
