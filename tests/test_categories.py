@@ -41,8 +41,8 @@ def test_get_category_unknown_id_returns_404(client):
 
 # ---------------------------------------------------------------- POST /categories
 
-def test_create_category_returns_201(client, session):
-    response = client.post("/categories", json={
+def test_create_category_returns_201(client, session, admin_headers):
+    response = client.post("/categories", headers=admin_headers, json={
         "category_name": "fashion",
         "description": "clothing and accessories",
     })
@@ -56,8 +56,8 @@ def test_create_category_returns_201(client, session):
     assert client.get("/categories").get_json()[0]["category_name"] == "fashion"
 
 
-def test_create_category_without_name_returns_400(client, session):
-    response = client.post("/categories", json={"description": "no name given"})
+def test_create_category_without_name_returns_400(client, session, admin_headers):
+    response = client.post("/categories", headers=admin_headers, json={"description": "no name given"})
 
     assert response.status_code == 400
     body = response.get_json()
@@ -65,8 +65,8 @@ def test_create_category_without_name_returns_400(client, session):
     assert "category_name is required" in body["details"]
 
 
-def test_create_category_duplicate_name_returns_409(client, sample_category):
-    response = client.post("/categories", json={"category_name": "electronics"})
+def test_create_category_duplicate_name_returns_409(client, sample_category, admin_headers):
+    response = client.post("/categories", headers=admin_headers, json={"category_name": "electronics"})
 
     assert response.status_code == 409
     assert response.get_json()["error"] == "category_name already exists"
@@ -74,8 +74,8 @@ def test_create_category_duplicate_name_returns_409(client, sample_category):
 
 # ----------------------------------------------------------- PUT /categories/<id>
 
-def test_update_category_returns_200(client, sample_category):
-    response = client.put(f"/categories/{sample_category}", json={
+def test_update_category_returns_200(client, sample_category, admin_headers):
+    response = client.put(f"/categories/{sample_category}", headers=admin_headers, json={
         "category_name": "consumer electronics",
         "description": "updated description",
     })
@@ -86,15 +86,15 @@ def test_update_category_returns_200(client, sample_category):
     assert body["category"]["description"] == "updated description"
 
 
-def test_update_category_unknown_id_returns_404(client):
-    response = client.put("/categories/9999", json={"category_name": "ghost"})
+def test_update_category_unknown_id_returns_404(client, admin_headers):
+    response = client.put("/categories/9999", headers=admin_headers, json={"category_name": "ghost"})
 
     assert response.status_code == 404
     assert response.get_json()["error"] == "category not found"
 
 
-def test_update_category_blank_name_returns_400(client, sample_category):
-    response = client.put(f"/categories/{sample_category}", json={"category_name": "   "})
+def test_update_category_blank_name_returns_400(client, sample_category, admin_headers):
+    response = client.put(f"/categories/{sample_category}", headers=admin_headers, json={"category_name": "   "})
 
     assert response.status_code == 400
     assert "category_name must not be blank" in response.get_json()["details"]
@@ -102,8 +102,8 @@ def test_update_category_blank_name_returns_400(client, sample_category):
 
 # -------------------------------------------------------- DELETE /categories/<id>
 
-def test_delete_category_returns_200(client, sample_category):
-    response = client.delete(f"/categories/{sample_category}")
+def test_delete_category_returns_200(client, sample_category, admin_headers):
+    response = client.delete(f"/categories/{sample_category}", headers=admin_headers)
 
     assert response.status_code == 200
     assert response.get_json()["id"] == sample_category
@@ -112,15 +112,15 @@ def test_delete_category_returns_200(client, sample_category):
     assert client.get(f"/categories/{sample_category}").status_code == 404
 
 
-def test_delete_category_unknown_id_returns_404(client):
-    response = client.delete("/categories/9999")
+def test_delete_category_unknown_id_returns_404(client, admin_headers):
+    response = client.delete("/categories/9999", headers=admin_headers)
 
     assert response.status_code == 404
     assert response.get_json()["error"] == "category not found"
 
 
-def test_delete_category_with_products_returns_409(client, category_with_product):
-    response = client.delete(f"/categories/{category_with_product}")
+def test_delete_category_with_products_returns_409(client, category_with_product, admin_headers):
+    response = client.delete(f"/categories/{category_with_product}", headers=admin_headers)
 
     assert response.status_code == 409
     body = response.get_json()

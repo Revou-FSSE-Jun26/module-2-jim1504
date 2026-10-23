@@ -3,8 +3,8 @@
 from flask import Blueprint, jsonify
 from sqlalchemy.exc import IntegrityError, SQLAlchemyError
 
-from models import Category, db
-from routes.helpers import error, get_payload, require_fields
+from models import Category, Product, db
+from routes.helpers import error, get_payload, require_fields, require_permission, text_or_none
 
 category_routes = Blueprint("categories", __name__)
 
@@ -29,18 +29,21 @@ def _validate(data, partial=False):
             values["category_name"] = name
 
     if "description" in data:
-        values["description"] = data["description"]
+        values["description"] = text_or_none(data["description"])
 
     return values, errors
 
 
 @category_routes.get("/categories")
 def list_categories():
-    """Return every category as JSON."""
-    categories = db.session.scalars(
-        db.select(Category).order_by(Category.category_id)
+    """Return every category with the number of products in it."""
+    rows = db.session.execute(
+        db.select(Category, db.func.count(Product.product_id))
+        .outerjoin(Product, Product.category_id == Category.category_id)
+        .group_by(Category.category_id)
+        .order_by(Category.category_id)
     ).all()
-    return jsonify([category.to_dict() for category in categories])
+    return jsonify([{**category.to_dict(), "product_count": count} for category, count in rows])
 
 
 @category_routes.get("/categories/<int:category_id>")
@@ -57,6 +60,7 @@ def get_category(category_id):
 
 
 @category_routes.post("/categories")
+@require_permission("categories:write")
 def create_category():
     """Create a category from JSON input."""
     data = get_payload()
@@ -79,6 +83,7 @@ def create_category():
 
 
 @category_routes.put("/categories/<int:category_id>")
+@require_permission("categories:write")
 def update_category(category_id):
     """Update an existing category. Only the supplied fields change."""
     category = db.session.get(Category, category_id)
@@ -109,6 +114,7 @@ def update_category(category_id):
 
 
 @category_routes.delete("/categories/<int:category_id>")
+@require_permission("categories:write")
 def delete_category(category_id):
     """Delete a category, unless products still belong to it."""
     category = db.session.get(Category, category_id)
