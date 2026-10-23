@@ -3,7 +3,9 @@
 Run with:
     flask run                             development only
     waitress-serve --port=5000 app:app    local production server, works on Windows
-    gunicorn app:app                      Linux deploy target -- see Procfile
+    gunicorn app:app                      classic Linux WSGI host -- see Procfile
+
+Production runs on Vercel, which serves the WSGI `app` below directly (no start command).
 
 Load testing needs the tuned waitress command in README section 7, not the bare
 one above; the defaults (4 threads, 100 connections) cap the numbers well below
@@ -40,11 +42,21 @@ app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
 # The pool is per process. Waitress runs one process with many threads; gunicorn runs
 # several processes with a few threads each. Total connections to Postgres is
 # processes x (pool_size + max_overflow) and must stay under its max_connections (100).
+# On Vercel every warm instance is a process of its own and many run at once, so each
+# keeps a single connection (Supabase's advice for serverless) - otherwise a burst of
+# requests, like a frontend build prerendering 40 pages, fills the pooler and gets
+# "max clients reached".
+ON_VERCEL = bool(os.getenv("VERCEL"))
 app.config["SQLALCHEMY_ENGINE_OPTIONS"] = {
-    "pool_size": int(os.getenv("DB_POOL_SIZE", "5")),
-    "max_overflow": int(os.getenv("DB_MAX_OVERFLOW", "5")),
+    "pool_size": int(os.getenv("DB_POOL_SIZE", "1" if ON_VERCEL else "5")),
+    "max_overflow": int(os.getenv("DB_MAX_OVERFLOW", "0" if ON_VERCEL else "5")),
     "pool_pre_ping": True,
     "pool_recycle": 1800,
+    # Supabase's transaction pooler (port 6543, the one for serverless) hands each
+    # transaction to whichever server connection is free, so a statement prepared on one
+    # isn't there on the next. psycopg prepares repeated queries by default; None turns
+    # that off. Harmless on a direct or session connection.
+    "connect_args": {"prepare_threshold": None},
 }
 
 SECRET_KEY = os.getenv("SECRET_KEY")
@@ -95,8 +107,11 @@ def health():
     """Prove the SQLAlchemy connection to the database is live."""
     try:
         db.session.execute(text("select 1"))
-    except Exception as exc:
-        return jsonify({"status": "error", "database": "unreachable", "detail": str(exc)}), 503
+    except Exception:
+        # The driver's message names the database host and user, so it goes to the server log
+        # (Vercel's runtime logs), not to whoever is calling this public endpoint.
+        app.logger.exception("health check: database unreachable")
+        return jsonify({"status": "error", "database": "unreachable"}), 503
 
     return jsonify({"status": "ok", "database": "connected"})
 

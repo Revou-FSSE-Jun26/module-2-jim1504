@@ -20,8 +20,8 @@ the results long before the API does:
     waitress-serve --port=5000 --threads=32 --connection-limit=400 --channel-timeout=60 app:app
     locust -f locustfile.py --host http://127.0.0.1:5000
 
-gunicorn cannot serve this on Windows (it imports fcntl); the Procfile is for the
-Linux deploy host only. See README section 7 for the reasoning behind each value.
+gunicorn cannot serve this on Windows (it imports fcntl); the Procfile is only for a
+classic Linux WSGI host (production runs on Vercel, which ignores it). See README section 7 for the reasoning behind each value.
 
 Then in the web UI at http://localhost:8089 start with 50 users
 (spawn rate 5/s) and ramp up to 200.
