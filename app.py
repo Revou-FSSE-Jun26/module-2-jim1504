@@ -57,11 +57,31 @@ app.config["SECRET_KEY"] = SECRET_KEY
 app.config["JWT_SECRET_KEY"] = app.config["SECRET_KEY"]
 app.config["JWT_ACCESS_TOKEN_EXPIRES"] = timedelta(days=1)
 app.config["DEBUG"] = os.getenv("FLASK_DEBUG", "0") == "1"
+# JSON bodies are small; the largest is a traced logo (at most ~1500 SVG paths).
+app.config["MAX_CONTENT_LENGTH"] = 4 * 1024 * 1024
 app.json.sort_keys = False
 
 db.init_app(app)
 migrate = Migrate(app, db)
 jwt = JWTManager(app)
+
+
+# Token problems answer in the API's own error shape ({"error": ...}) with 401, instead of
+# Flask-JWT-Extended's default {"msg": ...} (and 422 for a malformed token), so clients
+# handle every auth failure the same way -- e.g. signing the user out.
+@jwt.expired_token_loader
+def _expired_token(_jwt_header, _jwt_payload):
+    return jsonify({"error": "token has expired -- log in again"}), 401
+
+
+@jwt.invalid_token_loader
+def _invalid_token(reason):
+    return jsonify({"error": "invalid token", "detail": reason}), 401
+
+
+@jwt.unauthorized_loader
+def _missing_token(reason):
+    return jsonify({"error": "authentication required -- send a Bearer token", "detail": reason}), 401
 
 # Interactive API documentation at /apidocs. The spec lives in swagger_spec.py
 # rather than in the route docstrings, so documenting the API never edits it.

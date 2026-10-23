@@ -1,0 +1,3436 @@
+{
+  "_generated": "by RevoTech scripts/export-seed.mjs from data/catalog.json - edit the catalogue, not this file",
+  "categories": [
+    {
+      "category_id": 1,
+      "category_name": "Processors",
+      "description": "cpu desktop intel dan amd"
+    },
+    {
+      "category_id": 2,
+      "category_name": "Motherboards",
+      "description": "mainboard untuk soket lga dan am5"
+    },
+    {
+      "category_id": 3,
+      "category_name": "Memory and Storage",
+      "description": "ram, ssd nvme, ssd sata, dan hard disk"
+    },
+    {
+      "category_id": 4,
+      "category_name": "Graphics Cards",
+      "description": "kartu grafis untuk gaming dan rendering"
+    },
+    {
+      "category_id": 5,
+      "category_name": "Power and Cooling",
+      "description": "power supply, pendingin cpu, fan, dan thermal paste"
+    },
+    {
+      "category_id": 6,
+      "category_name": "Peripherals",
+      "description": "mouse, keyboard, dan monitor"
+    }
+  ],
+  "products": [
+    {
+      "product_id": 1,
+      "category_id": 1,
+      "product_name": "Intel Core Ultra 5 250K Plus",
+      "description": "18 core, 6p dan 12e, unlocked, soket lga1851",
+      "price": 4150000,
+      "stock_quantity": 25,
+      "is_active": true,
+      "official_url": "https://www.intel.com/content/www/us/en/products/sku/245694/intel-core-ultra-5-processor-250k-plus-30m-cache-up-to-5-30-ghz/specifications.html",
+      "overview": null,
+      "overview_source": null,
+      "images": [
+        "/products/intel-core-ultra-5-250k-plus.avif"
+      ],
+      "specs": [
+        {
+          "group": "Essentials",
+          "label": "Product Collection",
+          "value": "Intel® Core™ Ultra Processors (Series 2)"
+        },
+        {
+          "group": "Essentials",
+          "label": "Code Name",
+          "value": "Products formerly Arrow Lake"
+        },
+        {
+          "group": "Essentials",
+          "label": "Vertical Segment",
+          "value": "Desktop"
+        },
+        {
+          "group": "Essentials",
+          "label": "Processor Number",
+          "value": "250K PLUS"
+        },
+        {
+          "group": "Essentials",
+          "label": "Overall Peak TOPS (Int8)",
+          "value": "30"
+        },
+        {
+          "group": "CPU Specifications",
+          "label": "Total Cores",
+          "value": "18"
+        },
+        {
+          "group": "CPU Specifications",
+          "label": "# of Performance-cores",
+          "value": "6"
+        },
+        {
+          "group": "CPU Specifications",
+          "label": "# of Efficient-cores",
+          "value": "12"
+        },
+        {
+          "group": "CPU Specifications",
+          "label": "# of Low Power Efficient-cores",
+          "value": "0"
+        },
+        {
+          "group": "CPU Specifications",
+          "label": "Total Threads",
+          "value": "18"
+        },
+        {
+          "group": "CPU Specifications",
+          "label": "Max Turbo Frequency",
+          "value": "5.3 GHz"
+        },
+        {
+          "group": "CPU Specifications",
+          "label": "Performance-core Max Turbo Frequency",
+          "value": "5.3 GHz"
+        },
+        {
+          "group": "CPU Specifications",
+          "label": "Efficient-core Max Turbo Frequency",
+          "value": "4.6 GHz"
+        },
+        {
+          "group": "CPU Specifications",
+          "label": "Performance-core Base Frequency",
+          "value": "4.2 GHz"
+        },
+        {
+          "group": "CPU Specifications",
+          "label": "Efficient-core Base Frequency",
+          "value": "3.3 GHz"
+        },
+        {
+          "group": "CPU Specifications",
+          "label": "Cache",
+          "value": "30 MB Intel® Smart Cache"
+        },
+        {
+          "group": "CPU Specifications",
+          "label": "Total L2 Cache",
+          "value": "30 MB"
+        },
+        {
+          "group": "CPU Specifications",
+          "label": "Processor Base Power",
+          "value": "125 W"
+        },
+        {
+          "group": "CPU Specifications",
+          "label": "Maximum Turbo Power",
+          "value": "159 W"
+        },
+        {
+          "group": "CPU Specifications",
+          "label": "Intel® Deep Learning Boost (Intel® DL Boost) on CPU",
+          "value": "Yes"
+        },
+        {
+          "group": "CPU Specifications",
+          "label": "AI Software Frameworks Supported by CPU",
+          "value": "OpenVINO™, WindowsML, DirectML, ONNX RT, WebNN"
+        },
+        {
+          "group": "CPU Specifications",
+          "label": "CPU Lithography",
+          "value": "TSMC N3B"
+        },
+        {
+          "group": "Supplemental Information",
+          "label": "Marketing Status",
+          "value": "Launched"
+        },
+        {
+          "group": "Supplemental Information",
+          "label": "Launch Date",
+          "value": "Q1'26"
+        },
+        {
+          "group": "Supplemental Information",
+          "label": "Embedded Options Available",
+          "value": "No"
+        },
+        {
+          "group": "Supplemental Information",
+          "label": "Use Conditions",
+          "value": "PC/Client/Tablet, Workstation"
+        },
+        {
+          "group": "Memory Specifications",
+          "label": "Max Memory Size (dependent on memory type)",
+          "value": "256 GB"
+        },
+        {
+          "group": "Memory Specifications",
+          "label": "Memory Types",
+          "value": "Up To DDR5 7200 MT/s"
+        },
+        {
+          "group": "Memory Specifications",
+          "label": "Max # of Memory Channels",
+          "value": "2"
+        },
+        {
+          "group": "Memory Specifications",
+          "label": "ECC Memory Supported",
+          "value": "Yes"
+        },
+        {
+          "group": "GPU Specifications",
+          "label": "GPU Name",
+          "value": "Intel® Graphics"
+        },
+        {
+          "group": "GPU Specifications",
+          "label": "Graphics Base Frequency",
+          "value": "300 MHz"
+        },
+        {
+          "group": "GPU Specifications",
+          "label": "Graphics Max Dynamic Frequency",
+          "value": "1.9 GHz"
+        },
+        {
+          "group": "GPU Specifications",
+          "label": "GPU Peak TOPS (Int8)",
+          "value": "8"
+        },
+        {
+          "group": "GPU Specifications",
+          "label": "Graphics Output",
+          "value": "eDP1.4b, DP 2.1 UHBR20, HDMI 2.1 FRL"
+        },
+        {
+          "group": "GPU Specifications",
+          "label": "Xe-cores",
+          "value": "4"
+        },
+        {
+          "group": "GPU Specifications",
+          "label": "Max Resolution (HDMI)",
+          "value": "4096 x 2304 @ 60Hz (HDMI 2.1 TMDS), 7680 x 4320 @ 60Hz (HDMI 2.1 FRL)"
+        },
+        {
+          "group": "GPU Specifications",
+          "label": "Max Resolution (DP)",
+          "value": "7680 x 4320 @ 60Hz"
+        },
+        {
+          "group": "GPU Specifications",
+          "label": "Max Resolution (eDP - Integrated Flat Panel)",
+          "value": "3840 x 2400 @ 120Hz"
+        },
+        {
+          "group": "GPU Specifications",
+          "label": "DirectX* Support",
+          "value": "12"
+        },
+        {
+          "group": "GPU Specifications",
+          "label": "OpenGL* Support",
+          "value": "4.5"
+        },
+        {
+          "group": "GPU Specifications",
+          "label": "OpenCL* Support",
+          "value": "3"
+        },
+        {
+          "group": "GPU Specifications",
+          "label": "H.264 Hardware Encode/Decode",
+          "value": "Yes"
+        },
+        {
+          "group": "GPU Specifications",
+          "label": "H.265 (HEVC) Hardware Encode/Decode",
+          "value": "Yes"
+        },
+        {
+          "group": "GPU Specifications",
+          "label": "AV1 Encode/Decode",
+          "value": "Yes"
+        },
+        {
+          "group": "GPU Specifications",
+          "label": "Intel® Quick Sync Video",
+          "value": "Yes"
+        },
+        {
+          "group": "GPU Specifications",
+          "label": "# of Displays Supported",
+          "value": "4"
+        },
+        {
+          "group": "GPU Specifications",
+          "label": "Device ID",
+          "value": "0x7D67"
+        },
+        {
+          "group": "GPU Specifications",
+          "label": "Intel® Deep Learning Boost (Intel® DL Boost) on GPU",
+          "value": "Yes"
+        },
+        {
+          "group": "GPU Specifications",
+          "label": "AI Software Frameworks Supported by GPU",
+          "value": "OpenVINO™, WindowsML, DirectML, ONNX RT, WebGPU"
+        },
+        {
+          "group": "NPU Specifications",
+          "label": "NPU Name",
+          "value": "Intel® AI Boost"
+        },
+        {
+          "group": "NPU Specifications",
+          "label": "NPU Peak TOPS (Int8)",
+          "value": "13"
+        },
+        {
+          "group": "NPU Specifications",
+          "label": "Sparsity Support",
+          "value": "Yes"
+        },
+        {
+          "group": "NPU Specifications",
+          "label": "Windows Studio Effects Support",
+          "value": "Yes"
+        },
+        {
+          "group": "NPU Specifications",
+          "label": "AI Software Frameworks Supported by NPU",
+          "value": "OpenVINO™, WindowsML, DirectML, ONNX RT, WebNN"
+        },
+        {
+          "group": "Expansion Options",
+          "label": "Direct Media Interface (DMI) Revision",
+          "value": "4"
+        },
+        {
+          "group": "Expansion Options",
+          "label": "Max # of DMI Lanes",
+          "value": "8"
+        },
+        {
+          "group": "Expansion Options",
+          "label": "Intel® Thunderbolt™ 4",
+          "value": "Yes"
+        },
+        {
+          "group": "Expansion Options",
+          "label": "Scalability",
+          "value": "1S Only"
+        },
+        {
+          "group": "Expansion Options",
+          "label": "PCI Express Revision",
+          "value": "5.0 and 4.0"
+        },
+        {
+          "group": "Expansion Options",
+          "label": "PCI Express Configurations",
+          "value": "Up to 1x16+2x4, 2x8+2x4, 1x8+4x4"
+        },
+        {
+          "group": "Expansion Options",
+          "label": "Max # of PCI Express Lanes",
+          "value": "24"
+        },
+        {
+          "group": "Package Specifications",
+          "label": "Sockets Supported",
+          "value": "FCLGA1851"
+        },
+        {
+          "group": "Package Specifications",
+          "label": "Thermal Solution Specification",
+          "value": "PCG 2020A"
+        },
+        {
+          "group": "Package Specifications",
+          "label": "Max Operating Temperature",
+          "value": "105 °C"
+        },
+        {
+          "group": "Package Specifications",
+          "label": "Package Size",
+          "value": "45 mm x 37.5 mm"
+        },
+        {
+          "group": "Advanced Technologies",
+          "label": "Intel® Gaussian & Neural Accelerator",
+          "value": "3.5"
+        },
+        {
+          "group": "Advanced Technologies",
+          "label": "Intel® Thread Director",
+          "value": "Yes"
+        },
+        {
+          "group": "Advanced Technologies",
+          "label": "Intel® Speed Shift Technology",
+          "value": "Yes"
+        },
+        {
+          "group": "Advanced Technologies",
+          "label": "Intel® Turbo Boost Technology",
+          "value": "2.0"
+        },
+        {
+          "group": "Advanced Technologies",
+          "label": "Intel® Hyper-Threading Technology",
+          "value": "No"
+        },
+        {
+          "group": "Advanced Technologies",
+          "label": "Intel® 64",
+          "value": "Yes"
+        },
+        {
+          "group": "Advanced Technologies",
+          "label": "Instruction Set",
+          "value": "64-bit"
+        },
+        {
+          "group": "Advanced Technologies",
+          "label": "Instruction Set Extensions",
+          "value": "Intel® SSE4.1, Intel® SSE4.2, Intel® AVX2"
+        },
+        {
+          "group": "Advanced Technologies",
+          "label": "Idle States",
+          "value": "Yes"
+        },
+        {
+          "group": "Advanced Technologies",
+          "label": "Enhanced Intel SpeedStep® Technology",
+          "value": "Yes"
+        },
+        {
+          "group": "Advanced Technologies",
+          "label": "Thermal Monitoring Technologies",
+          "value": "Yes"
+        },
+        {
+          "group": "Advanced Technologies",
+          "label": "Intel® Volume Management Device (VMD)",
+          "value": "Yes"
+        },
+        {
+          "group": "Security & Reliability",
+          "label": "Intel vPro® Eligibility",
+          "value": "Intel vPro® Enterprise"
+        },
+        {
+          "group": "Security & Reliability",
+          "label": "Intel® Threat Detection Technology (TDT)",
+          "value": "Yes"
+        },
+        {
+          "group": "Security & Reliability",
+          "label": "Intel® Active Management Technology (AMT)",
+          "value": "Yes"
+        },
+        {
+          "group": "Security & Reliability",
+          "label": "Intel® Standard Manageability (ISM)",
+          "value": "Yes"
+        },
+        {
+          "group": "Security & Reliability",
+          "label": "Intel® Remote Platform Erase (RPE)",
+          "value": "Yes"
+        },
+        {
+          "group": "Security & Reliability",
+          "label": "Intel® One-Click Recovery",
+          "value": "Yes"
+        },
+        {
+          "group": "Security & Reliability",
+          "label": "Intel® Secure Key",
+          "value": "Yes"
+        },
+        {
+          "group": "Security & Reliability",
+          "label": "Intel® Control-Flow Enforcement Technology",
+          "value": "Yes"
+        },
+        {
+          "group": "Security & Reliability",
+          "label": "Intel® Total Memory Encryption - Multi Key",
+          "value": "Yes"
+        },
+        {
+          "group": "Security & Reliability",
+          "label": "Intel® AES New Instructions",
+          "value": "Yes"
+        },
+        {
+          "group": "Security & Reliability",
+          "label": "Intel® Trusted Execution Technology",
+          "value": "Yes"
+        },
+        {
+          "group": "Security & Reliability",
+          "label": "Execute Disable Bit",
+          "value": "Yes"
+        },
+        {
+          "group": "Security & Reliability",
+          "label": "Intel® OS Guard",
+          "value": "Yes"
+        },
+        {
+          "group": "Security & Reliability",
+          "label": "Intel® Boot Guard",
+          "value": "Yes"
+        },
+        {
+          "group": "Security & Reliability",
+          "label": "Mode-based Execute Control (MBEC)",
+          "value": "Yes"
+        },
+        {
+          "group": "Security & Reliability",
+          "label": "Intel® Stable IT Platform Program (SIPP)",
+          "value": "Yes"
+        },
+        {
+          "group": "Security & Reliability",
+          "label": "Intel® Virtualization Technology with Redirect Protection (VT-rp)",
+          "value": "Yes"
+        },
+        {
+          "group": "Security & Reliability",
+          "label": "Intel® Virtualization Technology (VT-x)",
+          "value": "Yes"
+        },
+        {
+          "group": "Security & Reliability",
+          "label": "Intel® Virtualization Technology for Directed I/O (VT-d)",
+          "value": "Yes"
+        },
+        {
+          "group": "Security & Reliability",
+          "label": "Intel® VT-x with Extended Page Tables (EPT)",
+          "value": "Yes"
+        }
+      ],
+      "specs_source": "https://www.intel.com/content/www/us/en/products/sku/245694/intel-core-ultra-5-processor-250k-plus-30m-cache-up-to-5-30-ghz/specifications.html"
+    },
+    {
+      "product_id": 2,
+      "category_id": 1,
+      "product_name": "Intel Core Ultra 7 270K Plus",
+      "description": "24 core, 8p dan 16e, boost 5.5 ghz, soket lga1851",
+      "price": 6350000,
+      "stock_quantity": 12,
+      "is_active": true,
+      "official_url": "https://www.intel.com/content/www/us/en/products/sku/245692/intel-core-ultra-7-processor-270k-plus-36m-cache-up-to-5-50-ghz/specifications.html",
+      "overview": null,
+      "overview_source": null,
+      "images": [
+        "/products/intel-core-ultra-7-270k-plus.avif"
+      ],
+      "specs": [
+        {
+          "group": "Essentials",
+          "label": "Product Collection",
+          "value": "Intel® Core™ Ultra Processors (Series 2)"
+        },
+        {
+          "group": "Essentials",
+          "label": "Code Name",
+          "value": "Products formerly Arrow Lake"
+        },
+        {
+          "group": "Essentials",
+          "label": "Vertical Segment",
+          "value": "Desktop"
+        },
+        {
+          "group": "Essentials",
+          "label": "Processor Number",
+          "value": "270K PLUS"
+        },
+        {
+          "group": "Essentials",
+          "label": "Overall Peak TOPS (Int8)",
+          "value": "36"
+        },
+        {
+          "group": "CPU Specifications",
+          "label": "Total Cores",
+          "value": "24"
+        },
+        {
+          "group": "CPU Specifications",
+          "label": "# of Performance-cores",
+          "value": "8"
+        },
+        {
+          "group": "CPU Specifications",
+          "label": "# of Efficient-cores",
+          "value": "16"
+        },
+        {
+          "group": "CPU Specifications",
+          "label": "# of Low Power Efficient-cores",
+          "value": "0"
+        },
+        {
+          "group": "CPU Specifications",
+          "label": "Total Threads",
+          "value": "24"
+        },
+        {
+          "group": "CPU Specifications",
+          "label": "Max Turbo Frequency",
+          "value": "5.5 GHz"
+        },
+        {
+          "group": "CPU Specifications",
+          "label": "Intel® Turbo Boost Max Technology 3.0 Frequency",
+          "value": "5.5 GHz"
+        },
+        {
+          "group": "CPU Specifications",
+          "label": "Performance-core Max Turbo Frequency",
+          "value": "5.4 GHz"
+        },
+        {
+          "group": "CPU Specifications",
+          "label": "Efficient-core Max Turbo Frequency",
+          "value": "4.7 GHz"
+        },
+        {
+          "group": "CPU Specifications",
+          "label": "Performance-core Base Frequency",
+          "value": "3.7 GHz"
+        },
+        {
+          "group": "CPU Specifications",
+          "label": "Efficient-core Base Frequency",
+          "value": "3.2 GHz"
+        },
+        {
+          "group": "CPU Specifications",
+          "label": "Cache",
+          "value": "36 MB Intel® Smart Cache"
+        },
+        {
+          "group": "CPU Specifications",
+          "label": "Total L2 Cache",
+          "value": "40 MB"
+        },
+        {
+          "group": "CPU Specifications",
+          "label": "Processor Base Power",
+          "value": "125 W"
+        },
+        {
+          "group": "CPU Specifications",
+          "label": "Maximum Turbo Power",
+          "value": "250 W"
+        },
+        {
+          "group": "CPU Specifications",
+          "label": "Intel® Deep Learning Boost (Intel® DL Boost) on CPU",
+          "value": "Yes"
+        },
+        {
+          "group": "CPU Specifications",
+          "label": "AI Software Frameworks Supported by CPU",
+          "value": "OpenVINO™, WindowsML, DirectML, ONNX RT, WebNN"
+        },
+        {
+          "group": "CPU Specifications",
+          "label": "CPU Lithography",
+          "value": "TSMC N3B"
+        },
+        {
+          "group": "Supplemental Information",
+          "label": "Marketing Status",
+          "value": "Launched"
+        },
+        {
+          "group": "Supplemental Information",
+          "label": "Launch Date",
+          "value": "Q1'26"
+        },
+        {
+          "group": "Supplemental Information",
+          "label": "Embedded Options Available",
+          "value": "No"
+        },
+        {
+          "group": "Supplemental Information",
+          "label": "Use Conditions",
+          "value": "PC/Client/Tablet, Workstation"
+        },
+        {
+          "group": "Memory Specifications",
+          "label": "Max Memory Size (dependent on memory type)",
+          "value": "256 GB"
+        },
+        {
+          "group": "Memory Specifications",
+          "label": "Memory Types",
+          "value": "Up To DDR5 7200 MT/s"
+        },
+        {
+          "group": "Memory Specifications",
+          "label": "Max # of Memory Channels",
+          "value": "2"
+        },
+        {
+          "group": "Memory Specifications",
+          "label": "ECC Memory Supported",
+          "value": "Yes"
+        },
+        {
+          "group": "GPU Specifications",
+          "label": "GPU Name",
+          "value": "Intel® Graphics"
+        },
+        {
+          "group": "GPU Specifications",
+          "label": "Graphics Base Frequency",
+          "value": "300 MHz"
+        },
+        {
+          "group": "GPU Specifications",
+          "label": "Graphics Max Dynamic Frequency",
+          "value": "2 GHz"
+        },
+        {
+          "group": "GPU Specifications",
+          "label": "GPU Peak TOPS (Int8)",
+          "value": "8"
+        },
+        {
+          "group": "GPU Specifications",
+          "label": "Graphics Output",
+          "value": "eDP1.4b, DP 2.1 UHBR20, HDMI 2.1 FRL"
+        },
+        {
+          "group": "GPU Specifications",
+          "label": "Xe-cores",
+          "value": "4"
+        },
+        {
+          "group": "GPU Specifications",
+          "label": "Max Resolution (HDMI)",
+          "value": "4096 x 2304 @ 60Hz (HDMI 2.1 TMDS), 7680 x 4320 @ 60Hz (HDMI 2.1 FRL)"
+        },
+        {
+          "group": "GPU Specifications",
+          "label": "Max Resolution (DP)",
+          "value": "7680 x 4320 @ 60Hz"
+        },
+        {
+          "group": "GPU Specifications",
+          "label": "Max Resolution (eDP - Integrated Flat Panel)",
+          "value": "3840 x 2400 @ 120Hz"
+        },
+        {
+          "group": "GPU Specifications",
+          "label": "DirectX* Support",
+          "value": "12"
+        },
+        {
+          "group": "GPU Specifications",
+          "label": "OpenGL* Support",
+          "value": "4.5"
+        },
+        {
+          "group": "GPU Specifications",
+          "label": "OpenCL* Support",
+          "value": "3"
+        },
+        {
+          "group": "GPU Specifications",
+          "label": "H.264 Hardware Encode/Decode",
+          "value": "Yes"
+        },
+        {
+          "group": "GPU Specifications",
+          "label": "H.265 (HEVC) Hardware Encode/Decode",
+          "value": "Yes"
+        },
+        {
+          "group": "GPU Specifications",
+          "label": "AV1 Encode/Decode",
+          "value": "Yes"
+        },
+        {
+          "group": "GPU Specifications",
+          "label": "Intel® Quick Sync Video",
+          "value": "Yes"
+        },
+        {
+          "group": "GPU Specifications",
+          "label": "# of Displays Supported",
+          "value": "4"
+        },
+        {
+          "group": "GPU Specifications",
+          "label": "Device ID",
+          "value": "0x7D67"
+        },
+        {
+          "group": "GPU Specifications",
+          "label": "Intel® Deep Learning Boost (Intel® DL Boost) on GPU",
+          "value": "Yes"
+        },
+        {
+          "group": "GPU Specifications",
+          "label": "AI Software Frameworks Supported by GPU",
+          "value": "OpenVINO™, WindowsML, DirectML, ONNX RT, WebGPU"
+        },
+        {
+          "group": "NPU Specifications",
+          "label": "NPU Name",
+          "value": "Intel® AI Boost"
+        },
+        {
+          "group": "NPU Specifications",
+          "label": "NPU Peak TOPS (Int8)",
+          "value": "13"
+        },
+        {
+          "group": "NPU Specifications",
+          "label": "Sparsity Support",
+          "value": "Yes"
+        },
+        {
+          "group": "NPU Specifications",
+          "label": "Windows Studio Effects Support",
+          "value": "Yes"
+        },
+        {
+          "group": "NPU Specifications",
+          "label": "AI Software Frameworks Supported by NPU",
+          "value": "OpenVINO™, WindowsML, DirectML, ONNX RT, WebNN"
+        },
+        {
+          "group": "Expansion Options",
+          "label": "Direct Media Interface (DMI) Revision",
+          "value": "4"
+        },
+        {
+          "group": "Expansion Options",
+          "label": "Max # of DMI Lanes",
+          "value": "8"
+        },
+        {
+          "group": "Expansion Options",
+          "label": "Intel® Thunderbolt™ 4",
+          "value": "Yes"
+        },
+        {
+          "group": "Expansion Options",
+          "label": "Scalability",
+          "value": "1S Only"
+        },
+        {
+          "group": "Expansion Options",
+          "label": "PCI Express Revision",
+          "value": "5.0 and 4.0"
+        },
+        {
+          "group": "Expansion Options",
+          "label": "PCI Express Configurations",
+          "value": "Up to 1x16+2x4, 2x8+2x4, 1x8+4x4"
+        },
+        {
+          "group": "Expansion Options",
+          "label": "Max # of PCI Express Lanes",
+          "value": "24"
+        },
+        {
+          "group": "Package Specifications",
+          "label": "Sockets Supported",
+          "value": "FCLGA1851"
+        },
+        {
+          "group": "Package Specifications",
+          "label": "Thermal Solution Specification",
+          "value": "PCG 2020A"
+        },
+        {
+          "group": "Package Specifications",
+          "label": "Max Operating Temperature",
+          "value": "105 °C"
+        },
+        {
+          "group": "Package Specifications",
+          "label": "Package Size",
+          "value": "45 mm x 37.5 mm"
+        },
+        {
+          "group": "Advanced Technologies",
+          "label": "Intel® Gaussian & Neural Accelerator",
+          "value": "3.5"
+        },
+        {
+          "group": "Advanced Technologies",
+          "label": "Intel® Thread Director",
+          "value": "Yes"
+        },
+        {
+          "group": "Advanced Technologies",
+          "label": "Intel® Speed Shift Technology",
+          "value": "Yes"
+        },
+        {
+          "group": "Advanced Technologies",
+          "label": "Intel® Turbo Boost Max Technology 3.0",
+          "value": "Yes"
+        },
+        {
+          "group": "Advanced Technologies",
+          "label": "Intel® Turbo Boost Technology",
+          "value": "2.0"
+        },
+        {
+          "group": "Advanced Technologies",
+          "label": "Intel® Hyper-Threading Technology",
+          "value": "No"
+        },
+        {
+          "group": "Advanced Technologies",
+          "label": "Intel® 64",
+          "value": "Yes"
+        },
+        {
+          "group": "Advanced Technologies",
+          "label": "Instruction Set",
+          "value": "64-bit"
+        },
+        {
+          "group": "Advanced Technologies",
+          "label": "Instruction Set Extensions",
+          "value": "Intel® SSE4.1, Intel® SSE4.2, Intel® AVX2"
+        },
+        {
+          "group": "Advanced Technologies",
+          "label": "Idle States",
+          "value": "Yes"
+        },
+        {
+          "group": "Advanced Technologies",
+          "label": "Enhanced Intel SpeedStep® Technology",
+          "value": "Yes"
+        },
+        {
+          "group": "Advanced Technologies",
+          "label": "Thermal Monitoring Technologies",
+          "value": "Yes"
+        },
+        {
+          "group": "Advanced Technologies",
+          "label": "Intel® Volume Management Device (VMD)",
+          "value": "Yes"
+        },
+        {
+          "group": "Security & Reliability",
+          "label": "Intel vPro® Eligibility",
+          "value": "Intel vPro® Enterprise"
+        },
+        {
+          "group": "Security & Reliability",
+          "label": "Intel® Threat Detection Technology (TDT)",
+          "value": "Yes"
+        },
+        {
+          "group": "Security & Reliability",
+          "label": "Intel® Active Management Technology (AMT)",
+          "value": "Yes"
+        },
+        {
+          "group": "Security & Reliability",
+          "label": "Intel® Standard Manageability (ISM)",
+          "value": "Yes"
+        },
+        {
+          "group": "Security & Reliability",
+          "label": "Intel® Remote Platform Erase (RPE)",
+          "value": "Yes"
+        },
+        {
+          "group": "Security & Reliability",
+          "label": "Intel® One-Click Recovery",
+          "value": "Yes"
+        },
+        {
+          "group": "Security & Reliability",
+          "label": "Intel® Secure Key",
+          "value": "Yes"
+        },
+        {
+          "group": "Security & Reliability",
+          "label": "Intel® Control-Flow Enforcement Technology",
+          "value": "Yes"
+        },
+        {
+          "group": "Security & Reliability",
+          "label": "Intel® Total Memory Encryption - Multi Key",
+          "value": "Yes"
+        },
+        {
+          "group": "Security & Reliability",
+          "label": "Intel® AES New Instructions",
+          "value": "Yes"
+        },
+        {
+          "group": "Security & Reliability",
+          "label": "Intel® Trusted Execution Technology",
+          "value": "Yes"
+        },
+        {
+          "group": "Security & Reliability",
+          "label": "Execute Disable Bit",
+          "value": "Yes"
+        },
+        {
+          "group": "Security & Reliability",
+          "label": "Intel® OS Guard",
+          "value": "Yes"
+        },
+        {
+          "group": "Security & Reliability",
+          "label": "Intel® Boot Guard",
+          "value": "Yes"
+        },
+        {
+          "group": "Security & Reliability",
+          "label": "Mode-based Execute Control (MBEC)",
+          "value": "Yes"
+        },
+        {
+          "group": "Security & Reliability",
+          "label": "Intel® Stable IT Platform Program (SIPP)",
+          "value": "Yes"
+        },
+        {
+          "group": "Security & Reliability",
+          "label": "Intel® Virtualization Technology with Redirect Protection (VT-rp)",
+          "value": "Yes"
+        },
+        {
+          "group": "Security & Reliability",
+          "label": "Intel® Virtualization Technology (VT-x)",
+          "value": "Yes"
+        },
+        {
+          "group": "Security & Reliability",
+          "label": "Intel® Virtualization Technology for Directed I/O (VT-d)",
+          "value": "Yes"
+        },
+        {
+          "group": "Security & Reliability",
+          "label": "Intel® VT-x with Extended Page Tables (EPT)",
+          "value": "Yes"
+        }
+      ],
+      "specs_source": "https://www.intel.com/content/www/us/en/products/sku/245692/intel-core-ultra-7-processor-270k-plus-36m-cache-up-to-5-50-ghz/specifications.html"
+    },
+    {
+      "product_id": 3,
+      "category_id": 1,
+      "product_name": "AMD Ryzen 7 9850X3D",
+      "description": "8 core 16 thread dengan 3d v-cache, boost 5.6 ghz, soket am5",
+      "price": 9650000,
+      "stock_quantity": 8,
+      "is_active": true,
+      "official_url": "https://www.amd.com/en/products/processors/desktops/ryzen/9000-series/amd-ryzen-7-9850x3d.html",
+      "overview": null,
+      "overview_source": null,
+      "images": [
+        "/products/amd-ryzen-7-9850x3d.avif"
+      ],
+      "specs": [
+        {
+          "label": "Name",
+          "value": "AMD Ryzen™ 7 9850X3D"
+        },
+        {
+          "label": "Family",
+          "value": "Ryzen"
+        },
+        {
+          "label": "Series",
+          "value": "Ryzen 9000 Series"
+        },
+        {
+          "label": "Form Factor",
+          "value": "Desktops, Boxed Processor"
+        },
+        {
+          "label": "Market Segment",
+          "value": "Enthusiast Desktop"
+        },
+        {
+          "label": "Regional Availability",
+          "value": "Global"
+        },
+        {
+          "label": "Former Codename",
+          "value": "Granite Ridge AM5"
+        },
+        {
+          "label": "Processor Architecture",
+          "value": "Zen 5"
+        },
+        {
+          "label": "# of CPU Cores",
+          "value": "8"
+        },
+        {
+          "label": "Multithreading (SMT)",
+          "value": "Yes"
+        },
+        {
+          "label": "# of Threads",
+          "value": "16"
+        },
+        {
+          "label": "Max. Boost Clock",
+          "value": "Up to 5.6 GHz"
+        },
+        {
+          "label": "Base Clock",
+          "value": "4.7 GHz"
+        },
+        {
+          "label": "L1 Cache",
+          "value": "640 KB"
+        },
+        {
+          "label": "L2 Cache",
+          "value": "8 MB"
+        },
+        {
+          "label": "L3 Cache",
+          "value": "96 MB"
+        },
+        {
+          "label": "Default TDP",
+          "value": "120W"
+        },
+        {
+          "label": "Processor Technology for CPU Cores",
+          "value": "TSMC 4nm FinFET"
+        },
+        {
+          "label": "Processor Technology for I/O Die",
+          "value": "TSMC 6nm FinFET"
+        },
+        {
+          "label": "Package Die Count",
+          "value": "2"
+        },
+        {
+          "label": "Unlocked for Overclocking",
+          "value": "Yes"
+        },
+        {
+          "label": "AMD EXPO™ Memory Overclocking Technology",
+          "value": "Yes"
+        },
+        {
+          "label": "Precision Boost Overdrive",
+          "value": "Yes"
+        },
+        {
+          "label": "Curve Optimizer Voltage Offsets",
+          "value": "Yes"
+        },
+        {
+          "label": "AMD Ryzen™ Master Support",
+          "value": "Yes"
+        },
+        {
+          "label": "CPU Socket",
+          "value": "AM5"
+        },
+        {
+          "label": "Supporting Chipsets",
+          "value": "A620, X670E, X670, B650E, B650, X870E, X870, B840, B850"
+        },
+        {
+          "label": "CPU Boost Technology",
+          "value": "Precision Boost 2"
+        },
+        {
+          "label": "Instruction Set",
+          "value": "x86-64"
+        },
+        {
+          "label": "Supported Extensions",
+          "value": "AES, AMD-V, AVX, AVX2, AVX512, FMA3, MMX-plus, SHA, SSE, SSE2, SSE3, SSE4.1, SSE4.2, SSE4A, SSSE3, x86-64"
+        },
+        {
+          "label": "Thermal Solution (PIB)",
+          "value": "Not Included"
+        },
+        {
+          "label": "Recommended Cooler",
+          "value": "Liquid cooler recommended for optimal performance"
+        },
+        {
+          "label": "Max. Operating Temperature (Tjmax)",
+          "value": "95°C"
+        },
+        {
+          "label": "Launch Date",
+          "value": "1/29/2026"
+        },
+        {
+          "label": "OS Support",
+          "value": "Windows 11 - 64-Bit Edition, Windows 10 - 64-Bit Edition, RHEL x86 64-Bit, Ubuntu x86 64-Bit"
+        },
+        {
+          "label": "Native USB 3.2 Gen 2 (10Gbps)",
+          "value": "4"
+        },
+        {
+          "label": "Native USB 2.0 (480Mbps)",
+          "value": "1"
+        },
+        {
+          "label": "PCI Express® Version",
+          "value": "PCIe® 5.0"
+        },
+        {
+          "label": "Native PCIe® Lanes (Total/Usable)",
+          "value": "28, 24"
+        },
+        {
+          "label": "NVMe Support",
+          "value": "Boot, RAID0, RAID1, RAID5, RAID10"
+        },
+        {
+          "label": "System Memory Type",
+          "value": "DDR5"
+        },
+        {
+          "label": "Memory Channels",
+          "value": "2"
+        },
+        {
+          "label": "Max. Memory",
+          "value": "256 GB"
+        },
+        {
+          "label": "System Memory Subtype",
+          "value": "UDIMM"
+        },
+        {
+          "label": "Max Memory Speed",
+          "value": "2x1R, DDR5-5600, 2x2R, DDR5-5600, 4x1R, DDR5-3600, 4x2R, DDR5-3600"
+        },
+        {
+          "label": "ECC Support",
+          "value": "Yes (Requires mobo support)"
+        },
+        {
+          "label": "Graphics Model",
+          "value": "AMD Radeon™ Graphics"
+        },
+        {
+          "label": "Graphics Core Count",
+          "value": "2"
+        },
+        {
+          "label": "Graphics Frequency",
+          "value": "2200 MHz"
+        },
+        {
+          "label": "USB Type-C® DisplayPort™ Alternate Mode",
+          "value": "Yes"
+        },
+        {
+          "label": "AMD Secure Processor",
+          "value": "Yes"
+        },
+        {
+          "label": "AMD Platform Secure Boot",
+          "value": "Yes"
+        },
+        {
+          "label": "Windows Secure Boot",
+          "value": "Yes"
+        },
+        {
+          "label": "UEFI Secure Boot",
+          "value": "Yes"
+        },
+        {
+          "label": "Windows Device Guard",
+          "value": "Yes"
+        },
+        {
+          "label": "Supervisor Mode Execution Prevention (SMEP)",
+          "value": "Yes"
+        },
+        {
+          "label": "Guest Mode Execution (GMET) Trap",
+          "value": "Yes"
+        },
+        {
+          "label": "Virtualization-Based Security (VBS)",
+          "value": "Yes"
+        },
+        {
+          "label": "Windows Secured-Core PC",
+          "value": "Yes"
+        },
+        {
+          "label": "Firmware TPM",
+          "value": "Yes"
+        },
+        {
+          "label": "AMD-V (SVM)",
+          "value": "Yes"
+        },
+        {
+          "label": "AMD AVIC (Interrupt Virtualization)",
+          "value": "Yes"
+        },
+        {
+          "label": "AMD-Vi (I/O MMU Virtualization)",
+          "value": "Yes"
+        },
+        {
+          "label": "Second Level Address Translation (SLAT)",
+          "value": "Yes"
+        },
+        {
+          "label": "Advanced Encryption Standard New Instructions (AES-NI)",
+          "value": "Yes"
+        },
+        {
+          "label": "AMD Enhanced Virus Protection (NX bit)",
+          "value": "Yes"
+        },
+        {
+          "label": "AMD Shadow Stack",
+          "value": "Yes"
+        }
+      ],
+      "specs_source": "https://www.amd.com/en/products/processors/desktops/ryzen/9000-series/amd-ryzen-7-9850x3d.html"
+    },
+    {
+      "product_id": 4,
+      "category_id": 2,
+      "product_name": "ASUS Prime B860M-A WiFi",
+      "description": "micro atx, ddr5, wifi 6e, soket lga1851",
+      "price": 2650000,
+      "stock_quantity": 20,
+      "is_active": true,
+      "official_url": "https://www.asus.com/motherboards-components/motherboards/prime/prime-b860m-a-wifi/",
+      "overview": "Discover the PRIME B860M-A WIFI motherboard with Intel® Core™ Ultra Processors (Series 2) support, robust power design, AI capabilities, WiFi 6E, PCIe 5.0 slots",
+      "overview_source": "https://www.asus.com/motherboards-components/motherboards/prime/prime-b860m-a-wifi/",
+      "images": [
+        "/products/asus-prime-b860m-a-wifi.avif"
+      ],
+      "specs": [],
+      "specs_source": null
+    },
+    {
+      "product_id": 5,
+      "category_id": 2,
+      "product_name": "MSI MAG B850 Tomahawk WiFi",
+      "description": "atx, ddr5, wifi 7, soket am5",
+      "price": 3850000,
+      "stock_quantity": 14,
+      "is_active": true,
+      "official_url": "https://www.msi.com/Motherboard/MAG-B850-TOMAHAWK-WIFI",
+      "overview": "MAG B850 TOMAHAWK WIFI AMD AM5 gaming motherboard offers advanced connectivity with Wi-Fi 7, 5G LAN, high-speed USB, DDR5, PCIe 5.0, and M.2 Gen5. Designed for AI PCs and EZ DIY, this is the best B850 ATX motherboard for AMD Ryzen 9000 processors.",
+      "overview_source": "https://www.msi.com/Motherboard/MAG-B850-TOMAHAWK-WIFI",
+      "images": [
+        "/products/msi-mag-b850-tomahawk-wifi.avif"
+      ],
+      "specs": [
+        {
+          "label": "Chipset",
+          "value": "AMD B850"
+        },
+        {
+          "label": "CPU",
+          "value": "Supports AMD Ryzen™ 9000/ 8000/ 7000 Series Desktop Processors, Socket AM5"
+        },
+        {
+          "label": "Onboard Graphics",
+          "value": "1x HDMI™, Support HDMI™ 2.1 FRL, maximum resolution of 8K 60Hz**Available only on processors featuring integrated graphics. Graphics specifications may vary depending on the CPU installed."
+        },
+        {
+          "label": "Audio",
+          "value": "Realtek® ALC4080 Codec, 7.1-Channel USB High Performance Audio Supports up to 32-bit/384kHz playback on front panel Supports S/PDIF output"
+        },
+        {
+          "label": "Multi-GPU",
+          "value": "AMD MULTI-GPU Support"
+        },
+        {
+          "label": "RAID",
+          "value": "Supports RAID 0 and RAID 1 for M.2 NVMe storage devices"
+        },
+        {
+          "label": "USB",
+          "value": "4x USB 2.0 (Rear), 4x USB 2.0 (Front), 2x USB 5Gbps Type A (Rear), 2x USB 5Gbps Type A (Front), 2x USB 10Gbps Type A (Rear), 1x USB 10Gbps Type C (Rear), 1x USB 10Gbps Type C (Front), 1x USB 20Gbps Type C (Rear)"
+        },
+        {
+          "label": "LAN",
+          "value": "Realtek® 8126VB 5G LAN"
+        },
+        {
+          "label": "LED FEATURE",
+          "value": "4x EZ Debug LED 1x EZ Memory Detection LED"
+        },
+        {
+          "label": "BACK PANEL PORTS",
+          "value": "Clear CMOS Button, USB 10Gbps Type-A, USB 5Gbps Type-A, USB 2.0, 5G LAN, Wi-Fi / Bluetooth, Audio Connectors, Flash BIOS Button, HDMI™, USB 10Gbps Type-C, USB 20Gbps Type-C, USB 10Gbps Type-A, Optical S/PDIF Out"
+        },
+        {
+          "label": "OPERATING SYSTEM",
+          "value": "Support for Windows® 11 64-bit"
+        },
+        {
+          "label": "PCB Info",
+          "value": "ATX, 243.84mmx304.8mm"
+        }
+      ],
+      "specs_source": "https://www.msi.com/Motherboard/MAG-B850-TOMAHAWK-WIFI/Specification"
+    },
+    {
+      "product_id": 6,
+      "category_id": 2,
+      "product_name": "Gigabyte H810M H",
+      "description": "micro atx hemat biaya, ddr5, soket lga1851",
+      "price": 1650000,
+      "stock_quantity": 30,
+      "is_active": true,
+      "official_url": "https://www.gigabyte.com/Motherboard/H810M-H-rev-10",
+      "overview": null,
+      "overview_source": null,
+      "images": [
+        "/products/gigabyte-h810m-h.avif"
+      ],
+      "specs": [],
+      "specs_source": null
+    },
+    {
+      "product_id": 7,
+      "category_id": 3,
+      "product_name": "Corsair Vengeance DDR5 16GB",
+      "description": "5600 mhz, kit 1x16gb",
+      "price": 1050000,
+      "stock_quantity": 45,
+      "is_active": true,
+      "official_url": "https://www.corsair.com/us/en/p/memory/cmk16gx5m1b5600c40/vengeance-16gb-1x16gb-ddr5-dram-5600mhz-c40-memory-kit-black-cmk16gx5m1b5600c40",
+      "overview": "CORSAIR VENGEANCE DDR5, optimized for Intel® motherboards, delivers higher frequencies and greater capacities of DDR5 technology in a high-quality, compact module that suits your system.",
+      "overview_source": "https://www.corsair.com/us/en/p/memory/cmk16gx5m1b5600c40/vengeance-16gb-1x16gb-ddr5-dram-5600mhz-c40-memory-kit-black-cmk16gx5m1b5600c40",
+      "images": [
+        "/products/corsair-vengeance-ddr5-16gb.avif"
+      ],
+      "specs": [
+        {
+          "label": "Capacity",
+          "value": "16GB (1 x 16GB)"
+        },
+        {
+          "label": "Tested Latency",
+          "value": "40"
+        },
+        {
+          "label": "Tested Speed",
+          "value": "5600 MT/s"
+        },
+        {
+          "label": "Tested Voltage",
+          "value": "1.25V"
+        },
+        {
+          "label": "SPD Voltage",
+          "value": "1.1V"
+        },
+        {
+          "label": "Speed Rating",
+          "value": "PC5-44800 (DDR5-5600)"
+        },
+        {
+          "label": "SPD Speed",
+          "value": "4800MHz"
+        },
+        {
+          "label": "SPD Latency",
+          "value": "40"
+        },
+        {
+          "label": "Performance Profile",
+          "value": "Intel XMP"
+        },
+        {
+          "label": "Package Memory Format",
+          "value": "UDIMM"
+        },
+        {
+          "label": "Package Memory Pin",
+          "value": "288"
+        },
+        {
+          "label": "Weight",
+          "value": "0kg"
+        },
+        {
+          "label": "Heat Spreader",
+          "value": "Aluminum"
+        },
+        {
+          "label": "Fan Included",
+          "value": "No"
+        },
+        {
+          "label": "Memory Color",
+          "value": "BLACK"
+        },
+        {
+          "label": "Memory Compatibility",
+          "value": "Intel 600 Series,Intel 700 Series,Intel 800 Series"
+        },
+        {
+          "label": "Memory Detail Compatibility",
+          "value": "Intel 600 Series, Intel 700 Series, Intel 800 Series"
+        },
+        {
+          "label": "Memory Type",
+          "value": "DDR5"
+        },
+        {
+          "label": "PMIC Type",
+          "value": "Overclock PMIC"
+        }
+      ],
+      "specs_source": "https://www.corsair.com/us/en/p/memory/cmk16gx5m1b5600c40/vengeance-16gb-1x16gb-ddr5-dram-5600mhz-c40-memory-kit-black-cmk16gx5m1b5600c40"
+    },
+    {
+      "product_id": 8,
+      "category_id": 3,
+      "product_name": "Corsair Dominator Titanium RGB DDR5 32GB",
+      "description": "ddr5 7600 mt/s cl36, kit 2x16gb, intel xmp 3.0, rgb",
+      "price": 13550000,
+      "stock_quantity": 10,
+      "is_active": true,
+      "official_url": "https://www.corsair.com/ww/en/p/memory/cmp32gx5m2x7600c36/dominator-titanium-rgb-2x16gb-ddr5-dram-7600mt-s-cl36-intel-xmp-memory-kit-cmp32gx5m2x7600c36",
+      "overview": "CORSAIR DOMINATOR TITANIUM RGB DDR5 Memory combines elegant, refined styling, superior build quality, and vibrant RGB lighting for a premium memory experience.",
+      "overview_source": "https://www.corsair.com/ww/en/p/memory/cmp32gx5m2x7600c36/dominator-titanium-rgb-2x16gb-ddr5-dram-7600mt-s-cl36-intel-xmp-memory-kit-cmp32gx5m2x7600c36",
+      "images": [
+        "/products/corsair-dominator-titanium-rgb-32gb.avif",
+        "/products/corsair-dominator-titanium-rgb-32gb-2.avif",
+        "/products/corsair-dominator-titanium-rgb-32gb-3.avif",
+        "/products/corsair-dominator-titanium-rgb-32gb-4.avif",
+        "/products/corsair-dominator-titanium-rgb-32gb-5.avif",
+        "/products/corsair-dominator-titanium-rgb-32gb-6.avif",
+        "/products/corsair-dominator-titanium-rgb-32gb-7.avif",
+        "/products/corsair-dominator-titanium-rgb-32gb-8.avif",
+        "/products/corsair-dominator-titanium-rgb-32gb-9.avif",
+        "/products/corsair-dominator-titanium-rgb-32gb-10.avif"
+      ],
+      "specs": [
+        {
+          "label": "Capacity",
+          "value": "32GB (2 x 16GB)"
+        },
+        {
+          "label": "Tested Latency",
+          "value": "36"
+        },
+        {
+          "label": "Tested Speed",
+          "value": "7600 MT/s"
+        },
+        {
+          "label": "Tested Voltage",
+          "value": "1.45V"
+        },
+        {
+          "label": "SPD Voltage",
+          "value": "1.1V"
+        },
+        {
+          "label": "Speed Rating",
+          "value": "PC5-60800 (DDR5-7600)"
+        },
+        {
+          "label": "SPD Speed",
+          "value": "4800MHz"
+        },
+        {
+          "label": "SPD Latency",
+          "value": "40"
+        },
+        {
+          "label": "Performance Profile",
+          "value": "Intel XMP"
+        },
+        {
+          "label": "Package Memory Format",
+          "value": "UDIMM"
+        },
+        {
+          "label": "Memory Series",
+          "value": "DOMINATOR TITANIUM"
+        },
+        {
+          "label": "Lighting",
+          "value": "RGB"
+        },
+        {
+          "label": "Heat Spreader",
+          "value": "Aluminum"
+        },
+        {
+          "label": "Fan Included",
+          "value": "No"
+        },
+        {
+          "label": "Memory Color",
+          "value": "Black"
+        },
+        {
+          "label": "Memory Compatibility",
+          "value": "Intel 700 Series,Intel 800 Series"
+        },
+        {
+          "label": "Memory Detail Compatibility",
+          "value": "ASUS ROG Z790 Series"
+        },
+        {
+          "label": "Memory Type",
+          "value": "DDR5"
+        },
+        {
+          "label": "PMIC Type",
+          "value": "Extreme OC PMIC"
+        }
+      ],
+      "specs_source": "https://www.corsair.com/ww/en/p/memory/cmp32gx5m2x7600c36/dominator-titanium-rgb-2x16gb-ddr5-dram-7600mt-s-cl36-intel-xmp-memory-kit-cmp32gx5m2x7600c36"
+    },
+    {
+      "product_id": 9,
+      "category_id": 3,
+      "product_name": "Samsung 9100 Pro NVMe 1TB",
+      "description": "pcie 5.0, baca hingga 14800 mb per detik",
+      "price": 2950000,
+      "stock_quantity": 35,
+      "is_active": true,
+      "official_url": "https://www.samsung.com/us/memory-storage/nvme-ssd/9100-pro-nvme-ssd-sku-mz-vap1t0b-am/",
+      "overview": "Get 9100 PRO 1TB, the fastest Gen5 NVMe SSD on the market. Blazing seq read/write speeds up to 14,800/13,400 MB/s. Perfect for AI computing, gaming, more.",
+      "overview_source": "https://www.samsung.com/us/memory-storage/nvme-ssd/9100-pro-nvme-ssd-sku-mz-vap1t0b-am/",
+      "images": [
+        "/products/samsung-9100-pro-nvme-1tb.avif"
+      ],
+      "specs": [],
+      "specs_source": null
+    },
+    {
+      "product_id": 10,
+      "category_id": 3,
+      "product_name": "Seagate Barracuda HDD 2TB",
+      "description": "sata 3.5 inci, 7200 rpm",
+      "price": 1050000,
+      "stock_quantity": 22,
+      "is_active": true,
+      "official_url": "https://www.seagate.com/products/hard-drives/barracuda-hard-drive/",
+      "overview": null,
+      "overview_source": null,
+      "images": [
+        "/products/seagate-barracuda-hdd-2tb.avif"
+      ],
+      "specs": [],
+      "specs_source": null
+    },
+    {
+      "product_id": 11,
+      "category_id": 4,
+      "product_name": "NVIDIA GeForce RTX 5060 8GB",
+      "description": "gddr7, arsitektur blackwell, dukungan dlss 4",
+      "price": 5750000,
+      "stock_quantity": 10,
+      "is_active": true,
+      "official_url": "https://www.nvidia.com/en-us/geforce/graphics-cards/50-series/rtx-5060-family/",
+      "overview": null,
+      "overview_source": null,
+      "images": [
+        "/products/nvidia-geforce-rtx-5060-8gb.avif"
+      ],
+      "specs": [
+        {
+          "group": "GPU Engine Specs",
+          "label": "NVIDIA CUDA® Cores",
+          "value": "3840"
+        },
+        {
+          "group": "GPU Engine Specs",
+          "label": "Shader Cores",
+          "value": "Blackwell"
+        },
+        {
+          "group": "GPU Engine Specs",
+          "label": "Tensor Cores (AI)",
+          "value": "5th Generation, 614 AI TOPS"
+        },
+        {
+          "group": "GPU Engine Specs",
+          "label": "Ray Tracing Cores",
+          "value": "4th Generation 58 TFLOPS"
+        },
+        {
+          "group": "GPU Engine Specs",
+          "label": "Boost Clock (GHz)",
+          "value": "2.50"
+        },
+        {
+          "group": "GPU Engine Specs",
+          "label": "Base Clock (GHz)",
+          "value": "2.28"
+        },
+        {
+          "group": "Memory Specs",
+          "label": "Standard Memory Config",
+          "value": "8 GB GDDR7"
+        },
+        {
+          "group": "Memory Specs",
+          "label": "Memory Interface Width",
+          "value": "128-bit"
+        },
+        {
+          "group": "Technology Support",
+          "label": "NVIDIA Architecture",
+          "value": "Blackwell"
+        },
+        {
+          "group": "Technology Support",
+          "label": "Ray Tracing",
+          "value": "Yes"
+        },
+        {
+          "group": "Technology Support",
+          "label": "NVIDIA DLSS",
+          "value": "DLSS 4, Super Resolution, DLAA, Ray Reconstruction, Frame Generation, Multi Frame Generation"
+        },
+        {
+          "group": "Technology Support",
+          "label": "NVIDIA Reflex",
+          "value": "Reflex 2 Low Latency Mode, Frame Warp (Coming Soon)"
+        },
+        {
+          "group": "Technology Support",
+          "label": "NVIDIA Broadcast",
+          "value": "Yes"
+        },
+        {
+          "group": "Technology Support",
+          "label": "PCI Express Gen 5",
+          "value": "Yes"
+        },
+        {
+          "group": "Technology Support",
+          "label": "Resizable BAR",
+          "value": "Yes"
+        },
+        {
+          "group": "Technology Support",
+          "label": "NVIDIA App",
+          "value": "Yes"
+        },
+        {
+          "group": "Technology Support",
+          "label": "Photo Mode",
+          "value": "Yes"
+        },
+        {
+          "group": "Technology Support",
+          "label": "NVIDIA FreeStyle",
+          "value": "Yes"
+        },
+        {
+          "group": "Technology Support",
+          "label": "NVIDIA ShadowPlay",
+          "value": "Yes"
+        },
+        {
+          "group": "Technology Support",
+          "label": "NVIDIA Highlights",
+          "value": "Yes"
+        },
+        {
+          "group": "Technology Support",
+          "label": "NVIDIA G-SYNC®",
+          "value": "Yes"
+        },
+        {
+          "group": "Technology Support",
+          "label": "Game Ready Drivers",
+          "value": "Yes"
+        },
+        {
+          "group": "Technology Support",
+          "label": "NVIDIA Studio Drivers",
+          "value": "Yes"
+        },
+        {
+          "group": "Technology Support",
+          "label": "NVIDIA Omniverse",
+          "value": "Yes"
+        },
+        {
+          "group": "Technology Support",
+          "label": "RTX Remix",
+          "value": "Yes"
+        },
+        {
+          "group": "Technology Support",
+          "label": "Microsoft DirectX® 12 Ultimate",
+          "value": "Yes"
+        },
+        {
+          "group": "Technology Support",
+          "label": "NVIDIA GPU Boost™",
+          "value": "Yes"
+        },
+        {
+          "group": "Technology Support",
+          "label": "NVIDIA NVLink™ (SLI-Ready)",
+          "value": "No"
+        },
+        {
+          "group": "Technology Support",
+          "label": "Vulkan 1.4, OpenGL 4.6",
+          "value": "Yes"
+        },
+        {
+          "group": "Technology Support",
+          "label": "NVIDIA Encoder (NVENC)",
+          "value": "1x Ninth Generation"
+        },
+        {
+          "group": "Technology Support",
+          "label": "NVIDIA Decoder (NVDEC)",
+          "value": "1x Sixth Generation"
+        },
+        {
+          "group": "Technology Support",
+          "label": "AV1 Encode",
+          "value": "Yes"
+        },
+        {
+          "group": "Technology Support",
+          "label": "AV1 Decode",
+          "value": "Yes"
+        },
+        {
+          "group": "Technology Support",
+          "label": "CUDA Capability",
+          "value": "12.0"
+        },
+        {
+          "group": "Technology Support",
+          "label": "VR Ready",
+          "value": "Yes"
+        },
+        {
+          "group": "Display Support",
+          "label": "Maximum Digital Resolution(1)",
+          "value": "4K at 480Hz or 8K at 165Hz with DSC"
+        },
+        {
+          "group": "Display Support",
+          "label": "Standard Display Connectors",
+          "value": "3x DisplayPort(2), 1x HDMI(3)"
+        },
+        {
+          "group": "Display Support",
+          "label": "Multi Monitor",
+          "value": "up to 4(4)"
+        },
+        {
+          "group": "Display Support",
+          "label": "HDCP",
+          "value": "2.3"
+        },
+        {
+          "group": "Card Dimensions",
+          "label": "Length",
+          "value": "Varies by manufacturer"
+        },
+        {
+          "group": "Card Dimensions",
+          "label": "Width",
+          "value": "Varies by manufacturer"
+        },
+        {
+          "group": "Card Dimensions",
+          "label": "Slot",
+          "value": "Varies by manufacturer"
+        },
+        {
+          "group": "Thermal and Power Specs",
+          "label": "Maximum GPU Temperature (in C)",
+          "value": "89"
+        },
+        {
+          "group": "Thermal and Power Specs",
+          "label": "Total Graphics Power (W)",
+          "value": "145"
+        },
+        {
+          "group": "Thermal and Power Specs",
+          "label": "Required System Power (W) (5)",
+          "value": "550"
+        },
+        {
+          "group": "Thermal and Power Specs",
+          "label": "Supplementary Power Connectors",
+          "value": "1x PCIe 8-pin cables OR, 300 W or greater PCIe Gen 5 cable (adapter in box)"
+        }
+      ],
+      "specs_source": "https://www.nvidia.com/en-us/geforce/graphics-cards/50-series/rtx-5060-family/"
+    },
+    {
+      "product_id": 12,
+      "category_id": 4,
+      "product_name": "MSI GeForce RTX 5070 12G Gaming Trio OC",
+      "description": "gddr7 12gb, boost 2610 mhz, pendingin tri frozr 4, arsitektur blackwell",
+      "price": 13450000,
+      "stock_quantity": 6,
+      "is_active": true,
+      "official_url": "https://id.msi.com/Graphics-Card/GeForce-RTX-5070-12G-GAMING-TRIO-OC",
+      "overview": "MSI GeForce RTX 5070 12G GAMING TRIO OC powered by NVIDIA Blackwell architecture and DLSS 4, featuring upgraded TRI FROZR 4 thermal design and STORMFORCE Fans for superior cooling, minimal noise, and exceptional performance.",
+      "overview_source": "https://www.msi.com/Graphics-Card/GeForce-RTX-5070-12G-GAMING-TRIO-OC",
+      "images": [
+        "/products/msi-geforce-rtx-5070-12g-gaming-trio-oc.avif",
+        "/products/msi-geforce-rtx-5070-12g-gaming-trio-oc-2.avif",
+        "/products/msi-geforce-rtx-5070-12g-gaming-trio-oc-3.avif",
+        "/products/msi-geforce-rtx-5070-12g-gaming-trio-oc-4.avif",
+        "/products/msi-geforce-rtx-5070-12g-gaming-trio-oc-5.avif"
+      ],
+      "specs": [
+        {
+          "label": "Marketing Name",
+          "value": "GeForce RTX™ 5070 12G GAMING TRIO OC"
+        },
+        {
+          "label": "Model Name",
+          "value": "G5070-12GTC"
+        },
+        {
+          "label": "Graphics Processing Unit",
+          "value": "NVIDIA® GeForce RTX™ 5070"
+        },
+        {
+          "label": "Interface",
+          "value": "PCI Express® Gen 5"
+        },
+        {
+          "label": "Core Clocks",
+          "value": "Extreme Performance: 2625 MHz (MSI Center), Boost: 2610 MHz"
+        },
+        {
+          "label": "CUDA® CORES",
+          "value": "6144 Units"
+        },
+        {
+          "label": "Memory Speed",
+          "value": "28 Gbps"
+        },
+        {
+          "label": "Memory",
+          "value": "12GB GDDR7"
+        },
+        {
+          "label": "Memory Bus",
+          "value": "192-bit"
+        },
+        {
+          "label": "Output",
+          "value": "DisplayPort x 3 (v2.1b), HDMI™ x 1 (As specified in HDMI™ 2.1b: up to 4K 480Hz or 8K 120Hz with DSC, Gaming VRR, HDR)"
+        },
+        {
+          "label": "HDCP Support",
+          "value": "Y"
+        },
+        {
+          "label": "Power consumption",
+          "value": "250 W"
+        },
+        {
+          "label": "Power connectors",
+          "value": "16-pin x 1 (ATX 3.1 PSU recommended)"
+        },
+        {
+          "label": "Recommended PSU",
+          "value": "650 W"
+        },
+        {
+          "label": "Card Dimension (mm)",
+          "value": "338 x 140 x 50 mm"
+        },
+        {
+          "label": "Weight (Card / Package)",
+          "value": "1187 g / 1705 g"
+        },
+        {
+          "label": "DirectX Version Support",
+          "value": "12 Ultimate"
+        },
+        {
+          "label": "OpenGL Version Support",
+          "value": "4.6"
+        },
+        {
+          "label": "Maximum Displays",
+          "value": "4"
+        },
+        {
+          "label": "G-SYNC® technology",
+          "value": "Y"
+        },
+        {
+          "label": "Digital Maximum Resolution",
+          "value": "7680 x 4320"
+        }
+      ],
+      "specs_source": "https://www.msi.com/Graphics-Card/GeForce-RTX-5070-12G-GAMING-TRIO-OC/Specification"
+    },
+    {
+      "product_id": 13,
+      "category_id": 4,
+      "product_name": "AMD Radeon RX 9060 XT 8GB",
+      "description": "gddr6, arsitektur rdna 4",
+      "price": 5950000,
+      "stock_quantity": 9,
+      "is_active": true,
+      "official_url": "https://www.amd.com/en/products/graphics/desktops/radeon/9000-series/amd-radeon-rx-9060xt-8gb.html",
+      "overview": null,
+      "overview_source": null,
+      "images": [
+        "/products/amd-radeon-rx-9060-xt-8gb.avif"
+      ],
+      "specs": [
+        {
+          "label": "Name",
+          "value": "AMD Radeon™ RX 9060 XT (8GB)"
+        },
+        {
+          "label": "Family",
+          "value": "Radeon RX"
+        },
+        {
+          "label": "Series",
+          "value": "Radeon RX 9000 Series"
+        },
+        {
+          "label": "Board Type",
+          "value": "Desktop"
+        },
+        {
+          "label": "OS Support",
+          "value": "Windows 10 - 64-Bit Edition, Windows 11 - 64-Bit Edition, Linux x86 64-Bit"
+        },
+        {
+          "label": "Additional Power Connector",
+          "value": "1x8-Pin"
+        },
+        {
+          "label": "Compute Units",
+          "value": "32"
+        },
+        {
+          "label": "Boost Frequency",
+          "value": "Up to 3130 MHz"
+        },
+        {
+          "label": "Game Frequency",
+          "value": "2530 MHz"
+        },
+        {
+          "label": "Ray Accelerators",
+          "value": "32"
+        },
+        {
+          "label": "AI Accelerators",
+          "value": "64"
+        },
+        {
+          "label": "Peak Pixel Fill-Rate",
+          "value": "Up to 200.3 GP/s"
+        },
+        {
+          "label": "Peak Single Precision (FP32 Vector) Performance",
+          "value": "25.6 TFLOPs"
+        },
+        {
+          "label": "Peak Half Precision (FP16 Vector) Performance",
+          "value": "25.6 TFLOPs"
+        },
+        {
+          "label": "Peak Half Precision (FP16 Matrix) Performance",
+          "value": "103 TFLOPs"
+        },
+        {
+          "label": "Peak Half Precision (FP16 Matrix) Performance with Structured Sparsity",
+          "value": "205 TFLOPs"
+        },
+        {
+          "label": "Peak 8-bit Precision (FP8 Matrix) Performance (E5M2, E4M3)",
+          "value": "205 TFLOPs"
+        },
+        {
+          "label": "Peak 8-bit Precision (INT8 Matrix) Performance",
+          "value": "205 TOPs"
+        },
+        {
+          "label": "Peak 8-bit Precision (INT8 Matrix) Performance with Structured Sparsity",
+          "value": "410 TOPs"
+        },
+        {
+          "label": "Peak 4-bit Precision (INT4 Matrix) Performance",
+          "value": "410 TOPs"
+        },
+        {
+          "label": "Peak 4-bit Precision (INT4 Matrix) Performance with Structured Sparsity",
+          "value": "821 TOPs"
+        },
+        {
+          "label": "ROPs",
+          "value": "64"
+        },
+        {
+          "label": "Stream Processors",
+          "value": "2048"
+        },
+        {
+          "label": "Texture Units",
+          "value": "128"
+        },
+        {
+          "label": "Transistor Count",
+          "value": "29.7 B"
+        },
+        {
+          "label": "AMD Infinity Cache Technology",
+          "value": "32 MB"
+        },
+        {
+          "label": "Memory Speed",
+          "value": "Up to 20 Gbps"
+        },
+        {
+          "label": "Max Memory Size",
+          "value": "8 GB"
+        },
+        {
+          "label": "Memory Type",
+          "value": "GDDR6"
+        },
+        {
+          "label": "Memory Interface",
+          "value": "128-bit"
+        },
+        {
+          "label": "Memory Bandwidth",
+          "value": "Up to 320 GB/s"
+        },
+        {
+          "label": "HDMI™ 4K Support",
+          "value": "Yes"
+        },
+        {
+          "label": "H265/HEVC Decode",
+          "value": "Yes"
+        },
+        {
+          "label": "H265/HEVC Encode",
+          "value": "Yes"
+        },
+        {
+          "label": "AV1 Decode",
+          "value": "Yes"
+        },
+        {
+          "label": "AV1 Encode",
+          "value": "Yes"
+        },
+        {
+          "label": "DisplayPort™",
+          "value": "2.1a"
+        },
+        {
+          "label": "HDMI™",
+          "value": "2.1b"
+        },
+        {
+          "label": "Bus Type",
+          "value": "PCIe® 5.0 x16"
+        }
+      ],
+      "specs_source": "https://www.amd.com/en/products/graphics/desktops/radeon/9000-series/amd-radeon-rx-9060xt-8gb.html"
+    },
+    {
+      "product_id": 14,
+      "category_id": 5,
+      "product_name": "Corsair RM650e 650W 80 Plus Gold",
+      "description": "full modular, sertifikasi gold, 650 watt",
+      "price": 1350000,
+      "stock_quantity": 16,
+      "is_active": true,
+      "official_url": "https://www.corsair.com/us/en/p/psu/cp-9020302-na/rme-series-rm650e-fully-modular-low-noise-atx-power-supply-cp-9020302-na",
+      "overview": "CORSAIR RMe Series Fully Modular Low-Noise Power Supplies include a dedicated 12V-2x6 GPU power cable, ATX 3.1 certification and PCIe 5.1 compliance, and Cybenetics™ Gold rated efficiency for a quiet, reliable build.",
+      "overview_source": "https://www.corsair.com/us/en/p/psu/cp-9020302-na/rme-series-rm650e-fully-modular-low-noise-atx-power-supply-cp-9020302-na",
+      "images": [
+        "/products/corsair-rm650e-650w.avif"
+      ],
+      "specs": [
+        {
+          "label": "Cybenetics Efficiency",
+          "value": "Gold"
+        },
+        {
+          "label": "Cybenetics Noise",
+          "value": "A++"
+        },
+        {
+          "label": "PATA Connector",
+          "value": "2"
+        },
+        {
+          "label": "SATA Connector",
+          "value": "6"
+        },
+        {
+          "label": "Modern Standby",
+          "value": "Yes"
+        },
+        {
+          "label": "Dimensions",
+          "value": "140x150x86"
+        },
+        {
+          "label": "Modular",
+          "value": "Fully"
+        },
+        {
+          "label": "Cable Type",
+          "value": "Type 4"
+        },
+        {
+          "label": "Zero RPM Mode",
+          "value": "Yes"
+        },
+        {
+          "label": "Continuous Power W",
+          "value": "650 Watts"
+        },
+        {
+          "label": "ATX Connector",
+          "value": "1"
+        },
+        {
+          "label": "ATX12V Version",
+          "value": "3.1"
+        },
+        {
+          "label": "MTBF Hours",
+          "value": "100,000 hours"
+        },
+        {
+          "label": "Warranty",
+          "value": "7 Year"
+        },
+        {
+          "label": "Weight",
+          "value": "2kg"
+        }
+      ],
+      "specs_source": "https://www.corsair.com/us/en/p/psu/cp-9020302-na/rme-series-rm650e-fully-modular-low-noise-atx-power-supply-cp-9020302-na"
+    },
+    {
+      "product_id": 15,
+      "category_id": 5,
+      "product_name": "Deepcool AK400 CPU Cooler",
+      "description": "single tower, empat heat pipe",
+      "price": 480000,
+      "stock_quantity": 28,
+      "is_active": true,
+      "official_url": "https://www.deepcool.com/products/Cooling/cpuaircoolers/AK400-Performance-CPU-Cooler-1700-AM5/2021/15222.shtml",
+      "overview": "The DeepCool AK400 is a highly compatible CPU cooler featuring a classic four heat pipe tower layout with a unique matrix fin design and a high-performance FDB fan that delivers excellent heat dissipation and extremely low noise levels.",
+      "overview_source": "https://www.deepcool.com/products/Cooling/cpuaircoolers/AK400-Performance-CPU-Cooler-1700-AM5/2021/15222.shtml",
+      "images": [
+        "/products/deepcool-ak400.avif"
+      ],
+      "specs": [
+        {
+          "label": "Product Dimensions",
+          "value": "127×97×155 mm(L×W×H)"
+        },
+        {
+          "label": "Heatsink Dimensions",
+          "value": "120×45×152 mm(L×W×H)"
+        },
+        {
+          "label": "Net Weight",
+          "value": "661 g"
+        },
+        {
+          "label": "Heatpipe",
+          "value": "Ø6 mm×4 pcs"
+        },
+        {
+          "label": "Fan Dimensions",
+          "value": "120×120×25 mm(L×W×H)"
+        },
+        {
+          "label": "Fan Speed",
+          "value": "500~1850 RPM±10%"
+        },
+        {
+          "label": "Fan Airflow",
+          "value": "66.47 CFM"
+        },
+        {
+          "label": "Fan Air Pressure",
+          "value": "2.04 mmAq"
+        },
+        {
+          "label": "Fan Noise",
+          "value": "≤29 dB(A)"
+        },
+        {
+          "label": "Fan Connector",
+          "value": "4-pin PWM"
+        },
+        {
+          "label": "Bearing Type",
+          "value": "Fluid Dynamic Bearing"
+        },
+        {
+          "label": "Fan Rated Voltage",
+          "value": "12 VDC"
+        },
+        {
+          "label": "Fan Rated Current",
+          "value": "0.13 A"
+        },
+        {
+          "label": "Fan Power Consumption",
+          "value": "1.56 W"
+        },
+        {
+          "label": "EAN",
+          "value": "6933412727446"
+        },
+        {
+          "label": "P/N",
+          "value": "R-AK400-BKNNMN-G-1"
+        }
+      ],
+      "specs_source": "https://www.deepcool.com/products/Cooling/cpuaircoolers/AK400-Performance-CPU-Cooler-1700-AM5/2021/15222.shtml"
+    },
+    {
+      "product_id": 16,
+      "category_id": 5,
+      "product_name": "Arctic P12 ARGB Case Fan",
+      "description": "120 mm, static pressure tinggi",
+      "price": 150000,
+      "stock_quantity": 60,
+      "is_active": true,
+      "official_url": "https://www.arctic.de/en/P12-PWM-PST-A-RGB",
+      "overview": null,
+      "overview_source": null,
+      "images": [
+        "/products/arctic-p12-argb.avif"
+      ],
+      "specs": [
+        {
+          "group": "Technical specifications & manual",
+          "label": "Fan Speed",
+          "value": "200—2000 rpm PWM Controlled (0 rpm below 5% PWM)"
+        },
+        {
+          "group": "Technical specifications & manual",
+          "label": "Airflow",
+          "value": "48.80 cfm | 82.91 m³/h"
+        },
+        {
+          "group": "Technical specifications & manual",
+          "label": "Static Pressure",
+          "value": "1.85 mmH2O"
+        },
+        {
+          "group": "Technical specifications & manual",
+          "label": "Noise Level",
+          "value": "0.3 Sone"
+        },
+        {
+          "group": "Technical specifications & manual",
+          "label": "Operating Ambient Temperature",
+          "value": "0—40 °C"
+        },
+        {
+          "group": "Technical specifications & manual",
+          "label": "Warranty",
+          "value": "6 Years"
+        },
+        {
+          "label": "Fan Frame",
+          "value": "Standard"
+        },
+        {
+          "label": "Control Type",
+          "value": "PWM PST"
+        },
+        {
+          "label": "Connector",
+          "value": "4-Pin Connector + 4-Pin Socket"
+        },
+        {
+          "label": "Fan Bearing",
+          "value": "Fluid Dynamic Bearing"
+        },
+        {
+          "label": "Typical Voltage",
+          "value": "12 V DC"
+        },
+        {
+          "label": "Starting Voltage",
+          "value": "5 V"
+        },
+        {
+          "label": "Current | Voltage",
+          "value": "0.11 A | 12 V DC"
+        },
+        {
+          "label": "Cable Length",
+          "value": "400 mm"
+        },
+        {
+          "label": "LEDs",
+          "value": "12 A-RGB LEDs"
+        },
+        {
+          "label": "Current/Voltage",
+          "value": "0.4 A | 5 V"
+        },
+        {
+          "label": "Cable",
+          "value": "400 mm Cable with 80 mm Sharing Cable, Black"
+        },
+        {
+          "label": "Length",
+          "value": "120 mm"
+        },
+        {
+          "label": "Width",
+          "value": "120 mm"
+        },
+        {
+          "label": "Height",
+          "value": "25 mm"
+        },
+        {
+          "label": "Weight",
+          "value": "131 g"
+        }
+      ],
+      "specs_source": "https://www.arctic.de/en/P12-PWM-PST-A-RGB"
+    },
+    {
+      "product_id": 17,
+      "category_id": 5,
+      "product_name": "Thermal Grizzly Kryonaut 1G",
+      "description": "thermal paste konduktivitas tinggi",
+      "price": 210000,
+      "stock_quantity": 40,
+      "is_active": true,
+      "official_url": "https://www.thermal-grizzly.com/en/kryonaut/s-tg-k-001-rs",
+      "overview": "The Kryonaut Thermal Paste has been specially developed for the extreme applications and the highest demands of the overlocking community.",
+      "overview_source": "https://www.thermal-grizzly.com/en/kryonaut/s-tg-k-001-rs",
+      "images": [
+        "/products/thermal-grizzly-kryonaut-1g.avif"
+      ],
+      "specs": [
+        {
+          "group": "Application",
+          "label": "Color",
+          "value": "Silver matt"
+        },
+        {
+          "group": "Application",
+          "label": "Density",
+          "value": "3.7g/cm³"
+        },
+        {
+          "group": "Application",
+          "label": "Electrical conductivity",
+          "value": "0 pS/m"
+        },
+        {
+          "group": "Application",
+          "label": "Operating temperature",
+          "value": "-250°C to +350°C"
+        },
+        {
+          "group": "Application",
+          "label": "Viscosity",
+          "value": "130 - 170 Pa⋅s"
+        }
+      ],
+      "specs_source": "https://www.thermal-grizzly.com/en/kryonaut/s-tg-k-001-rs"
+    },
+    {
+      "product_id": 18,
+      "category_id": 6,
+      "product_name": "Logitech G502 X Gaming Mouse",
+      "description": "sensor hero 25k, switch hybrid lightforce, 13 tombol",
+      "price": 950000,
+      "stock_quantity": 33,
+      "is_active": true,
+      "official_url": "https://www.logitechg.com/en-us/shop/p/g502-x-wired-lightforce",
+      "overview": null,
+      "overview_source": null,
+      "images": [
+        "/products/logitech-g502-x.avif"
+      ],
+      "specs": [],
+      "specs_source": null
+    },
+    {
+      "product_id": 19,
+      "category_id": 6,
+      "product_name": "Keychron K8 Pro Mechanical Keyboard",
+      "description": "tenkeyless, hot swappable, bluetooth",
+      "price": 1850000,
+      "stock_quantity": 15,
+      "is_active": true,
+      "official_url": "https://www.keychron.com/products/keychron-k8-pro-qmk-via-wireless-mechanical-keyboard",
+      "overview": "Keychron K8 Pro QMK/VIA Wireless Mechanical Keyboard. Supports out-of-the-box QMK/VIA. Wireless or Wired. Hot swap every switch in a breeze with the hot-swappable feature. Compatible with Mac, Windows, iOS, Android, Linux. Keychron Gateron G Pro Mechanical Switches. Connect up to 3 devices.",
+      "overview_source": "https://www.keychron.com/products/keychron-k8-pro-qmk-via-wireless-mechanical-keyboard",
+      "images": [
+        "/products/keychron-k8-pro.avif"
+      ],
+      "specs": [],
+      "specs_source": null
+    },
+    {
+      "product_id": 20,
+      "category_id": 6,
+      "product_name": "LG UltraGear 27GS60F 180Hz Monitor",
+      "description": "27 inci, ips, 1 ms, 180 hz",
+      "price": 2950000,
+      "stock_quantity": 7,
+      "is_active": false,
+      "official_url": "https://www.lg.com/uk/monitors/gaming/27gs60f-b/",
+      "overview": "27'' UltraGear™ Full HD IPS gaming monitor 180Hz, IPS 1ms (GtG), HDR10.",
+      "overview_source": "https://www.lg.com/uk/monitors/gaming/27gs60f-b/",
+      "images": [
+        "/products/lg-ultragear-27gs60f.avif"
+      ],
+      "specs": [
+        {
+          "group": "DISPLAY",
+          "label": "Size [Inch]",
+          "value": "27"
+        },
+        {
+          "group": "DISPLAY",
+          "label": "Size [cm]",
+          "value": "68.5"
+        },
+        {
+          "group": "DISPLAY",
+          "label": "Resolution",
+          "value": "1920 x 1080"
+        },
+        {
+          "group": "DISPLAY",
+          "label": "Panel Type",
+          "value": "IPS"
+        },
+        {
+          "group": "DISPLAY",
+          "label": "Aspect Ratio",
+          "value": "16:9"
+        },
+        {
+          "group": "DISPLAY",
+          "label": "Pixel Pitch [mm]",
+          "value": "0.3108 x 0.3108 mm"
+        },
+        {
+          "group": "DISPLAY",
+          "label": "Color Gamut (Min.)",
+          "value": "sRGB 95% (CIE1931)"
+        },
+        {
+          "group": "DISPLAY",
+          "label": "Color Gamut (Typ.)",
+          "value": "sRGB 99% (CIE1931)"
+        },
+        {
+          "group": "DISPLAY",
+          "label": "Color Depth (Number of Colors)",
+          "value": "16.7M"
+        },
+        {
+          "group": "DISPLAY",
+          "label": "Contrast Ratio (Min.)",
+          "value": "700:1"
+        },
+        {
+          "group": "DISPLAY",
+          "label": "Contrast Ratio (Typ.)",
+          "value": "1000:1"
+        },
+        {
+          "group": "DISPLAY",
+          "label": "Response Time",
+          "value": "1ms (GtG at Faster)"
+        },
+        {
+          "group": "DISPLAY",
+          "label": "Refresh Rate (Max.) [Hz]",
+          "value": "180"
+        },
+        {
+          "group": "DISPLAY",
+          "label": "Viewing Angle (CR≥10)",
+          "value": "178º(R/L), 178º(U/D)"
+        },
+        {
+          "group": "DISPLAY",
+          "label": "Brightness (Min.) [cd/m²]",
+          "value": "240cd/m²"
+        },
+        {
+          "group": "DISPLAY",
+          "label": "Brightness (Typ.) [cd/m²]",
+          "value": "300cd/m²"
+        },
+        {
+          "group": "DISPLAY",
+          "label": "Colour Bit",
+          "value": "8bit"
+        },
+        {
+          "group": "FEATURES",
+          "label": "HDR 10",
+          "value": "YES"
+        },
+        {
+          "group": "FEATURES",
+          "label": "HDR Effect",
+          "value": "YES"
+        },
+        {
+          "group": "FEATURES",
+          "label": "Color Calibrated in Factory",
+          "value": "YES"
+        },
+        {
+          "group": "FEATURES",
+          "label": "Flicker Safe",
+          "value": "YES"
+        },
+        {
+          "group": "FEATURES",
+          "label": "Reader Mode",
+          "value": "YES"
+        },
+        {
+          "group": "FEATURES",
+          "label": "NVIDIA G-Sync™",
+          "value": "G-SYNC Compatible"
+        },
+        {
+          "group": "FEATURES",
+          "label": "AMD FreeSync™",
+          "value": "FreeSync"
+        },
+        {
+          "group": "FEATURES",
+          "label": "Black Stabiliser",
+          "value": "YES"
+        },
+        {
+          "group": "FEATURES",
+          "label": "Dynamic Action Sync",
+          "value": "YES"
+        },
+        {
+          "group": "FEATURES",
+          "label": "Crosshair",
+          "value": "YES"
+        },
+        {
+          "group": "FEATURES",
+          "label": "FPS Counter",
+          "value": "YES"
+        },
+        {
+          "group": "FEATURES",
+          "label": "User Defined Key",
+          "value": "YES"
+        },
+        {
+          "group": "FEATURES",
+          "label": "Auto Input Switch",
+          "value": "YES"
+        },
+        {
+          "group": "FEATURES",
+          "label": "Smart Energy Saving",
+          "value": "YES"
+        },
+        {
+          "group": "CONNECTIVITY",
+          "label": "HDMI",
+          "value": "YES(1ea)"
+        },
+        {
+          "group": "CONNECTIVITY",
+          "label": "DisplayPort",
+          "value": "YES(1ea)"
+        },
+        {
+          "group": "CONNECTIVITY",
+          "label": "DP Version",
+          "value": "1.4"
+        },
+        {
+          "group": "CONNECTIVITY",
+          "label": "Headphone out",
+          "value": "3-Pole(Sound only)"
+        },
+        {
+          "group": "POWER",
+          "label": "Type",
+          "value": "External Power(Adapter)"
+        },
+        {
+          "group": "POWER",
+          "label": "AC Input",
+          "value": "100~240V (50/60Hz)"
+        },
+        {
+          "group": "POWER",
+          "label": "Power Consumption (Sleep Mode)",
+          "value": "Less than 0.5W"
+        },
+        {
+          "group": "POWER",
+          "label": "Power Consumption (DC Off)",
+          "value": "Less than 0.3W"
+        },
+        {
+          "group": "POWER",
+          "label": "DC Output",
+          "value": "19V, 2.1A"
+        },
+        {
+          "group": "DIMENSIONS/WEIGHTS",
+          "label": "Dimension with Stand (W x H x D) [mm]",
+          "value": "614.2 x 454.2 x 224.8mm"
+        },
+        {
+          "group": "DIMENSIONS/WEIGHTS",
+          "label": "Dimension without Stand (W x H x D) [mm]",
+          "value": "614.2 x 364.8 x 51.7mm"
+        },
+        {
+          "group": "DIMENSIONS/WEIGHTS",
+          "label": "Dimension in Shiping (W x H x D) [mm]",
+          "value": "707 x 164 x 453mm"
+        },
+        {
+          "group": "DIMENSIONS/WEIGHTS",
+          "label": "Weight with Stand [kg]",
+          "value": "5.8kg"
+        },
+        {
+          "group": "DIMENSIONS/WEIGHTS",
+          "label": "Weight without Stand [kg]",
+          "value": "5.1kg"
+        },
+        {
+          "group": "DIMENSIONS/WEIGHTS",
+          "label": "Weight in Shipping [kg]",
+          "value": "7.9kg"
+        },
+        {
+          "group": "ACCESSORY",
+          "label": "Display Port",
+          "value": "YES"
+        },
+        {
+          "group": "ACCESSORY",
+          "label": "Others (Accessory)",
+          "value": "Mouse Holder, Top Cover, user screws"
+        },
+        {
+          "group": "ACCESSORY",
+          "label": "Adapter",
+          "value": "YES"
+        },
+        {
+          "group": "ACCESSORY",
+          "label": "Calibration Report (Paper)",
+          "value": "YES"
+        },
+        {
+          "group": "ACCESSORY",
+          "label": "Power Cord",
+          "value": "Depend on Country"
+        },
+        {
+          "group": "COMPLIANCE INFORMATION",
+          "label": "extension",
+          "value": "pdfDismantling information(27GS60F-B)"
+        }
+      ],
+      "specs_source": "https://www.lg.com/uk/monitors/gaming/27gs60f-b/"
+    },
+    {
+      "product_id": 21,
+      "category_id": 5,
+      "product_name": "Corsair iCUE LINK TITAN II 360 RX LCD",
+      "description": "aio 360 mm, layar lcd ips 5 inci, kipas rx120 rgb, soket lga1851 dan am5",
+      "price": 3950000,
+      "stock_quantity": 9,
+      "is_active": true,
+      "official_url": "https://www.corsair.com/ww/en/p/cpu-coolers/cw-9061045-ww/icue-link-titan-ii-360-rx-lcd-aio-liquid-cpu-cooler-cw-9061045-ww",
+      "overview": "High-performance AIO CPU cooler with high-res 5\" LCD screen, second-generation FlowDrive pump, unified RGB fan frame, and enhanced cooling efficiency.",
+      "overview_source": "https://www.corsair.com/ww/en/p/cpu-coolers/cw-9061045-ww/icue-link-titan-ii-360-rx-lcd-aio-liquid-cpu-cooler-cw-9061045-ww",
+      "images": [
+        "/products/corsair-icue-link-titan-ii-360-rx-lcd.avif",
+        "/products/corsair-icue-link-titan-ii-360-rx-lcd-2.avif",
+        "/products/corsair-icue-link-titan-ii-360-rx-lcd-3.avif",
+        "/products/corsair-icue-link-titan-ii-360-rx-lcd-4.avif",
+        "/products/corsair-icue-link-titan-ii-360-rx-lcd-5.avif",
+        "/products/corsair-icue-link-titan-ii-360-rx-lcd-6.avif",
+        "/products/corsair-icue-link-titan-ii-360-rx-lcd-7.avif",
+        "/products/corsair-icue-link-titan-ii-360-rx-lcd-8.avif",
+        "/products/corsair-icue-link-titan-ii-360-rx-lcd-9.avif",
+        "/products/corsair-icue-link-titan-ii-360-rx-lcd-10.avif"
+      ],
+      "specs": [
+        {
+          "label": "Cold Plate Material",
+          "value": "Copper"
+        },
+        {
+          "label": "Color",
+          "value": "Black"
+        },
+        {
+          "label": "Fan Airflow",
+          "value": "14.1-64.7 CFM"
+        },
+        {
+          "label": "Fan Control Method",
+          "value": "Digital"
+        },
+        {
+          "label": "Fan Static Pressure",
+          "value": "0.21 - 3.57mm-H2O"
+        },
+        {
+          "label": "iCUE Software",
+          "value": "Yes"
+        },
+        {
+          "label": "Noise Level",
+          "value": "10 - 32.8 dBA"
+        },
+        {
+          "label": "Product Family",
+          "value": "COOLING"
+        },
+        {
+          "label": "Product Height",
+          "value": "125 mm"
+        },
+        {
+          "label": "Product Length",
+          "value": "396 mm"
+        },
+        {
+          "label": "Product Width",
+          "value": "125 mm"
+        },
+        {
+          "label": "PWM",
+          "value": "No"
+        },
+        {
+          "label": "Radiator Dimensions",
+          "value": "394mm x 120mm x 27mm"
+        },
+        {
+          "label": "Radiator Material",
+          "value": "Aluminum"
+        },
+        {
+          "label": "Radiator Size",
+          "value": "360mm"
+        },
+        {
+          "label": "Speed",
+          "value": "400 - 2100 RPM ±10%"
+        },
+        {
+          "label": "Tubing Length",
+          "value": "450mm"
+        },
+        {
+          "label": "Tubing Material",
+          "value": "Black Sleeved Low-Permeation Rubber"
+        },
+        {
+          "label": "Weight",
+          "value": "2kg"
+        }
+      ],
+      "specs_source": "https://www.corsair.com/ww/en/p/cpu-coolers/cw-9061045-ww/icue-link-titan-ii-360-rx-lcd-aio-liquid-cpu-cooler-cw-9061045-ww#tab-techspecs"
+    },
+    {
+      "product_id": 22,
+      "category_id": 3,
+      "product_name": "SanDisk Optimus GX PRO 850X 1TB Heatsink",
+      "description": "pcie 4.0, baca hingga 7300 mb per detik, heatsink terintegrasi, kompatibel ps5",
+      "price": 4850000,
+      "stock_quantity": 12,
+      "is_active": true,
+      "official_url": "https://www.sandisk.com/in-id/products/ssd/internal-ssd/sandisk-optimus-gx-pro-850x-internal-nvme-ssd?sku=SDSP81100TAH-000E0",
+      "overview": "Supercharge gaming and creative work with the SANDISK Optimus GX PRO 850X SSD, delivering fast PCIe 4.0 speeds, up to 8TB storage, and reliable performance.",
+      "overview_source": "https://www.sandisk.com/products/ssd/internal-ssd/sandisk-optimus-gx-pro-850x-internal-nvme-ssd?sku=SDSP81100TAH-000E0",
+      "images": [
+        "/products/sandisk-optimus-gx-pro-850x-1tb.avif",
+        "/products/sandisk-optimus-gx-pro-850x-1tb-2.avif",
+        "/products/sandisk-optimus-gx-pro-850x-1tb-3.avif",
+        "/products/sandisk-optimus-gx-pro-850x-1tb-4.avif",
+        "/products/sandisk-optimus-gx-pro-850x-1tb-5.avif",
+        "/products/sandisk-optimus-gx-pro-850x-1tb-6.avif",
+        "/products/sandisk-optimus-gx-pro-850x-1tb-7.avif",
+        "/products/sandisk-optimus-gx-pro-850x-1tb-8.avif",
+        "/products/sandisk-optimus-gx-pro-850x-1tb-9.avif",
+        "/products/sandisk-optimus-gx-pro-850x-1tb-10.avif"
+      ],
+      "specs": [
+        {
+          "label": "Capacity",
+          "value": "1TB"
+        },
+        {
+          "label": "Form Factor",
+          "value": "M.2 2280 S3-M"
+        },
+        {
+          "label": "Connector",
+          "value": "M.2"
+        },
+        {
+          "label": "Sequential Read Performance",
+          "value": "7,300MB/s"
+        },
+        {
+          "label": "Sequential Write Performance",
+          "value": "6,300MB/s"
+        },
+        {
+          "label": "Random Read",
+          "value": "800K IOPS"
+        },
+        {
+          "label": "Random Write",
+          "value": "1.1M IOPS"
+        },
+        {
+          "label": "Interface",
+          "value": "PCIe 4.0 x4"
+        },
+        {
+          "label": "Dimensions (L x W x H)",
+          "value": "80 x 23.1 x 8.9 mm (3.15\" x 0.91\" x 0.35\")"
+        },
+        {
+          "label": "Warranty",
+          "value": "5-Year Limited Warranty"
+        },
+        {
+          "label": "Endurance (TBW)",
+          "value": "600 TBW"
+        },
+        {
+          "label": "Weight",
+          "value": "24 g"
+        },
+        {
+          "label": "Model Number",
+          "value": "SDSP81100TAH-000E0"
+        },
+        {
+          "label": "Operating Temperature",
+          "value": "0°C to 85°C"
+        },
+        {
+          "label": "Non-Operating Temperature",
+          "value": "-40°C to 85°C"
+        }
+      ],
+      "specs_source": "https://www.sandisk.com/products/ssd/internal-ssd/sandisk-optimus-gx-pro-850x-internal-nvme-ssd?sku=SDSP81100TAH-000E0"
+    },
+    {
+      "product_id": 23,
+      "category_id": 3,
+      "product_name": "WD_BLACK SN850X 1TB Heatsink",
+      "description": "pcie 4.0, baca hingga 7300 mb per detik, heatsink, kompatibel ps5",
+      "price": 3450000,
+      "stock_quantity": 18,
+      "is_active": true,
+      "official_url": "https://www.sandisk.com/in-id/products/ssd/internal-ssd/wd-black-sn850x-nvme-ssd?sku=WDS100T2XHE-00BCA0",
+      "overview": "Load games faster with a WD_BLACK SN850X internal NVMe SSD. Designed for PC gaming rigs and PlayStation 5 consoles, push the envelope of PCIe Gen4 technology with read speeds up to 7300MB/s.",
+      "overview_source": "https://www.sandisk.com/products/ssd/internal-ssd/wd-black-sn850x-nvme-ssd?sku=WDS100T2XHE-00BCA0",
+      "images": [
+        "/products/wd-black-sn850x-1tb.avif",
+        "/products/wd-black-sn850x-1tb-2.avif",
+        "/products/wd-black-sn850x-1tb-3.avif",
+        "/products/wd-black-sn850x-1tb-4.avif"
+      ],
+      "specs": [
+        {
+          "label": "Capacity",
+          "value": "1TB"
+        },
+        {
+          "label": "Form Factor",
+          "value": "M.2 2280"
+        },
+        {
+          "label": "Connector",
+          "value": "M.2"
+        },
+        {
+          "label": "Sequential Read Performance",
+          "value": "7300MB/s"
+        },
+        {
+          "label": "Sequential Write Performance",
+          "value": "6300MB/s"
+        },
+        {
+          "label": "Random Read",
+          "value": "800K IOPS"
+        },
+        {
+          "label": "Random Write",
+          "value": "1100K IOPS"
+        },
+        {
+          "label": "Interface",
+          "value": "PCIe 4.0 x4"
+        },
+        {
+          "label": "Warranty",
+          "value": "5-Year Limited Warranty"
+        },
+        {
+          "label": "Endurance (TBW)",
+          "value": "600 TBW"
+        },
+        {
+          "label": "Dimensions (L x W x H)",
+          "value": "80 x 23.4 x 8.8 mm"
+        },
+        {
+          "label": "Weight",
+          "value": "24 g"
+        },
+        {
+          "label": "Model Number",
+          "value": "WDS100T2XHE"
+        },
+        {
+          "label": "Operating Temperature",
+          "value": "0°C to 85°C"
+        },
+        {
+          "label": "Non-Operating Temperature",
+          "value": "-40°C to 85°C"
+        }
+      ],
+      "specs_source": "https://www.sandisk.com/products/ssd/internal-ssd/wd-black-sn850x-nvme-ssd?sku=WDS100T2XHE-00BCA0"
+    }
+  ],
+  "users": [
+    {
+      "id": 1,
+      "username": "Andi Pratama",
+      "email": "andi.pratama@example.com",
+      "phone_number": "+62-812-1111-0001",
+      "address": "Jl. Sudirman No. 1, Jakarta Pusat",
+      "role": "superadmin"
+    },
+    {
+      "id": 2,
+      "username": "Siti Rahayu",
+      "email": "siti.rahayu@example.com",
+      "phone_number": "+62-813-2222-0002",
+      "address": "Jl. Asia Afrika No. 22, Bandung",
+      "role": "customer"
+    },
+    {
+      "id": 3,
+      "username": "Budi Santoso",
+      "email": "budi.santoso@example.com",
+      "phone_number": "+62-856-3333-0003",
+      "address": "Jl. Pemuda No. 33, Surabaya",
+      "role": "admin"
+    },
+    {
+      "id": 4,
+      "username": "Dewi Lestari",
+      "email": "dewi.lestari@example.com",
+      "phone_number": "+62-877-4444-0004",
+      "address": "Jl. Malioboro No. 44, Yogyakarta",
+      "role": "customer"
+    },
+    {
+      "id": 5,
+      "username": "Rizky Ramadhan",
+      "email": "rizky.ramadhan@example.com",
+      "phone_number": "+62-819-5555-0005",
+      "address": "Jl. Gatot Subroto No. 55, Medan",
+      "role": "customer"
+    },
+    {
+      "id": 6,
+      "username": "Maya Kusuma",
+      "email": "maya.kusuma@example.com",
+      "phone_number": null,
+      "address": "Jl. Diponegoro No. 66, Semarang",
+      "role": "customer"
+    }
+  ],
+  "orders": [
+    {
+      "order_id": 1,
+      "user_id": 2,
+      "order_status": "delivered",
+      "shipping_address": "Jl. Asia Afrika No. 22, Bandung",
+      "ordered_at": "2026-07-14T09:20:00",
+      "items": [
+        {
+          "product_id": 1,
+          "quantity": 1,
+          "unit_price": 4150000
+        },
+        {
+          "product_id": 4,
+          "quantity": 1,
+          "unit_price": 2650000
+        },
+        {
+          "product_id": 7,
+          "quantity": 2,
+          "unit_price": 1050000
+        }
+      ]
+    },
+    {
+      "order_id": 2,
+      "user_id": 3,
+      "order_status": "delivered",
+      "shipping_address": "Jl. Pemuda No. 33, Surabaya",
+      "ordered_at": "2026-08-02T14:05:00",
+      "items": [
+        {
+          "product_id": 11,
+          "quantity": 1,
+          "unit_price": 5750000
+        },
+        {
+          "product_id": 14,
+          "quantity": 1,
+          "unit_price": 1350000
+        }
+      ]
+    },
+    {
+      "order_id": 3,
+      "user_id": 4,
+      "order_status": "shipped",
+      "shipping_address": "Jl. Malioboro No. 44, Yogyakarta",
+      "ordered_at": "2026-08-28T11:40:00",
+      "items": [
+        {
+          "product_id": 18,
+          "quantity": 1,
+          "unit_price": 950000
+        },
+        {
+          "product_id": 19,
+          "quantity": 1,
+          "unit_price": 1850000
+        }
+      ]
+    },
+    {
+      "order_id": 4,
+      "user_id": 5,
+      "order_status": "paid",
+      "shipping_address": "Jl. Gatot Subroto No. 55, Medan",
+      "ordered_at": "2026-09-09T16:15:00",
+      "items": [
+        {
+          "product_id": 3,
+          "quantity": 1,
+          "unit_price": 9650000
+        },
+        {
+          "product_id": 5,
+          "quantity": 1,
+          "unit_price": 3850000
+        },
+        {
+          "product_id": 9,
+          "quantity": 1,
+          "unit_price": 2950000
+        }
+      ]
+    },
+    {
+      "order_id": 5,
+      "user_id": 6,
+      "order_status": "pending",
+      "shipping_address": "Jl. Diponegoro No. 66, Semarang",
+      "ordered_at": "2026-09-18T08:55:00",
+      "items": [
+        {
+          "product_id": 12,
+          "quantity": 1,
+          "unit_price": 13450000
+        },
+        {
+          "product_id": 15,
+          "quantity": 1,
+          "unit_price": 480000
+        }
+      ]
+    },
+    {
+      "order_id": 6,
+      "user_id": 2,
+      "order_status": "cancelled",
+      "shipping_address": "Jl. Asia Afrika No. 22, Bandung",
+      "ordered_at": "2026-09-20T19:30:00",
+      "items": [
+        {
+          "product_id": 2,
+          "quantity": 1,
+          "unit_price": 6350000
+        },
+        {
+          "product_id": 6,
+          "quantity": 1,
+          "unit_price": 1650000
+        },
+        {
+          "product_id": 8,
+          "quantity": 2,
+          "unit_price": 13550000
+        }
+      ]
+    }
+  ],
+  "content": {
+    "home": {
+      "slides": [
+        {
+          "id": "new-arrivals",
+          "eyebrow": "New arrivals · Corsair iCUE",
+          "title": "Just landed: iCUE LINK TITAN II",
+          "body": "A 5\" LCD liquid cooler and Dominator Titanium DDR5-7600 — plus the MSI RTX 5070 Gaming Trio OC and new PCIe 4.0 SSDs.",
+          "cta": "See what's new",
+          "href": "/#new-arrivals",
+          "visible": true
+        },
+        {
+          "id": "rtx-50",
+          "eyebrow": "Graphics · Blackwell",
+          "title": "RTX 50 series has landed",
+          "body": "GeForce RTX 5060 and 5070 with GDDR7 memory and DLSS 4 — 1440p gaming without the compromise.",
+          "cta": "Shop graphics cards",
+          "href": "/products?category_id=4",
+          "visible": true
+        },
+        {
+          "id": "x3d-gaming",
+          "eyebrow": "Processors · Zen 5 X3D",
+          "title": "The fastest gaming CPU, in stock",
+          "body": "Ryzen 7 9850X3D: 3D V-Cache, a 5.6 GHz boost, and a drop-in fit for every AM5 board we carry.",
+          "cta": "See the 9850X3D",
+          "href": "/products/3",
+          "visible": true
+        },
+        {
+          "id": "nvme-speed",
+          "eyebrow": "Storage · PCIe 5.0",
+          "title": "14,800 MB/s. Load screens, gone.",
+          "body": "Samsung 9100 Pro NVMe and fast DDR5 — the upgrades you feel on every boot.",
+          "cta": "Shop memory & storage",
+          "href": "/products?category_id=3",
+          "visible": true
+        },
+        {
+          "id": "peripherals",
+          "eyebrow": "Peripherals",
+          "title": "Gear for the desk, not just the case",
+          "body": "Hot-swappable mechanical keyboards, 25K-sensor mice and high-refresh IPS monitors.",
+          "cta": "Shop peripherals",
+          "href": "/products?category_id=6",
+          "visible": true
+        },
+        {
+          "id": "build-your-rig",
+          "eyebrow": "Build planner",
+          "title": "Pick the parts. We check the sockets.",
+          "body": "Choose one part per category and get a running total, a socket check and a PSU headroom warning before you pay.",
+          "cta": "Start a build",
+          "href": "/build",
+          "visible": true
+        }
+      ],
+      "pillars": [
+        {
+          "title": "Current generation only",
+          "body": "Core Ultra Plus, Ryzen 9000 X3D, RTX 50 and RDNA 4 — nothing a generation behind."
+        },
+        {
+          "title": "Socket-checked builds",
+          "body": "The build planner flags an LGA1851 chip in an AM5 board before it reaches your cart."
+        },
+        {
+          "title": "Priced in rupiah",
+          "body": "Indonesian street prices, stock counts you can trust, and low-stock warnings that mean it."
+        }
+      ],
+      "featured_eyebrow": "New arrivals",
+      "featured_heading": "Fresh drops for the next build",
+      "featured_ids": [
+        21,
+        8,
+        12,
+        22,
+        23
+      ]
+    },
+    "about": {
+      "name": "Jim",
+      "tagline": "Frontend developer — HTML, CSS, JavaScript, TypeScript, React",
+      "intro": "I built the RevoTech backend in Module 2 and this storefront on top of it in Module 3. I like getting the data model right before styling anything: every product here uses the same field names as the Flask API, so the types line up from the database to the component.",
+      "skills": [
+        {
+          "name": "HTML5",
+          "note": "Semantic landmarks, accessible forms, meaningful headings."
+        },
+        {
+          "name": "CSS",
+          "note": "Box model, Grid, Flexbox, custom properties, media queries."
+        },
+        {
+          "name": "JavaScript",
+          "note": "DOM APIs, events, forEach / map / filter / reduce."
+        },
+        {
+          "name": "TypeScript",
+          "note": "Interfaces, type aliases, union types, strict mode."
+        },
+        {
+          "name": "Tailwind CSS",
+          "note": "Utility-first, mobile-first, v4 CSS-configured theme."
+        },
+        {
+          "name": "React & Next.js",
+          "note": "Server Components, App Router, context, view transitions."
+        },
+        {
+          "name": "Python & Flask",
+          "note": "REST APIs, SQLAlchemy, PostgreSQL, JWT auth."
+        },
+        {
+          "name": "Testing",
+          "note": "Playwright end-to-end suites against local and production."
+        }
+      ],
+      "projects": [
+        {
+          "name": "RevoTech API",
+          "meta": "Module 2 · Flask · PostgreSQL",
+          "body": "REST API for a computer-parts store: five tables, full CRUD, orders with line items, and deletion guards that refuse to remove a product while active orders reference it.",
+          "href": "https://github.com/jim1504/Revou-revoshop-jim1504"
+        },
+        {
+          "name": "RevoTech Frontend",
+          "meta": "Module 3 · Next.js 16 · TypeScript · Tailwind v4",
+          "body": "This site. Live search and category filtering, cart and checkout, an admin dashboard with product and category CRUD, and a Playwright suite.",
+          "href": "/products"
+        },
+        {
+          "name": "Build Planner",
+          "meta": "Module 3 · Extra",
+          "body": "Pick one part per slot and get a running total, a socket compatibility check and a PSU headroom warning.",
+          "href": "/build"
+        }
+      ]
+    }
+  },
+  "settings": {
+    "shop_name": "RevoTech",
+    "tagline": "PC parts, built for the next frame",
+    "timezone": "Asia/Jakarta",
+    "clock": "24h",
+    "date_style": "medium",
+    "support_email": "support@revotech.id",
+    "support_phone": "+62 21 5000 1234",
+    "logo_glow": true,
+    "logo_version": 1
+  }
+}

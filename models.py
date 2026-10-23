@@ -1,4 +1,5 @@
 from flask_sqlalchemy import SQLAlchemy
+from sqlalchemy.dialects.postgresql import JSONB
 
 db = SQLAlchemy()
 
@@ -28,6 +29,38 @@ order_items = db.Table(
 )
 
 
+ROLE_CUSTOMER = "customer"
+ROLE_ADMIN = "admin"
+ROLE_SUPERADMIN = "superadmin"
+
+# The only roles the system recognises. Enforced both here (check constraint) and
+# in routes/helpers.py, so an invalid role cannot enter through either door.
+ROLES = (ROLE_SUPERADMIN, ROLE_ADMIN, ROLE_CUSTOMER)
+
+# What each role may do -- the same table as the RevoTech frontend's lib/roles.ts, so the
+# dashboard only offers what this API will accept. Routes check a permission, never a role
+# name, so moving a permission between roles is a one-line change here.
+#
+#   products:write    create/edit/withdraw products        superadmin, admin
+#   categories:write  create/edit/delete categories        superadmin, admin
+#   orders:manage     see every order, change its status  superadmin, admin
+#   content:write     homepage and About page content      superadmin, admin
+#   settings:write    shop name, logo, time zone           superadmin
+#   users:manage      user list, roles, password resets    superadmin
+PERMISSIONS = {
+    ROLE_SUPERADMIN: frozenset(
+        {"products:write", "categories:write", "orders:manage", "content:write", "settings:write", "users:manage"}
+    ),
+    ROLE_ADMIN: frozenset({"products:write", "categories:write", "orders:manage", "content:write"}),
+    ROLE_CUSTOMER: frozenset(),
+}
+
+
+def can(role, permission):
+    """True when `role` holds `permission`. Unknown roles hold nothing."""
+    return permission in PERMISSIONS.get(role, frozenset())
+
+
 class User(db.Model):
     __tablename__ = "users"
 
@@ -44,9 +77,16 @@ class User(db.Model):
     )
 
 
-    role = db.Column(db.String(20), nullable=False, server_default="customer")
+    role = db.Column(db.String(20), nullable=False, server_default=ROLE_CUSTOMER)
 
     orders = db.relationship("Order", back_populates="user")
+
+    __table_args__ = (
+        db.CheckConstraint(
+            "role in ('customer', 'admin', 'superadmin')",
+            name="chk_users_role",
+        ),
+    )
 
     def to_dict(self):
         """Serialise for jsonify. password_hash is deliberately never exposed."""
@@ -115,6 +155,16 @@ class Product(db.Model):
         server_default=db.func.current_timestamp(),
     )
 
+    # Storefront detail: the manufacturer's page, a credited summary of it, the gallery
+    # (image URLs, first = primary) and the technical specification table
+    # ([{group?, label, value}]).
+    official_url = db.Column(db.Text)
+    overview = db.Column(db.Text)
+    overview_source = db.Column(db.Text)
+    images = db.Column(JSONB, nullable=False, server_default="[]")
+    specs = db.Column(JSONB, nullable=False, server_default="[]")
+    specs_source = db.Column(db.Text)
+
     category = db.relationship("Category", back_populates="products")
     orders = db.relationship("Order", secondary=order_items, back_populates="products")
 
@@ -129,6 +179,12 @@ class Product(db.Model):
             "stock_quantity": self.stock_quantity,
             "is_active": self.is_active,
             "created_at": self.created_at.isoformat() if self.created_at else None,
+            "official_url": self.official_url,
+            "overview": self.overview,
+            "overview_source": self.overview_source,
+            "images": self.images or [],
+            "specs": self.specs or [],
+            "specs_source": self.specs_source,
         }
 
     def __repr__(self):
@@ -176,3 +232,37 @@ class Order(db.Model):
 
     def __repr__(self):
         return f"<Order {self.order_id} {self.order_status}>"
+
+
+class SiteContent(db.Model):
+    """Editable page content, one JSON document per page ('home', 'about')."""
+
+    __tablename__ = "site_content"
+
+    key = db.Column(db.String(20), primary_key=True)
+    content = db.Column(JSONB, nullable=False)
+    updated_at = db.Column(
+        db.DateTime,
+        nullable=False,
+        server_default=db.func.current_timestamp(),
+        onupdate=db.func.current_timestamp(),
+    )
+
+
+class SiteSettings(db.Model):
+    """The store's settings and logo -- a single row (id = 1)."""
+
+    __tablename__ = "site_settings"
+    __table_args__ = (db.CheckConstraint("id = 1", name="chk_site_settings_single_row"),)
+
+    id = db.Column(db.Integer, primary_key=True)
+    settings = db.Column(JSONB, nullable=False)
+    # the logo as vector paths ({box: {x, y, w, h}, paths: [{d, fill}], colours}), traced from
+    # an upload by the storefront; null = the storefront's default logo
+    logo = db.Column(JSONB)
+    updated_at = db.Column(
+        db.DateTime,
+        nullable=False,
+        server_default=db.func.current_timestamp(),
+        onupdate=db.func.current_timestamp(),
+    )
