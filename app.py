@@ -42,11 +42,21 @@ app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
 # The pool is per process. Waitress runs one process with many threads; gunicorn runs
 # several processes with a few threads each. Total connections to Postgres is
 # processes x (pool_size + max_overflow) and must stay under its max_connections (100).
+# On Vercel every warm instance is a process of its own and many run at once, so each
+# keeps a single connection (Supabase's advice for serverless) - otherwise a burst of
+# requests, like a frontend build prerendering 40 pages, fills the pooler and gets
+# "max clients reached".
+ON_VERCEL = bool(os.getenv("VERCEL"))
 app.config["SQLALCHEMY_ENGINE_OPTIONS"] = {
-    "pool_size": int(os.getenv("DB_POOL_SIZE", "5")),
-    "max_overflow": int(os.getenv("DB_MAX_OVERFLOW", "5")),
+    "pool_size": int(os.getenv("DB_POOL_SIZE", "1" if ON_VERCEL else "5")),
+    "max_overflow": int(os.getenv("DB_MAX_OVERFLOW", "0" if ON_VERCEL else "5")),
     "pool_pre_ping": True,
     "pool_recycle": 1800,
+    # Supabase's transaction pooler (port 6543, the one for serverless) hands each
+    # transaction to whichever server connection is free, so a statement prepared on one
+    # isn't there on the next. psycopg prepares repeated queries by default; None turns
+    # that off. Harmless on a direct or session connection.
+    "connect_args": {"prepare_threshold": None},
 }
 
 SECRET_KEY = os.getenv("SECRET_KEY")
