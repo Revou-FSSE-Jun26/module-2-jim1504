@@ -27,6 +27,7 @@ instance/
 .idea/
 *.swp
 review.md
+review-module-3.md
 
 # ---- file workspace dbeaver / pgadmin ----
 .dbeaver/
